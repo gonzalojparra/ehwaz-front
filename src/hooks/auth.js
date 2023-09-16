@@ -25,15 +25,37 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
   );
 
   useEffect(() => {
-    /* if (middleware === 'guest' && user)
+    if (middleware === 'auth') {
+      // Ta logueado
+      error && logout()
+      if (window.location.pathname === '/login' || window.location.pathname === '/register') {
+        router.push('/');
+      }
+    } else {
+      // No ta logueado
+      if (window.location.pathname !== '/login' && window.location.pathname !== '/register') {
+        router.push('/');
+      }
+    }
+    if (middleware === 'auth' && error) {
+      logout()
+    }
+  }, [user, error])
+
+  /* useEffect(() => {
+    if (middleware === 'guest' && redirectIfAuthenticated && user) {
       router.push(redirectIfAuthenticated)
+    }
     if (
       window.location.pathname === '/verify-email' &&
       user?.email_verified_at
-    )
+    ) {
       router.push(redirectIfAuthenticated)
-    if (middleware === 'auth' && error) logout() */
-  }, [user, error])
+    }
+    if (middleware === 'auth' && error) {
+      logout()
+    }
+  }, [user, error]); */
 
   const csrf = async () => axios.get('/sanctum/csrf-cookie');
 

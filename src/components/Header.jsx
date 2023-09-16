@@ -6,7 +6,7 @@ import AuthLayout from './ui/AuthLayout';
 import GuestLayout from './ui/GuestLayout';
 
 export default function Header() {
-  const { user, logout } = useAuth({ middleware: 'guest', redirectIfAuthenticated: '/' });
+  const { user, logout } = useAuth({ middleware: 'guest' });
 
   if (user) {
     return AuthLayout(user, logout);

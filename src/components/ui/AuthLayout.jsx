@@ -59,7 +59,7 @@ const components = [
   },
 ]
 
-const ListItem = (({ className, title, children, ...props }, ref) => {
+const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
   return (
     <li>
       <NavigationMenuLink asChild>
