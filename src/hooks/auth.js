@@ -24,7 +24,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
       }),
   );
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (middleware === 'auth') {
       // Ta logueado
       error && logout()
@@ -40,9 +40,9 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
     if (middleware === 'auth' && error) {
       logout()
     }
-  }, [user, error])
+  }, [user, error]); */
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (middleware === 'guest' && redirectIfAuthenticated && user) {
       router.push(redirectIfAuthenticated)
     }
@@ -55,7 +55,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
     if (middleware === 'auth' && error) {
       logout()
     }
-  }, [user, error]); */
+  }, [user, error]);
 
   const csrf = async () => axios.get('/sanctum/csrf-cookie');
 

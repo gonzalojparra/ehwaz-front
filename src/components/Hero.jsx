@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Hero() {
   return (
-    <section>
+    <section className='bg-background'>
       <div className='relative pt-16 pb-32 flex content-center items-center justify-center'>
         <div className='absolute top-0 w-full h-full bg-top bg-cover'>
           <span id='blackOverlay' className='w-full h-full absolute opacity-75 bg-black'></span>
