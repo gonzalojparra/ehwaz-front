@@ -108,7 +108,7 @@ const AuthLayout = (user, logout) => {
               </SheetContent>
             </Sheet>
             <Link href='/' className='ml-4 lg:ml-0'>
-              <h1 className='text-xl font-bold'>
+              <h1 className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#6a3b86] to-[#b412ff]'>
                 Ehwaz
               </h1>
             </Link>
