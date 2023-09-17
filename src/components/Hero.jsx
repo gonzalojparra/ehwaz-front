@@ -14,11 +14,11 @@ export default function Hero() {
             <div className='w-full lg:w-6/12 px-4 ml-auto mr-auto text-center'>
               <div>
                 <h1 className='text-white font-bold text-5xl leading-none'>
-                  Experiencia <span className='bg-clip-text text-transparent pb-2 bg-gradient-to-r from-[#6a3b86] to-[#b412ff]'>Ehwaz</span>
+                  Experiencia <span className='bg-clip-text text-transparent pb-2 bg-gradient-to-r from-primary to-[#008080]'>Ehwaz</span>
                 </h1>
                 <p className='mt-4 z-20 animate-fade-up text-center text-slate-400 animate-delay-100 sm:text-xl'>
                   Somos un portal de entrenamiento web para Personal Trainers
-                  enfocado en <span className='font-semibold text-primary'>ayudar</span> a los profesionales. Dales la mejor experiencia a tus alumnos con Ehwaz.
+                  enfocado en <span className='font-semibold text-[#FFD700]'>ayudar</span> a los profesionales. Dales la mejor experiencia a tus alumnos con Ehwaz.
                 </p>
                 <Button className='mt-5' variant='default' size='lg'>Descargar Ehwaz</Button>
               </div>

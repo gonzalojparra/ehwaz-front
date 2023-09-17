@@ -114,13 +114,13 @@ export default function GuestLayout() {
               </SheetContent>
             </Sheet>
             <Link href='/' className='ml-4 lg:ml-0'>
-              <h1 className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#6a3b86] to-[#b412ff]'>
+              <h1 className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#008080]'>
                 Ehwaz
               </h1>
             </Link>
           </div>
 
-          <nav className='mx-6 flex items-center space-x-4 lg:space-x-6 hidden md:block justify-center'>
+          <nav className='px-6 items-center justify-center space-x-4 lg:space-x-6 hidden md:block '>
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>

@@ -6,12 +6,12 @@ export default function AboutPage() {
           <div className="flex flex-col justify-center space-y-8 text-center" >
             <div className="space-y-2" >
               <h1
-                className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500"
+                className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none bg-clip-text text-transparent bg-gradient-to-r from-[#8A2BE2] to-[#FFD700]"
               >
-                Discover Our Unique Features
+                Somos Runas Software
               </h1>
               <p className="max-w-[600px] text-inherit md:text-xl mx-auto" >
-                Our features are designed to enhance your productivity and streamline your workflow.
+                Comprometidos a mantenernos a la vanguardia tecnológica para mejorar la eficiencia nuestros clientes.
               </p>
             </div>
             <div className="w-full max-w-full space-y-4 mx-auto" >
@@ -37,10 +37,10 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <h2 className="text-xl font-bold text-inherit" >
-                    Smart Inbox
+                    Analíticas
                   </h2>
                   <p className="text-zinc-200 dark:text-zinc-100" >
-                    Our Smart Inbox feature helps you manage your emails efficiently by prioritizing important emails.
+                    Detalles de los ejercicios realizados, con gráficos de progreso y estadísticas.
                   </p>
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg" >
@@ -63,10 +63,60 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <h2 className="text-xl font-bold text-inherit" >
-                    Seamless Integration
+                    Seguimiento
                   </h2>
                   <p className="text-zinc-200 dark:text-zinc-100" >
-                    Seamless Integration allows you to connect with your favorite apps and services without leaving your inbox.
+                    Permitimos a los clientes realizar un seguimiento de sus progresos.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg" >
+                  <div className="p-2 bg-black bg-opacity-50 rounded-full" >
+                    <svg
+                      className=" text-inherit h-6 w-6 mb-2 opacity-75"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <rect height="11" rx="2" ry="2" width="18" x="3" y="11" />
+                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-bold text-inherit" >
+                    Seguridad
+                  </h2>
+                  <p className="text-zinc-200 dark:text-zinc-100" >
+                    Con seguridad confiable, sus datos siempre están seguros y protegidos.
+                  </p>
+                </div>
+                <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg" >
+                  <div className="p-2 bg-black bg-opacity-50 rounded-full" >
+                    <svg
+                      className=" text-inherit h-6 w-6 mb-2 opacity-75"
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="11" cy="11" r="8" />
+                      <path d="m21 21-4.3-4.3" />
+                    </svg>
+                  </div>
+                  <h2 className="text-xl font-bold text-inherit" >
+                    Condición Física
+                  </h2>
+                  <p className="text-zinc-200 dark:text-zinc-100" >
+                    Los ejercicios se adaptan a la condición física de cada cliente y mejorarán en base a sus objetivos.
                   </p>
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg" >
@@ -90,60 +140,10 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <h2 className="text-xl font-bold text-inherit" >
-                    Advanced Customization
+                    Guías Nutricionales
                   </h2>
                   <p className="text-zinc-200 dark:text-zinc-100" >
-                    With Advanced Customization, you can personalize your email client to suit your preferences and work style.
-                  </p>
-                </div>
-                <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg" >
-                  <div className="p-2 bg-black bg-opacity-50 rounded-full" >
-                    <svg
-                      className=" text-inherit h-6 w-6 mb-2 opacity-75"
-                      fill="none"
-                      height="24"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      width="24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle cx="11" cy="11" r="8" />
-                      <path d="m21 21-4.3-4.3" />
-                    </svg>
-                  </div>
-                  <h2 className="text-xl font-bold text-inherit" >
-                    Powerful Search
-                  </h2>
-                  <p className="text-zinc-200 dark:text-zinc-100" >
-                    Our Powerful Search feature allows you to find any email, contact, or file in seconds.
-                  </p>
-                </div>
-                <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg" >
-                  <div className="p-2 bg-black bg-opacity-50 rounded-full" >
-                    <svg
-                      className=" text-inherit h-6 w-6 mb-2 opacity-75"
-                      fill="none"
-                      height="24"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      width="24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect height="11" rx="2" ry="2" width="18" x="3" y="11" />
-                      <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                    </svg>
-                  </div>
-                  <h2 className="text-xl font-bold text-inherit" >
-                    Reliable Security
-                  </h2>
-                  <p className="text-zinc-200 dark:text-zinc-100" >
-                    With Reliable Security, your data is always safe and protected.
+                    Con los especialistas asociados, los clientes podrán mejorar su alimentación en base a sus ideales.
                   </p>
                 </div>
                 <div className="flex flex-col items-center space-y-2 border-gray-800 p-4 rounded-lg" >
@@ -166,10 +166,10 @@ export default function AboutPage() {
                     </svg>
                   </div>
                   <h2 className="text-xl font-bold text-inherit" >
-                    Easy Collaboration
+                    Contacto fácil
                   </h2>
                   <p className="text-zinc-200 dark:text-zinc-100" >
-                    Easy Collaboration allows you to share and edit documents with your team in real time.
+                    La comunicación con los especialistas asociados permite a los clientes resolver sus problemas.
                   </p>
                 </div>
               </div>

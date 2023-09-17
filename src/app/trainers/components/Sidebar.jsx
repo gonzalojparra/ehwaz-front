@@ -47,7 +47,7 @@ export default function Sidebar({ trainers, className }) {
           </div>
         </div>
         <div className='py-2'>
-          <h2 className='relative px-7 text-lg font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-[#3b863b] to-[#12ffc4]'>
+          <h2 className='relative px-7 text-lg font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-[#8A2BE2] to-[#FFD700]'>
             Top Ten <Badge variant="destructive" className='mx-4'>On Fire 🔥</Badge>
           </h2>
           <Separator className="w-[90%] mx-auto" />
