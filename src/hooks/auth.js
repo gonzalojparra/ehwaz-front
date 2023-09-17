@@ -162,5 +162,6 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
     resetPassword,
     resendEmailVerification,
     logout,
+    csrf
   }
 }
