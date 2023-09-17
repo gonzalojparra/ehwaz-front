@@ -108,7 +108,7 @@ export default function CalendarComponent({ student }) {
         initial_date: fechaInicio,
         final_date: fechaFin,
         name: nombre,
-        descriptions: [descripcion],
+        descriptions: descripcion,
         id_student: student,
         id_student_goal: studentGoalId,
         amount: precio,
@@ -129,17 +129,19 @@ export default function CalendarComponent({ student }) {
     // Validar la creación
     if (await sendInfo()) {
       const nuevaRutina = calendarApi;
+      let nuevaFechaFin = new Date(fechaFin);
+      nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1);
       nuevaRutina.addEvent({
         id: createEventId(),
         title: nombre,
         start: fechaInicio,
-        end: fechaFin,
+        end: nuevaFechaFin,
         allDay: true,
         extendedProps: {
           descripcion: descripcion,
           precio: precio,
           fecha_inicio: fechaInicio,
-          fecha_fin: fechaFin,
+          fecha_fin: nuevaFechaFin,
           id_student_goal: studentGoalId,
         },
       });
@@ -212,7 +214,7 @@ export default function CalendarComponent({ student }) {
                 onChange={(e) => setFechaInicio(e.target.value)}
                 disabled={ver === 'ver'}
               />
-              <InputError messages={errors.initial_date} />
+              <InputError messages={errors?.initial_date} />
 
               <Label htmlFor='fechaFin' className='flex ml-1'>
                 Fecha Fin:
@@ -225,7 +227,7 @@ export default function CalendarComponent({ student }) {
                 onChange={(e) => setFechaFin(e.target.value)}
                 disabled={ver === 'ver'}
               />
-              <InputError messages={errors.final_date} />
+              <InputError messages={errors?.final_date} />
 
               <Label htmlFor='nombre' className='flex ml-1'>
                 Nombre de Rutina:
@@ -240,7 +242,7 @@ export default function CalendarComponent({ student }) {
                 placeholder='Bajar de peso...'
                 disabled={ver === 'ver'}
               />
-              <InputError messages={errors.name} />
+              <InputError messages={errors?.name} />
 
               <div className='space-y-2'>
                 <Label htmlFor='estudiantes' className='flex ml-1'>
@@ -267,7 +269,7 @@ export default function CalendarComponent({ student }) {
                 </Select>
                 }
               </div>
-              <InputError messages={errors.id_student_goal} />
+              <InputError messages={errors?.id_student_goal} />
 
               <Label htmlFor='precio' className='flex ml-1'>
                 Precio:
@@ -282,20 +284,20 @@ export default function CalendarComponent({ student }) {
                 placeholder='$ xxxx'
                 disabled={ver === 'ver'}
               />
-              <InputError messages={errors.amount} />
+              <InputError messages={errors?.amount} />
 
               <Label htmlFor='descripcion' className='flex ml-1' >
                 Descripción:
               </Label>
               <Textarea
                 id='descripcion'
-                placeholder='Añada una descripción'
+                placeholder='Añada una descripción, puede añadir descripciones para diferentes días separandolos con "|"'
                 onChange={(e) => {
                   setDescripcion(e.target.value);
                 }}
                 disabled={ver === 'ver'}
               />
-              <InputError messages={errors.description} />
+              <InputError messages={errors?.description} />
 
             </DialogDescription>
           </DialogHeader>
