@@ -19,15 +19,20 @@ export function DatePicker({ fechaIni }) {
   const [parsedDate, setParsedDate] = useState();
 
   useEffect(() => {
-    if (date) {
-      console.log(date);
-      let array = date.split('-');
-      array = array.reverse();
-      array = array.join('/');
-      setParsedDate(array);
-    } else {
-      setParsedDate(null);
-    };
+    const sqlDateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    //console.log(sqlDateRegex.test(data));
+    if(date != undefined){
+      if (sqlDateRegex.test(date)) {
+        console.log(date);
+        let parseada = parse(date, 'yyyy-MM-dd', new Date());
+        parseada = format(parseada, 'PPP');
+        setParsedDate(parseada);
+      } else {
+        console.log(date);
+        let parseada = format(date, "PPP");
+        setParsedDate(parseada);
+      };
+    }
   });
 
   return (
