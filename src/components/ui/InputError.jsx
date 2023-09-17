@@ -27,7 +27,7 @@ const InputError = ({ messages = [], className = '', ...props }) => (
     {messages?.length > 0 && (
       <>
         <Alert variant="destructive">
-          <AlertCircle className="h-4 w-4" />
+          <AlertCircle className="h-2 w-2" />
           <AlertTitle>Error!</AlertTitle>
           <AlertDescription
             {...props}

@@ -6,7 +6,7 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 import axios from '@/lib/axios';
-import { createEventId } from '../event-utils';
+import { createEventId } from '../utils/event-utils';
 
 import {
   Dialog,
@@ -27,6 +27,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import InputError from '@/components/ui/InputError';
 
 export default function CalendarComponent({ student }) {
   const [open, setOpen] = useState(false);
@@ -42,8 +43,9 @@ export default function CalendarComponent({ student }) {
   const [calendarApi, setCalendarApi] = useState({});
   const [rutinas, setRutinas] = useState([]);
   const [infoEvento, setInfoEvento] = useState({});
+  const [errors, setErrors] = useState([]);
 
-  const traer_rutinas = async () => {
+  const getRoutines = async () => {
     await axios.post('/api/student_routines', {
       student_id: student
     })
@@ -85,44 +87,47 @@ export default function CalendarComponent({ student }) {
   }
 
   useEffect(() => {
-    traer_rutinas();
+    getRoutines();
     getStudentGoals();
   }, [student]);
 
-  const crearEvento = (selectInfo) => {
+  const createEvent = (selectInfo) => {
     let calendarApi = selectInfo.view.calendar;
     calendarApi.unselect();
     setOpen(true);
+    setErrors([]);
     setCalendarApi(calendarApi);
     setFechaInicio(selectInfo.startStr);
     setFechaFin(selectInfo.startStr);
     setVer('guardar');
   };
 
-  const enviarInfo = async () => {
+  const sendInfo = async () => {
     const res = await axios
       .post('/api/trainerroutinest', {
         initial_date: fechaInicio,
         final_date: fechaFin,
         name: nombre,
         descriptions: [descripcion],
-        id_student: 1,
-        id_student_goal: 1,
+        id_student: student,
+        id_student_goal: studentGoalId,
         amount: precio,
       })
       .then((response) => {
+        setErrors([]);
         return true;
       })
       .catch((e) => {
         console.log(e);
+        setErrors(e.response.data.errors);
         return false;
       });
     return res;
   };
 
-  const crearRutina = async () => {
+  const createRoutine = async () => {
     // Validar la creación
-    if (await enviarInfo()) {
+    if (await sendInfo()) {
       const nuevaRutina = calendarApi;
       nuevaRutina.addEvent({
         id: createEventId(),
@@ -182,7 +187,7 @@ export default function CalendarComponent({ student }) {
         selectMirror={true}
         dayMaxEvents={true}
         weekends={true}
-        select={crearEvento}
+        select={createEvent}
         eventClick={verEvento}
         themeSystem="Pulse"
         events={rutinas}
@@ -207,6 +212,8 @@ export default function CalendarComponent({ student }) {
                 onChange={(e) => setFechaInicio(e.target.value)}
                 disabled={ver === 'ver'}
               />
+              <InputError messages={errors.initial_date} />
+
               <Label htmlFor='fechaFin' className='flex ml-1'>
                 Fecha Fin:
               </Label>
@@ -218,6 +225,8 @@ export default function CalendarComponent({ student }) {
                 onChange={(e) => setFechaFin(e.target.value)}
                 disabled={ver === 'ver'}
               />
+              <InputError messages={errors.final_date} />
+
               <Label htmlFor='nombre' className='flex ml-1'>
                 Nombre de Rutina:
               </Label>
@@ -231,6 +240,7 @@ export default function CalendarComponent({ student }) {
                 placeholder='Bajar de peso...'
                 disabled={ver === 'ver'}
               />
+              <InputError messages={errors.name} />
 
               <div className='space-y-2'>
                 <Label htmlFor='estudiantes' className='flex ml-1'>
@@ -257,6 +267,7 @@ export default function CalendarComponent({ student }) {
                 </Select>
                 }
               </div>
+              <InputError messages={errors.id_student_goal} />
 
               <Label htmlFor='precio' className='flex ml-1'>
                 Precio:
@@ -271,6 +282,8 @@ export default function CalendarComponent({ student }) {
                 placeholder='$ xxxx'
                 disabled={ver === 'ver'}
               />
+              <InputError messages={errors.amount} />
+
               <Label htmlFor='descripcion' className='flex ml-1' >
                 Descripción:
               </Label>
@@ -282,11 +295,13 @@ export default function CalendarComponent({ student }) {
                 }}
                 disabled={ver === 'ver'}
               />
+              <InputError messages={errors.description} />
+
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             {ver == 'guardar' && (
-              <Button type='submit' onClick={crearRutina}>
+              <Button type='submit' onClick={createRoutine}>
                 Crear Rutina
               </Button>
             )}

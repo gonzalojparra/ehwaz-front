@@ -21,18 +21,18 @@ export default function Calendario() {
   const [recargarEventos, setRecargarEventos] = useState(false);
   const [rutinas, setRutinas] = useState(null);
 
-  const traer_estudiantes = async () => {
+  const getStudents = async () => {
     await axios.get('/api/trainer_students/1')
       .then((res) => setStudents(res.data));
   };
 
   useEffect(() => {
-    traer_estudiantes();
+    getStudents();
   }, []);
 
   return (
-    <div className='bg-background py-7 flex flex-col justify-center items-center'>
-      <div className='w-[500px] pb-8'>
+    <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
+      <div className='md:w-[500px] sm:w-full pb-8'>
         <div className='space-y-2'>
           <Label htmlFor='estudiantes' className='flex ml-1'>
             Estudiantes
