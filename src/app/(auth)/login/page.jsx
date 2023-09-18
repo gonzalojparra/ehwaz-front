@@ -47,7 +47,7 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="py-10 lg:py-10">
+    <section className="py-10 lg:py-10 bg-background">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
