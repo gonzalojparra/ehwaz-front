@@ -8,6 +8,7 @@ import axios from '@/lib/axios';
 export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
   const router = useRouter();
   let searchParams = useSearchParams();
+  let permissions = [];
 
   /* Se define una constante data, con destructuring de user, error y mutate del useSWR.
    * El hook useSWR recibe dos parámetros: el primero es la ruta de la API que consume
@@ -23,6 +24,15 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
         router.push('/verify-email');
       }),
   );
+
+  const get_permissions = async()=>{
+    axios
+      .get('/api/permissions')
+      .then(res => {return res.data})
+      .catch(error => {
+        return error
+      })
+  } 
 
   /* useEffect(() => {
     if (middleware === 'auth') {
@@ -162,6 +172,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
     resetPassword,
     resendEmailVerification,
     logout,
-    csrf
+    csrf,
+    get_permissions,
+    permissions
   }
 }
