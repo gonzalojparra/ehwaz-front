@@ -166,7 +166,7 @@ const AuthLayout = (user, logout) => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href='/' legacyBehavior passHref>
+                  <Link href='/about' legacyBehavior passHref>
                     <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                       Sobre Nosotros
                     </NavigationMenuLink>
