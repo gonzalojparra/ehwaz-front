@@ -28,6 +28,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import InputError from '@/components/ui/InputError';
+import SpinerCustom from '@/components/ui/spiner-custom';
 
 export default function CalendarComponent({ student }) {
   const [open, setOpen] = useState(false);
@@ -41,7 +42,7 @@ export default function CalendarComponent({ student }) {
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState('');
   const [calendarApi, setCalendarApi] = useState({});
-  const [rutinas, setRutinas] = useState([]);
+  const [rutinas, setRutinas] = useState(null);
   const [infoEvento, setInfoEvento] = useState({});
   const [errors, setErrors] = useState([]);
 
@@ -53,16 +54,23 @@ export default function CalendarComponent({ student }) {
         setRutinas(
           response.data.data.map((event) => {
             console.log(event)
+            let fecha_fin = new Date(event.final_date);
+            fecha_fin = fecha_fin.setDate(fecha_fin.getDate() + 2);
+            console.log('fecha_fin: '+fecha_fin);
+            let nueva_fecha_fin = new Date(fecha_fin);
+            nueva_fecha_fin = `${nueva_fecha_fin.getFullYear()}-${String(nueva_fecha_fin.getMonth()+1).padStart(2, '0')}-${String(nueva_fecha_fin.getDate()).padStart(2, '0')}`;
+            console.log(nueva_fecha_fin);
             return {
               id: event.id,
               title: event.name,
               start: event.initial_date,
-              end: event.final_date,
+              end: nueva_fecha_fin,
+              allDay: true,
               extendedProps: {
                 descripcion: event.descriptions,
                 precio: event.amount,
                 fecha_inicio: event.initial_date,
-                fecha_fin: event.final_date,
+                fecha_fin: nueva_fecha_fin,
                 name: event.name,
                 id_payment: event.id_payment,
                 id_student: event.id_student,
@@ -129,8 +137,10 @@ export default function CalendarComponent({ student }) {
     // Validar la creación
     if (await sendInfo()) {
       const nuevaRutina = calendarApi;
-      let nuevaFechaFin = new Date(fechaFin);
-      nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1);
+      getRoutines();
+      //nuevaRutina.view.calendar.refetchEvents();
+      /* let nuevaFechaFin = new Date(fechaFin);
+      nuevaFechaFin = nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1);
       nuevaRutina.addEvent({
         id: createEventId(),
         title: nombre,
@@ -144,7 +154,7 @@ export default function CalendarComponent({ student }) {
           fecha_fin: nuevaFechaFin,
           id_student_goal: studentGoalId,
         },
-      });
+      }); */
       setOpen(false);
       setVer('');
       setInfoEvento({});
@@ -176,12 +186,12 @@ export default function CalendarComponent({ student }) {
 
   return (
     <>
-      <FullCalendar
+      {rutinas != null ? <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={{
           left: "prev,next today",
           center: "title",
-          right: "dayGridMonth,timeGridWeek,timeGridDay",
+          right: "dayGridMonth",
         }}
         initialView="dayGridMonth"
         editable={true}
@@ -193,7 +203,7 @@ export default function CalendarComponent({ student }) {
         eventClick={verEvento}
         themeSystem="Pulse"
         events={rutinas}
-      />
+      /> : <SpinerCustom text={'Cargando Rutinas'}/>}
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>

@@ -14,9 +14,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import SpinerCustom from '@/components/ui/spiner-custom';
 
 export default function Calendario() {
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState(null);
   const [student_id, setStudent_id] = useState('');
   const [recargarEventos, setRecargarEventos] = useState(false);
   const [rutinas, setRutinas] = useState(null);
@@ -32,11 +33,13 @@ export default function Calendario() {
 
   return (
     <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
+      {students != null ? <>
       <div className='md:w-[500px] sm:w-full pb-8'>
         <div className='space-y-2'>
           <Label htmlFor='estudiantes' className='flex ml-1'>
             Estudiantes
           </Label>
+          
           <Select onValueChange={
             (e) => {setStudent_id(e)
           }}>
@@ -52,7 +55,7 @@ export default function Calendario() {
                 );
               })}
             </SelectContent>
-          </Select>
+          </Select> 
         </div>
       </div>
       <Container>
@@ -62,6 +65,7 @@ export default function Calendario() {
           <div className='text-center'>No hay rutinas</div>
         )}
       </Container>
+      </> : <SpinerCustom text={'Cargando Estudiantes'}/>}
     </div>
   );
 }
