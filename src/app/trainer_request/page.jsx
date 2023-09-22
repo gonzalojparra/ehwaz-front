@@ -1,24 +1,29 @@
 'use client'
-import { useEffect, useState } from "react"
-import SpinerCustom from "@/components/ui/spiner-custom"
-import { getRequests } from "@/modules/trainers"
-import Tabla from "./components/Tabla"
 
+import { useEffect, useState } from "react";
 
-export default function TableDemo() {
-    const [requests, setRequests] = useState([])
-    console.log(requests);
-    useEffect(()=>{
-        getRequests().then((requests) => {
-            setRequests(requests);
-            console.log(requests);
-          });
-    }, [])
+import { getRequests } from "@/modules/trainers";
 
-    return (
-        <div className='bg-background py-7 flex flex-col justify-center min-h-[84vh]'>
-        
-      {requests.length > 0 ? <Tabla data={requests}/> : <SpinerCustom text={'Cargando Tabla'}/>}
-      </div>
-    )
-  }
+import SpinerCustom from "@/components/ui/spiner-custom";
+import { Tabla } from "./components/Tabla";
+
+export default function TrainerRequestPage() {
+  const [requests, setRequests] = useState([]);
+
+  useEffect(() => {
+    getRequests().then((requests) => {
+      console.log(requests);
+      setRequests(requests);
+    });
+  }, [])
+
+  return (
+    <div className='bg-background py-7 flex flex-col justify-center min-h-[84vh]'>
+      {
+        requests.length > 0
+        ? <Tabla data={requests} />
+        : <SpinerCustom text={'Cargando Tabla'} />
+      }
+    </div>
+  )
+}
