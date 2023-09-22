@@ -19,3 +19,12 @@ export const getTrainer = async (id) => {
     return err;
   }
 };
+
+export const getRequests = async () => {
+  try {
+    const res = await axios.get('/api/trainer_students');
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+}
