@@ -1,7 +1,10 @@
 'use client'
 
-import { Container } from '@/components/ui/container';
 import { useEffect, useState } from 'react';
+
+import { getTrainer } from '@/modules/trainers';
+
+import { Container } from '@/components/ui/container';
 import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -9,19 +12,14 @@ export default function TrainerPage({ params: { id } }) {
   const [trainer, setTrainer] = useState({});
 
   useEffect(() => {
-    const obtener = async () => {
-      const data = await fetch(`http://localhost:8000/api/trainers/${id}`);
-      const trainerData = await data.json()
-      setTrainer(trainerData.trainer);
-    };
-
-    obtener();
+    getTrainer(id).then((trainer) => {
+      console.log(trainer);
+      setTrainer(trainer);
+    });
   }, [id]);
 
-  console.log(trainer);
-
   return (
-    <div className='bg-background'>
+    <div className='bg-background min-h-[84vh]'>
       <Container>
         <div className='flex flex-1 flex-col md:flex-row p-8'>
           <Image
@@ -31,7 +29,11 @@ export default function TrainerPage({ params: { id } }) {
             width={400}
             height={900}
             quality={100}
+            style={{ display: trainer.profile_picture_url ? 'block' : 'none' }}
           />
+          {!trainer.profile_picture_url && (
+            <Skeleton width={400} height={900} />
+          )}
           <div className='px-4'>
             <h1 className='text-5xl font-bold mt-4 text-center'>{trainer.name} <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary to-[#008080]'>{trainer.last_name}</span></h1>
             edad

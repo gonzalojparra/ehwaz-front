@@ -1,6 +1,13 @@
 'use client'
 
-import axios from "@/lib/axios";
+import { useEffect, useState } from "react";
+
+import { getTrainers } from '@/modules/trainers';
+
+import Sidebar from './components/Sidebar';
+import TrainerCard from './components/TrainerCard';
+import { Badge } from "@/components/ui/badge";
+import { Input } from '@/components/ui/input';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -10,26 +17,14 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs';
 
-import TrainerCard from './components/TrainerCard';
-import Sidebar from './components/Sidebar';
-import { Input } from '@/components/ui/input';
-import { Badge } from "@/components/ui/badge";
-
-const getTrainers = () => {
-  const data = axios.get('/api/trainers')
-    .then((res) => {
-      console.log(res.data.trainers[0]);
-      return res.data.trainers;
-    })
-    .catch((err) => {
-      console.log(err);
-      throw err;
-    })
-  return data;
-}
-
 export default function TrainersPage() {
-  const trainers = getTrainers();
+  const [trainers, setTrainers] = useState([]);
+
+  useEffect(() => {
+    getTrainers().then((trainers) => {
+      setTrainers(trainers);
+    });
+  }, []);
 
   return (
     <div className='block'>
@@ -38,7 +33,7 @@ export default function TrainersPage() {
           <div className='grid lg:grid-cols-6'>
             <Sidebar trainers={trainers} className='hidden lg:block' />
             <div className='col-span-3 lg:col-span-5 lg:border-l'>
-              <div className='h-full px-4 py-6 lg:px-8'>
+              <div className='px-4 py-6 lg:px-8 min-h-[83.9vh]'>
                 <Tabs defaultValue='trainers' className='h-full space-y-6'>
                   <div className='flex justify-around '>
                     <TabsList className='flex justify-center'>
@@ -71,14 +66,14 @@ export default function TrainersPage() {
                     <div className='relative'>
                       <ScrollArea>
                         <div className='flex space-x-4 pb-4'>
-                          {/* {trainers.map((trainer) => (
+                          {Array.isArray(trainers) && trainers.length > 0 && trainers.map((trainer) => (
                             <TrainerCard
                               key={trainer.name}
                               trainer={trainer}
                               width={160}
                               height={160}
                             />
-                          ))} */}
+                          ))}
                         </div>
                         <ScrollBar orientation='horizontal' />
                       </ScrollArea>
@@ -98,14 +93,14 @@ export default function TrainersPage() {
                     <div className='relative'>
                       <ScrollArea>
                         <div className='flex space-x-4 pb-4'>
-                          {/* {trainers.map((trainer) => (
+                          {Array.isArray(trainers) && trainers.length > 0 && trainers.map((trainer) => (
                             <TrainerCard
                               key={trainer.name}
                               trainer={trainer}
                               width={160}
                               height={160}
                             />
-                          ))} */}
+                          ))}
                         </div>
                         <ScrollBar orientation='horizontal' />
                       </ScrollArea>

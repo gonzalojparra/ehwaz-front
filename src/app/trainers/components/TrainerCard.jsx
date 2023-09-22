@@ -12,8 +12,6 @@ import {
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
 
-import { Trainer, trainers } from '../data/trainer';
-
 export default function TrainerCard({
   trainer,
   aspectRatio = 'portrait',
@@ -68,7 +66,7 @@ export default function TrainerCard({
         </ContextMenuContent>
       </ContextMenu>
       <div className='space-y-1 text-sm'>
-        <h3 className='font-medium leading-none'>{trainer.name}</h3>
+        <h3 className='font-medium leading-none'>{trainer.name} {trainer.last_name}</h3>
         <p className='text-xs text-muted-foreground'>{trainer.speciality}</p>
       </div>
     </div>

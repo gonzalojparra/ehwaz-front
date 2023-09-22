@@ -2,14 +2,13 @@ import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Skeleton } from "@/components/ui/skeleton"
-import { trainers } from '../data/trainer';
 import { ListIcon } from 'lucide-react';
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
+} from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 
@@ -53,7 +52,7 @@ export default function Sidebar({ trainers, className }) {
           <Separator className="w-[90%] mx-auto" />
           <ScrollArea className='px-1'>
             <div className='p-2'>
-              {/* {trainers?.map((trainer, i) => (
+              {trainers?.map((trainer, i) => (
                 <div className="flex items-center space-x-4 ml-2 h-full my-5" key={`${trainer.name}-${i}`}>
                   <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -66,7 +65,7 @@ export default function Sidebar({ trainers, className }) {
                   <Button className='primary' size={'sm'}><Link href={`./trainers/${trainer.id}`}>¡Contáctame!</Link></Button>
                   </div>
                 </div>
-              ))} */}
+              ))}
             </div>
            {/*  <div className='space-y-1 p-2'>
               {trainers?.map((trainer, i) => (

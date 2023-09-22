@@ -10,7 +10,6 @@ export function middleware(request) {
     return NextResponse.next();
     //return NextResponse.redirect(new URL('/', request.url));
   } */
-}
 
 // See "Matching Paths" below to learn more
 export const config = {
@@ -31,7 +30,7 @@ const get_permissions = (url) => {
     .catch(error => {
       return error;
     })
-} */
+}
 
 export default function middleware(request) {
   /* const token = request.cookies.get('token')?.value;
