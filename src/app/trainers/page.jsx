@@ -1,3 +1,6 @@
+'use client'
+
+import axios from "@/lib/axios";
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -9,12 +12,25 @@ import {
 
 import TrainerCard from './components/TrainerCard';
 import Sidebar from './components/Sidebar';
-import { trainers } from './data/trainer';
 import { Input } from '@/components/ui/input';
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 
+const getTrainers = () => {
+  const data = axios.get('/api/trainers')
+    .then((res) => {
+      console.log(res.data.trainers[0]);
+      return res.data.trainers;
+    })
+    .catch((err) => {
+      console.log(err);
+      throw err;
+    })
+  return data;
+}
 
 export default function TrainersPage() {
+  const trainers = getTrainers();
+
   return (
     <div className='block'>
       <div className='border-t'>
@@ -55,14 +71,14 @@ export default function TrainersPage() {
                     <div className='relative'>
                       <ScrollArea>
                         <div className='flex space-x-4 pb-4'>
-                          {trainers.map((trainer) => (
+                          {/* {trainers.map((trainer) => (
                             <TrainerCard
                               key={trainer.name}
                               trainer={trainer}
                               width={160}
                               height={160}
                             />
-                          ))}
+                          ))} */}
                         </div>
                         <ScrollBar orientation='horizontal' />
                       </ScrollArea>
@@ -82,14 +98,14 @@ export default function TrainersPage() {
                     <div className='relative'>
                       <ScrollArea>
                         <div className='flex space-x-4 pb-4'>
-                          {trainers.map((trainer) => (
+                          {/* {trainers.map((trainer) => (
                             <TrainerCard
                               key={trainer.name}
                               trainer={trainer}
                               width={160}
                               height={160}
                             />
-                          ))}
+                          ))} */}
                         </div>
                         <ScrollBar orientation='horizontal' />
                       </ScrollArea>

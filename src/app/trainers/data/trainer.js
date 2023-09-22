@@ -1,4 +1,4 @@
-export const trainers = [
+/* export const trainers = [
   {
     id:1,
     name: '"Rockardo"',
@@ -27,4 +27,5 @@ export const trainers = [
     speciality: 'Fuerza, resistencia para cantidad de fuerza',
     profile_picture_url: 'https://thumbs.dreamstime.com/b/fitness-clipboard-exercise-personal-trainer-gym-writing-documents-tracking-progress-training-workout-259836873.jpg',
   },
-];
+]; */
+

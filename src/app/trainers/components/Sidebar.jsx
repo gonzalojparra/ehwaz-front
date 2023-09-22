@@ -53,7 +53,7 @@ export default function Sidebar({ trainers, className }) {
           <Separator className="w-[90%] mx-auto" />
           <ScrollArea className='px-1'>
             <div className='p-2'>
-              {trainers?.map((trainer, i) => (
+              {/* {trainers?.map((trainer, i) => (
                 <div className="flex items-center space-x-4 ml-2 h-full my-5" key={`${trainer.name}-${i}`}>
                   <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -66,7 +66,7 @@ export default function Sidebar({ trainers, className }) {
                   <Button className='primary' size={'sm'}><Link href={`./trainers/${trainer.id}`}>¡Contáctame!</Link></Button>
                   </div>
                 </div>
-              ))}
+              ))} */}
             </div>
            {/*  <div className='space-y-1 p-2'>
               {trainers?.map((trainer, i) => (

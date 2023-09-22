@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import axios from '@/lib/axios';
+/* import axios from '@/lib/axios';
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request) {
@@ -31,4 +31,25 @@ const get_permissions = (url) => {
     .catch(error => {
       return error;
     })
+} */
+
+export default function middleware(request) {
+  /* const token = request.cookies.get('token')?.value;
+  const signInUrl = new URL('/', request.nextUrl);
+
+  if (!token) {
+    if (request.nextUrl.pathname === '/') {
+      return NextResponse.next();
+    }
+
+    return NextResponse.redirect(signInUrl);
+  }
+}
+
+export const config = {
+  matcher: [
+    '/',
+    '/calendario',
+    '/trainers',
+  ] */
 }

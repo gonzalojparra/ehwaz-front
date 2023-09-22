@@ -28,7 +28,9 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
   const get_permissions = async()=>{
     axios
       .get('/api/permissions')
-      .then(res => {return res.data})
+      .then(res => {
+        return res.data
+      })
       .catch(error => {
         return error
       })
