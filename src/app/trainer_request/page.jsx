@@ -8,7 +8,7 @@ import SpinerCustom from "@/components/ui/spiner-custom";
 import { Tabla } from "./components/Tabla";
 
 export default function TrainerRequestPage() {
-  const [requests, setRequests] = useState([]);
+  const [requests, setRequests] = useState(null);
 
   useEffect(() => {
     getRequests().then((requests) => {
@@ -20,8 +20,8 @@ export default function TrainerRequestPage() {
   return (
     <div className='bg-background py-7 flex flex-col justify-center min-h-[84vh]'>
       {
-        requests.length > 0
-        ? <Tabla data={requests} />
+        requests != null 
+        ? <Tabla data={requests}/>
         : <SpinerCustom text={'Cargando Tabla'} />
       }
     </div>
