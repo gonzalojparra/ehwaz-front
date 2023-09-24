@@ -86,6 +86,7 @@ export default function CalendarComponent({ student }) {
                 id_student_goal: event.id_student_goal,
                 id_trainer: event.id_trainer,
                 rutina_id: event.id,
+                description: event.description
               },
             };
           })
@@ -191,6 +192,7 @@ export default function CalendarComponent({ student }) {
     setFechaInicio(selectInfo.event.extendedProps.fecha_inicio);
     setFechaFin(selectInfo.event.extendedProps.fecha_fin);
     setStudentGoalId(selectInfo.event.extendedProps.id_student_goal);
+    setDescripcion(selectInfo.event.extendedProps.description);
     setStudentGoalName(() => {
       const studentGoal = studentGoals.find(
         (studentGoal) =>
@@ -351,6 +353,7 @@ export default function CalendarComponent({ student }) {
               <Textarea
                 id="descripcion"
                 placeholder='Añada una descripción, puede añadir descripciones para diferentes días separandolos con "|"'
+                value={descripcion? descripcion : null}
                 onChange={(e) => {
                   setDescripcion(e.target.value);
                 }}
