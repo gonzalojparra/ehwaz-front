@@ -31,9 +31,8 @@ import InputError from "@/components/ui/InputError";
 import SpinerCustom from "@/components/ui/spiner-custom";
 import SimpleSpiner from "@/components/ui/simple-spiner";
 
-export default function CalendarComponent({ student }) {
+export default function CalendarComponent({ trainer }) {
   const [open, setOpen] = useState(false);
-  const [ver, setVer] = useState("");
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
   const [nombre, setNombre] = useState("");
@@ -48,48 +47,38 @@ export default function CalendarComponent({ student }) {
   const [errors, setErrors] = useState([]);
   const [rutinaId, setRutinaId] = useState("");
   const [sending, setSending] = useState(false);
-  const [color, setColor] = useState('');
+  const [feedback, setFeedback] = useState("");
+  const [id_evento, setId_evento] = useState(null);
 
   const getRoutines = async () => {
     await axios
-      .post("/api/student_routines", {
-        student_id: student,
+      .post("/api/trainer_routines", {
+        trainer_id: trainer,
       })
       .then((response) => {
         setRutinas(
           response.data.data.map((event) => {
             console.log(event);
-            let fecha_fin = new Date(event.final_date);
-            fecha_fin = fecha_fin.setDate(fecha_fin.getDate() + 2);
-            console.log("fecha_fin: " + fecha_fin);
-            let nueva_fecha_fin = new Date(fecha_fin);
-            nueva_fecha_fin = `${nueva_fecha_fin.getFullYear()}-${String(
-              nueva_fecha_fin.getMonth() + 1
-            ).padStart(2, "0")}-${String(nueva_fecha_fin.getDate()).padStart(
-              2,
-              "0"
-            )}`;
-            console.log(nueva_fecha_fin);
             return {
               id: event.id,
-              title: event.name,
-              start: event.initial_date,
-              end: nueva_fecha_fin,
+              title: event.routine.name,
+              start: event.date,
+              end: event.date,
               allDay: true,
-              backgroundColor: event.color,
-              borderColor: event.color,
+              backgroundColor: event.routine.color,
+              borderColor: event.routine.color,
               extendedProps: {
-                descripcion: event.descriptions,
-                precio: event.amount,
-                fecha_inicio: event.initial_date,
-                fecha_fin: nueva_fecha_fin,
-                name: event.name,
-                id_payment: event.id_payment,
-                id_student: event.id_student,
-                id_student_goal: event.id_student_goal,
-                id_trainer: event.id_trainer,
-                rutina_id: event.id,
-                description: event.description
+                trainer_routine_id: event.trainer_routine_id,
+                student_feedback: event.student_feedback,
+                description: event.description,
+                id_student_goal: event.routine.id_student_goal,
+                name_routine: event.routine.name,
+                event_date: event.date,
+                id_routine_status: event.routine.id_routine_status,
+                id_payment: event.routine.id_payment,
+                amount: event.routine.amount,
+                initial_date: event.routine.initial_date,
+                final_date: event.routine.final_date,
               },
             };
           })
@@ -98,44 +87,23 @@ export default function CalendarComponent({ student }) {
   };
 
   const getStudentGoals = async () => {
-    await axios
-      .post(`/api/student_goals`, {
-        student_id: student,
-      })
-      .then((response) => {
-        console.log(response.data.data);
-        setStudentGoals(response.data.data);
-      });
+    await axios.get(`/api/get_student_goals`).then((response) => {
+      console.log(response.data.data);
+      setStudentGoals(response.data.data);
+    });
   };
 
   useEffect(() => {
     getRoutines();
     getStudentGoals();
-  }, [student]);
-
-  const createEvent = (selectInfo) => {
-    let calendarApi = selectInfo.view.calendar;
-    calendarApi.unselect();
-    setOpen(true);
-    setErrors([]);
-    setCalendarApi(calendarApi);
-    setFechaInicio(selectInfo.startStr);
-    setFechaFin(selectInfo.startStr);
-    setVer("guardar");
-  };
+  }, [trainer]);
 
   const sendInfo = async () => {
     setSending(true);
     const res = await axios
-      .post("/api/trainerroutinest", {
-        initial_date: fechaInicio,
-        final_date: fechaFin,
-        name: nombre,
-        descriptions: descripcion,
-        id_student: student,
-        id_student_goal: studentGoalId,
-        amount: precio,
-        color: color
+      .post("/api/set_feedback", {
+        id_evento: id_evento,
+        feedback: feedback,
       })
       .then((response) => {
         setErrors([]);
@@ -151,54 +119,18 @@ export default function CalendarComponent({ student }) {
     return res;
   };
 
-  const createRoutine = async () => {
-    // Validar la creación
-    if (await sendInfo()) {
-      const nuevaRutina = calendarApi;
-      getRoutines();
-      //nuevaRutina.view.calendar.refetchEvents();
-      /* let nuevaFechaFin = new Date(fechaFin);
-      nuevaFechaFin = nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1);
-      nuevaRutina.addEvent({
-        id: createEventId(),
-        title: nombre,
-        start: fechaInicio,
-        end: nuevaFechaFin,
-        allDay: true,
-        extendedProps: {
-          descripcion: descripcion,
-          precio: precio,
-          fecha_inicio: fechaInicio,
-          fecha_fin: nuevaFechaFin,
-          id_student_goal: studentGoalId,
-        },
-      }); */
-      setOpen(false);
-      setVer("");
-      setInfoEvento({});
-      setFechaInicio("");
-      setFechaFin("");
-      setNombre("");
-      setDescripcion("");
-      setPrecio("");
-    } else {
-      console.log("no paso");
-    }
-  };
-
   const verEvento = (selectInfo) => {
-    //console.log(selectInfo.event);
-    setVer("ver");
+    console.log(selectInfo.event);
     setInfoEvento(selectInfo.event);
+    setId_evento(selectInfo.event.id);
     setRutinaId(selectInfo.event.extendedProps.rutina_id);
     setNombre(selectInfo.event.title);
-    setDescripcion(selectInfo.event.extendedProps.descripcion);
-    setPrecio(selectInfo.event.extendedProps.precio);
-    setFechaInicio(selectInfo.event.extendedProps.fecha_inicio);
-    setFechaFin(selectInfo.event.extendedProps.fecha_fin);
+    setPrecio(selectInfo.event.extendedProps.amount);
+    setFechaInicio(selectInfo.event.extendedProps.initial_date);
+    setFechaFin(selectInfo.event.extendedProps.final_date);
     setStudentGoalId(selectInfo.event.extendedProps.id_student_goal);
     setDescripcion(selectInfo.event.extendedProps.description);
-    setColor(selectInfo.event.backgroundColor);
+    setFeedback(selectInfo.event.extendedProps.student_feedback);
     setStudentGoalName(() => {
       const studentGoal = studentGoals.find(
         (studentGoal) =>
@@ -209,32 +141,22 @@ export default function CalendarComponent({ student }) {
     setOpen(true);
   };
 
-  const deleteRoutine = async () => {
-    setSending(true);
-    const res = await axios
-      .post("/api/trainerroutinedl", {
-        rutina_id: rutinaId,
-      })
-      .then((response) => {
-        setErrors([]);
-        setOpen(false);
-        setVer("");
-        setInfoEvento({});
-        setFechaInicio("");
-        setFechaFin("");
-        setNombre("");
-        setDescripcion("");
-        setPrecio("");
-        getRoutines();
-      })
-      .catch((e) => {
-        console.log(e);
-        setErrors(e.response.data.errors);
-        
-      });
-      setSending(false);
+  const sendFeedback = async () => {
+    console.log("mandando...");
+    if (await sendInfo()) {
+      getRoutines();
+      setOpen(false);
+      setInfoEvento({});
+      setFechaInicio("");
+      setFechaFin("");
+      setNombre("");
+      setDescripcion("");
+      setPrecio("");
+      setRutinaId("");
+      setStudentGoalId("");
+      setFeedback("");
+    }
   };
-
 
   return (
     <>
@@ -252,7 +174,7 @@ export default function CalendarComponent({ student }) {
           selectMirror={true}
           dayMaxEvents={true}
           weekends={true}
-          select={createEvent}
+          select={false}
           eventClick={verEvento}
           themeSystem="Pulse"
           events={rutinas}
@@ -265,22 +187,10 @@ export default function CalendarComponent({ student }) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex justify-center mb-4">
-              {ver === "ver" ? 'Ver Rutina' : 'Agregar Rutina'}
+              Agregar Rutina
             </DialogTitle>
             <DialogDescription className="flex flex-1 flex-col gap-4">
               {/*Voy a poner el componente en el calendar para poder obtener la fecha seleccionada */}
-              <Label htmlFor="color" className="flex ml-1">
-                Color:
-              </Label>
-              <input
-                id="color"
-                type="color"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-                disabled={ver === "ver"}
-              />
-
               <Label htmlFor="fechaInicio" className="flex ml-1">
                 Fecha Inicio:
               </Label>
@@ -290,9 +200,8 @@ export default function CalendarComponent({ student }) {
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 value={fechaInicio}
                 onChange={(e) => setFechaInicio(e.target.value)}
-                disabled={ver === "ver"}
+                disabled={true}
               />
-              <InputError messages={errors?.initial_date} />
 
               <Label htmlFor="fechaFin" className="flex ml-1">
                 Fecha Fin:
@@ -303,9 +212,8 @@ export default function CalendarComponent({ student }) {
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 value={fechaFin}
                 onChange={(e) => setFechaFin(e.target.value)}
-                disabled={ver === "ver"}
+                disabled={true}
               />
-              <InputError messages={errors?.final_date} />
 
               <Label htmlFor="nombre" className="flex ml-1">
                 Nombre de Rutina:
@@ -318,37 +226,15 @@ export default function CalendarComponent({ student }) {
                 onChange={(e) => setNombre(e.target.value)}
                 className="w-full"
                 placeholder="Bajar de peso..."
-                disabled={ver === "ver"}
+                disabled={true}
               />
-              <InputError messages={errors?.name} />
 
               <div className="space-y-2">
                 <Label htmlFor="estudiantes" className="flex ml-1">
                   Objetivo del estudiante
                 </Label>
-                {ver === "ver" ? (
-                  <Input disabled value={studentGoalName} />
-                ) : (
-                  <Select onValueChange={(e) => setStudentGoalId(e)}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Seleccione un objetivo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {studentGoals.map((studentGoal) => {
-                        return (
-                          <SelectItem
-                            key={studentGoal.id}
-                            value={studentGoal.id}
-                          >
-                            {studentGoal.name}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                )}
+                <Input disabled value={studentGoalName} />
               </div>
-              <InputError messages={errors?.id_student_goal} />
 
               <Label htmlFor="precio" className="flex ml-1">
                 Precio:
@@ -361,9 +247,8 @@ export default function CalendarComponent({ student }) {
                 onChange={(e) => setPrecio(e.target.value)}
                 className="w-full"
                 placeholder="$ xxxx"
-                disabled={ver === "ver"}
+                disabled={true}
               />
-              <InputError messages={errors?.amount} />
 
               <Label htmlFor="descripcion" className="flex ml-1">
                 Descripción:
@@ -371,31 +256,30 @@ export default function CalendarComponent({ student }) {
               <Textarea
                 id="descripcion"
                 placeholder='Añada una descripción, puede añadir descripciones para diferentes días separandolos con "|"'
-                value={descripcion? descripcion : null}
+                value={descripcion ? descripcion : null}
                 onChange={(e) => {
                   setDescripcion(e.target.value);
                 }}
-                disabled={ver === "ver"}
+                disabled={true}
               />
-              <InputError messages={errors?.description} />
+
+              <Label htmlFor="feedback" className="flex ml-1">
+                Feedback:
+              </Label>
+              <Textarea
+                id="feedback"
+                placeholder="Añada una descripción de su desempeño con la rutina"
+                value={feedback ? feedback : null}
+                onChange={(e) => {
+                  setFeedback(e.target.value);
+                }}
+              />
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            {ver == "guardar" ? (
-              <Button type="submit" onClick={createRoutine} disabled={sending}>
-                Crear Rutina {sending && <SimpleSpiner/>}
-              </Button>
-            ) : (
-              
-                <Button
-                  variant="destructive"
-                  type="submit"
-                  onClick={deleteRoutine}
-                  disabled={sending}
-                >
-                  Borrar Rutina {sending && <SimpleSpiner/>}
-                </Button>
-            )}
+            <Button type="submit" onClick={sendFeedback} disabled={sending}>
+              Enviar Feedback {sending && <SimpleSpiner />}
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
