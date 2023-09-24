@@ -30,6 +30,7 @@ export default function TrainerCard({
               alt={trainer.name}
               width={width}
               height={height}
+              quality={100}
               className={cn(
                 'h-auto w-auto object-cover transition-all hover:scale-105 cursor-pointer', aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
               )}
@@ -67,7 +68,7 @@ export default function TrainerCard({
       </ContextMenu>
       <div className='space-y-1 text-sm'>
         <h3 className='font-medium leading-none'>{trainer.name} {trainer.last_name}</h3>
-        <p className='text-xs text-muted-foreground'>{trainer.speciality}</p>
+        <p className='text-xs text-muted-foreground'>{trainer.description}</p>
       </div>
     </div>
   )

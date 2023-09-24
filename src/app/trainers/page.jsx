@@ -22,6 +22,7 @@ export default function TrainersPage() {
 
   useEffect(() => {
     getTrainers().then((trainers) => {
+      console.log(trainers);
       setTrainers(trainers);
     });
   }, []);
