@@ -23,7 +23,7 @@ export default function Calendario() {
   const [rutinas, setRutinas] = useState(null);
 
   const getStudents = async () => {
-    await axios.get('/api/trainer_students/1')
+    await axios.get('/api/trainer_students')
       .then((res) => setStudents(res.data));
   };
 
