@@ -17,7 +17,10 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs';
 
+
+
 export default function TrainersPage() {
+
   const [trainers, setTrainers] = useState([]);
 
   useEffect(() => {

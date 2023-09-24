@@ -59,22 +59,26 @@ export default function CalendarComponent({ student }) {
         setRutinas(
           response.data.data.map((event) => {
             console.log(event);
-            let fecha_fin = new Date(event.final_date);
-            fecha_fin = fecha_fin.setDate(fecha_fin.getDate() + 2);
-            console.log("fecha_fin: " + fecha_fin);
-            let nueva_fecha_fin = new Date(fecha_fin);
-            nueva_fecha_fin = `${nueva_fecha_fin.getFullYear()}-${String(
-              nueva_fecha_fin.getMonth() + 1
-            ).padStart(2, "0")}-${String(nueva_fecha_fin.getDate()).padStart(
-              2,
-              "0"
-            )}`;
-            console.log(nueva_fecha_fin);
+            let fecha_fin = event.final_date
+            if(event.final_date != event.initial_date){
+              let fecha_fin = new Date(event.final_date);
+              fecha_fin = fecha_fin.setDate(fecha_fin.getDate() + 2);
+              console.log("fecha_fin: " + fecha_fin);
+              let nueva_fecha_fin = new Date(fecha_fin);
+              nueva_fecha_fin = `${nueva_fecha_fin.getFullYear()}-${String(
+                nueva_fecha_fin.getMonth() + 1
+              ).padStart(2, "0")}-${String(nueva_fecha_fin.getDate()).padStart(
+                2,
+                "0"
+              )}`;
+              fecha_fin = nueva_fecha_fin;
+            }
+            //console.log(nueva_fecha_fin);
             return {
               id: event.id,
               title: event.name,
               start: event.initial_date,
-              end: nueva_fecha_fin,
+              end: fecha_fin,
               allDay: true,
               backgroundColor: event.color,
               borderColor: event.color,
@@ -82,7 +86,7 @@ export default function CalendarComponent({ student }) {
                 descripcion: event.descriptions,
                 precio: event.amount,
                 fecha_inicio: event.initial_date,
-                fecha_fin: nueva_fecha_fin,
+                fecha_fin: fecha_fin,
                 name: event.name,
                 id_payment: event.id_payment,
                 id_student: event.id_student,

@@ -15,10 +15,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import SpinerCustom from '@/components/ui/spiner-custom';
-import { useRouter } from 'next/navigation';
 
-export default async function Calendario() {
-  const router = useRouter();
+
+export default function Calendario() {
   const [students, setStudents] = useState(null);
   const [student_id, setStudent_id] = useState('');
   const [recargarEventos, setRecargarEventos] = useState(false);
@@ -30,11 +29,6 @@ export default async function Calendario() {
   };
 
   useEffect(() => {
-    axios.post('/api/permissions', {url: window.location.pathname}).then((response)=>{
-      if(response.data.data == false){
-          router.push('/')
-      }
-    });
     getStudents();
   }, []);
 

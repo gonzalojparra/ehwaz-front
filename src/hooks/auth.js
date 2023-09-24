@@ -54,7 +54,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
     }
   }, [user, error]); */
 
-  useEffect(() => {
+ /*  useEffect(() => {
     if (middleware === 'guest' && redirectIfAuthenticated && user) {
       router.push(redirectIfAuthenticated)
     }
@@ -67,7 +67,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
     if (middleware === 'auth' && error) {
       logout()
     }
-  }, [user, error]);
+  }, [user, error]); */
 
   const csrf = async () => axios.get('/sanctum/csrf-cookie');
 
