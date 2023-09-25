@@ -24,7 +24,7 @@ import ProfileButton from './ProfileButton';
 const components = [
   {
     title: 'Rutinas',
-    href: '/',
+    href: '/student_routines',
     description:
       'Ver rutinas asignadas por el personal trainer.',
   },

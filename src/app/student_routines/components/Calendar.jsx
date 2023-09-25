@@ -31,7 +31,16 @@ import InputError from "@/components/ui/InputError";
 import SpinerCustom from "@/components/ui/spiner-custom";
 import SimpleSpiner from "@/components/ui/simple-spiner";
 
+
+
+
 export default function CalendarComponent({ trainer }) {
+
+  const fecha_de_hoy = new Date().toISOString().indexOf('T');
+  const fecha_string = new Date().toISOString().substring(0, fecha_de_hoy);
+  
+
+
   const [open, setOpen] = useState(false);
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
@@ -49,6 +58,8 @@ export default function CalendarComponent({ trainer }) {
   const [sending, setSending] = useState(false);
   const [feedback, setFeedback] = useState("");
   const [id_evento, setId_evento] = useState(null);
+  const [fecha_actual, setFecha_actual ]= useState(fecha_string);
+
 
   const getRoutines = async () => {
     await axios
@@ -187,7 +198,7 @@ export default function CalendarComponent({ trainer }) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex justify-center mb-4">
-              Agregar Rutina
+              Ver Evento
             </DialogTitle>
             <DialogDescription className="flex flex-1 flex-col gap-4">
               {/*Voy a poner el componente en el calendar para poder obtener la fecha seleccionada */}

@@ -31,7 +31,7 @@ export default function GuestLayout() {
     },
     {
       title: 'Calendario',
-      href: '/calendario',
+      href: '/',
       description:
         'Ver calendario con el cronograma de rutinas asignadas por todos los profesionales.',
     },

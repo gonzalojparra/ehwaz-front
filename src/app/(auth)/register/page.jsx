@@ -15,6 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useAuth } from '@/hooks/auth';
+import InputError from '@/components/ui/InputError';
 
 export default function RegisterPage() {
   const { register } = useAuth({ middleware: 'guest', redirectIfAuthenticated: '/' });
@@ -74,6 +75,7 @@ export default function RegisterPage() {
                     className="w-full"
                   />
                 </div>
+                <InputError messages={errors.name} />
 
                 {/* Email */}
                 <div className="space-y-2">
@@ -89,6 +91,7 @@ export default function RegisterPage() {
                     className="w-full"
                   />
                 </div>
+                <InputError messages={errors.email} />
 
                 {/* Password */}
                 <div className="space-y-2">
@@ -103,7 +106,8 @@ export default function RegisterPage() {
                     className="w-full"
                   />
                 </div>
-
+                <InputError messages={errors.password} />
+                
                 {/* Confirm Password */}
                 <div className="space-y-2">
                   <Label htmlFor="confirm-password" className="flex ml-1">Confirmar Contraseña</Label>
@@ -117,6 +121,7 @@ export default function RegisterPage() {
                     className="w-full"
                   />
                 </div>
+                <InputError messages={errors.password_confirmation} />
 
                 {/* Role */}
                 <div className="space-y-2">
@@ -138,6 +143,7 @@ export default function RegisterPage() {
                     </SelectContent>
                   </Select>
                 </div>
+                {errors.rol_id ? <InputError messages={'Es necesario elegir un rol'}/> : <></>}
 
                 {/* Submit Button */}
                 <div className="flex items-center justify-between mt-4">

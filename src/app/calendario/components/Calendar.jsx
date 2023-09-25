@@ -48,7 +48,7 @@ export default function CalendarComponent({ student }) {
   const [errors, setErrors] = useState([]);
   const [rutinaId, setRutinaId] = useState("");
   const [sending, setSending] = useState(false);
-  const [color, setColor] = useState('');
+  const [color, setColor] = useState("");
 
   const getRoutines = async () => {
     await axios
@@ -59,26 +59,25 @@ export default function CalendarComponent({ student }) {
         setRutinas(
           response.data.data.map((event) => {
             console.log(event);
-            let fecha_fin = event.final_date
-            if(event.final_date != event.initial_date){
-              let fecha_fin = new Date(event.final_date);
-              fecha_fin = fecha_fin.setDate(fecha_fin.getDate() + 2);
-              console.log("fecha_fin: " + fecha_fin);
-              let nueva_fecha_fin = new Date(fecha_fin);
-              nueva_fecha_fin = `${nueva_fecha_fin.getFullYear()}-${String(
-                nueva_fecha_fin.getMonth() + 1
-              ).padStart(2, "0")}-${String(nueva_fecha_fin.getDate()).padStart(
-                2,
-                "0"
-              )}`;
-              fecha_fin = nueva_fecha_fin;
-            }
+
+            let fecha_fin = new Date(event.final_date);
+            fecha_fin = fecha_fin.setDate(fecha_fin.getDate() + 2);
+            console.log("fecha_fin: " + fecha_fin);
+            let nueva_fecha_fin = new Date(fecha_fin);
+            nueva_fecha_fin = `${nueva_fecha_fin.getFullYear()}-${String(
+              nueva_fecha_fin.getMonth() + 1
+            ).padStart(2, "0")}-${String(nueva_fecha_fin.getDate()).padStart(
+              2,
+              "0"
+            )}`;
+            fecha_fin = nueva_fecha_fin;
+
             //console.log(nueva_fecha_fin);
             return {
               id: event.id,
               title: event.name,
               start: event.initial_date,
-              end: fecha_fin,
+              end: nueva_fecha_fin,
               allDay: true,
               backgroundColor: event.color,
               borderColor: event.color,
@@ -86,14 +85,14 @@ export default function CalendarComponent({ student }) {
                 descripcion: event.descriptions,
                 precio: event.amount,
                 fecha_inicio: event.initial_date,
-                fecha_fin: fecha_fin,
+                fecha_fin: event.final_date,
                 name: event.name,
                 id_payment: event.id_payment,
                 id_student: event.id_student,
                 id_student_goal: event.id_student_goal,
                 id_trainer: event.id_trainer,
                 rutina_id: event.id,
-                description: event.description
+                description: event.description,
               },
             };
           })
@@ -139,7 +138,7 @@ export default function CalendarComponent({ student }) {
         id_student: student,
         id_student_goal: studentGoalId,
         amount: precio,
-        color: color
+        color: color,
       })
       .then((response) => {
         setErrors([]);
@@ -191,7 +190,7 @@ export default function CalendarComponent({ student }) {
   };
 
   const verEvento = (selectInfo) => {
-    //console.log(selectInfo.event);
+    console.log(selectInfo.event);
     setVer("ver");
     setInfoEvento(selectInfo.event);
     setRutinaId(selectInfo.event.extendedProps.rutina_id);
@@ -234,11 +233,9 @@ export default function CalendarComponent({ student }) {
       .catch((e) => {
         console.log(e);
         setErrors(e.response.data.errors);
-        
       });
-      setSending(false);
+    setSending(false);
   };
-
 
   return (
     <>
@@ -269,7 +266,7 @@ export default function CalendarComponent({ student }) {
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex justify-center mb-4">
-              {ver === "ver" ? 'Ver Rutina' : 'Agregar Rutina'}
+              {ver === "ver" ? "Ver Rutina" : "Agregar Rutina"}
             </DialogTitle>
             <DialogDescription className="flex flex-1 flex-col gap-4">
               {/*Voy a poner el componente en el calendar para poder obtener la fecha seleccionada */}
@@ -375,7 +372,7 @@ export default function CalendarComponent({ student }) {
               <Textarea
                 id="descripcion"
                 placeholder='Añada una descripción, puede añadir descripciones para diferentes días separandolos con "|"'
-                value={descripcion? descripcion : null}
+                value={descripcion ? descripcion : null}
                 onChange={(e) => {
                   setDescripcion(e.target.value);
                 }}
@@ -387,18 +384,17 @@ export default function CalendarComponent({ student }) {
           <DialogFooter>
             {ver == "guardar" ? (
               <Button type="submit" onClick={createRoutine} disabled={sending}>
-                Crear Rutina {sending && <SimpleSpiner/>}
+                Crear Rutina {sending && <SimpleSpiner />}
               </Button>
             ) : (
-              
-                <Button
-                  variant="destructive"
-                  type="submit"
-                  onClick={deleteRoutine}
-                  disabled={sending}
-                >
-                  Borrar Rutina {sending && <SimpleSpiner/>}
-                </Button>
+              <Button
+                variant="destructive"
+                type="submit"
+                onClick={deleteRoutine}
+                disabled={sending}
+              >
+                Borrar Rutina {sending && <SimpleSpiner />}
+              </Button>
             )}
           </DialogFooter>
         </DialogContent>
