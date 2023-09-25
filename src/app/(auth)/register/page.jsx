@@ -54,7 +54,7 @@ export default function RegisterPage() {
   }, []);
 
   return (
-    <section className="py-10 lg:py-10 bg-background">
+    <section className="py-10 lg:py-10 bg-background min-h-[84vh]">
       <div className="container mx-auto">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">

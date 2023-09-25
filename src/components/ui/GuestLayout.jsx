@@ -58,20 +58,14 @@ export default function GuestLayout() {
       description:
         'Ver eventos que se realizarán y que pueden ser de interés para que te inscribas!',
     },
-    {
-      title: 'Login',
-      href: '/login',
-      description:
-        'Ingresar a la plataforma.',
-    }
-  ]
+  ];
 
   const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
     return (
       <li>
         <NavigationMenuLink asChild>
-          <a
-            ref={ref}
+          <Link
+            href={ref}
             className={cn(
               'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
               className
@@ -82,7 +76,7 @@ export default function GuestLayout() {
             <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
               {children}
             </p>
-          </a>
+          </Link>
         </NavigationMenuLink>
       </li>
     )

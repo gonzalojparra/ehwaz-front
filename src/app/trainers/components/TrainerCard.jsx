@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { cn } from '@/lib/utils';
 import {
@@ -24,18 +25,20 @@ export default function TrainerCard({
     <div className={cn('space-y-3', className)} {...props}>
       <ContextMenu>
         <ContextMenuTrigger>
-          <div className='overflow-hidden rounded-md'>
-            <Image
-              src={trainer.profile_picture_url}
-              alt={trainer.name}
-              width={width}
-              height={height}
-              quality={100}
-              className={cn(
-                'h-auto w-auto object-cover transition-all hover:scale-105 cursor-pointer', aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
-              )}
-            />
-          </div>
+          <Link href={`/trainers/${trainer.id}`}>
+            <div className='overflow-hidden rounded-md'>
+              <Image
+                src={trainer.profile_picture_url}
+                alt={trainer.name}
+                width={width}
+                height={height}
+                quality={100}
+                className={cn(
+                  'h-auto w-auto object-cover transition-all hover:scale-105 cursor-pointer', aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
+                )}
+              />
+            </div>
+          </Link>
         </ContextMenuTrigger>
         <ContextMenuContent className='w-40'>
           <ContextMenuItem>Contactar</ContextMenuItem>
