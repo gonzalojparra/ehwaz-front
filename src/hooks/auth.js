@@ -25,7 +25,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
       }),
   );
 
-  const get_permissions = async()=>{
+  const get_permissions = async () => {
     axios
       .get('/api/permissions')
       .then(res => {
@@ -34,7 +34,7 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
       .catch(error => {
         return error
       })
-  } 
+  }
 
   /* useEffect(() => {
     if (middleware === 'auth') {
@@ -54,11 +54,11 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
     }
   }, [user, error]); */
 
- /*  useEffect(() => {
+  useEffect(() => {
     if (middleware === 'guest' && redirectIfAuthenticated && user) {
       router.push(redirectIfAuthenticated)
     }
-    if (
+    /* if (
       window.location.pathname === '/verify-email' &&
       user?.email_verified_at
     ) {
@@ -66,8 +66,8 @@ export const useAuth = ({ middleware, redirectIfAuthenticated }) => {
     }
     if (middleware === 'auth' && error) {
       logout()
-    }
-  }, [user, error]); */
+    } */
+  }, [user, error]);
 
   const csrf = async () => axios.get('/sanctum/csrf-cookie');
 
