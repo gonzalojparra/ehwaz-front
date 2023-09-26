@@ -52,8 +52,8 @@ const components = [
       'Ver pagos realizados y pendientes de los planes asignados por los profesionales.',
   },
   {
-    title: 'Eventos',
-    href: '/',
+    title: 'Alumnos',
+    href: '/trainer_request',
     description:
       'Ver eventos que se realizarán y que pueden ser de interés para que te inscribas!',
   },

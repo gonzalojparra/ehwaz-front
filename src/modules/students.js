@@ -26,7 +26,7 @@ export const isConnectedTrainer = async (trainerId) => {
     const res = axios.post('/api/is_connected_trainer', {
       trainer_id: trainerId,
     });
-    return res.data.data;
+    return res.data;
   } catch (err) {
     console.log(err);
     return err;
