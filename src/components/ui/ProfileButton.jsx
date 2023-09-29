@@ -7,6 +7,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import Link from 'next/link';
 
 export default function ProfileButton({ User, logout }) {
   return (
@@ -20,7 +21,7 @@ export default function ProfileButton({ User, logout }) {
       <DropdownMenuContent>
         <DropdownMenuLabel>{User.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className='cursor-pointer'>Perfil</DropdownMenuItem>
+        <DropdownMenuItem className='cursor-pointer'><Link href='/perfil'>Perfil</Link></DropdownMenuItem>
         <DropdownMenuItem className='cursor-pointer'>Pagos</DropdownMenuItem>
         <DropdownMenuItem className='cursor-pointer'>Ayuda</DropdownMenuItem>
         <DropdownMenuSeparator />

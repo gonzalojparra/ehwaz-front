@@ -64,10 +64,10 @@ export default function RegisterPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div className="space-y-2">
-                  <Label htmlFor="name" className="flex ml-1">Nombre</Label>
+                  <Label htmlFor="name" className="flex ml-1">Nombre de Usuario</Label>
                   <Input
                     type="text"
-                    placeholder="Juan Perez"
+                    placeholder="juanito123"
                     id="name"
                     name="name"
                     value={name}
