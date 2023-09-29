@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -28,52 +27,69 @@ import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/toast';
 import { useAuth } from '@/hooks/auth';
 
+/**
+ * Esquema de validación para el formulario de perfil de usuario.
+ * @typedef {Object} ProfileFormSchema
+ * @property {string} username - Nombre de usuario con longitud entre 2 y 30 caracteres.
+ * @property {string} email - Dirección de correo electrónico válida.
+ * @property {string} bio - Biografía del usuario con longitud entre 4 y 160 caracteres.
+ * @property {Array.<{value: string}>|undefined} urls - Array opcional de objetos con propiedad 'value' que debe ser una URL válida.
+ */
 const profileFormSchema = z.object({
   username: z
     .string()
     .min(2, {
-      message: 'Username must be at least 2 characters.',
+      message: 'El nombre de usuario debe contener al menos 2 caracteres.',
     })
     .max(30, {
-      message: 'Username must not be longer than 30 characters.',
+      message: 'El nombre de usuario debe contener como máximo 30 caracteres.',
     }),
   email: z
     .string({
-      required_error: 'Please select an email to display.',
+      required_error: 'Por favor seleccione un email para mostrar.',
     })
     .email(),
   bio: z.string().max(160).min(4),
   urls: z
     .array(
       z.object({
-        value: z.string().url({ message: 'Please enter a valid URL.' }),
+        value: z.string().url({ message: 'Por favor ingrese una URL válida.' }),
       })
     )
     .optional(),
-})
+});
 
-// This can come from your database or API.
+// Valores por default que se utilizarán para inicializar el formulario.
+// Deben venir de la db.
 const defaultValues = {
-  bio: 'I own a computer.',
+  description: 'Especialista en tonificar los cojone',
   urls: [
-    { value: 'https://shadcn.com' },
-    { value: 'http://twitter.com/shadcn' },
+    { value: 'https://instagram.com/leomessi' },
+    { value: 'http://twitter.com/elonmusk' },
   ],
 }
 
 export function ProfileForm() {
   const { user } = useAuth({ middleware: 'auth' });
 
+  /**
+   * Crea un formulario utilizando la librería useForm de React Hook Form.
+   * @param {Object} options - Opciones para configurar el formulario.
+   * @param {Object} options.resolver - Validador de esquema Zod para validar los datos del formulario.
+   * @param {Object} options.defaultValues - Valores por defecto para inicializar el formulario.
+   * @param {string} options.mode - Modo de validación del formulario.
+   * @returns {Object} - Objeto con los métodos y propiedades necesarios para manejar el formulario.
+   */
   const form = useForm({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
     mode: 'onChange',
-  })
+  });
 
   const { fields, append } = useFieldArray({
     name: 'urls',
     control: form.control,
-  })
+  });
 
   function onSubmit(data) {
     toast({
@@ -193,7 +209,7 @@ export function ProfileForm() {
             Add URL
           </Button>
         </div>
-        <Button type='submit'>Update profile</Button>
+        <Button type='submit'>Actualizar perfil</Button>
       </form>
     </Form>
   )
