@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 export default function Prueba(){
     const [fechaInicio, setFechaInicio] = useState('');
     const [fechaFin, setFechaFin] = useState('');
-    const [descrip, setDescrip] = useState([]);
+    const [descrip, setDescrip] = useState(null);
 
     const set_descriptions = ()=>{
         //console.log(document.getElementsByName('description'));
@@ -26,6 +26,10 @@ export default function Prueba(){
 
     const dropInfo = ()=>{
         set_descriptions();
+    }
+
+    const cargarInfo= ()=>{
+        setDescrip(['ASD', 'DSA']);
     }
 
     return (
@@ -53,13 +57,20 @@ export default function Prueba(){
                 onChange={(e) => setFechaFin(e.target.value)}
                 />
 
-                <MultipleDescription fecha_inicio={fechaInicio} fecha_fin={fechaFin} classes={'flex flex-1 flex-col gap-4'} />
+                <MultipleDescription fecha_inicio={fechaInicio} fecha_fin={fechaFin} classes={'flex flex-1 flex-col gap-4'} descrip={descrip}/>
 
                 <Button
                 type="button"
                 onClick={dropInfo}
                 >
                     Enviar
+                </Button>
+
+                <Button
+                type="button"
+                onClick={cargarInfo}
+                >
+                    Cargar Rutina
                 </Button>
 
             </div>
