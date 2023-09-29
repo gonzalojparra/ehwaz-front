@@ -32,6 +32,10 @@ export default function Prueba(){
         setDescrip(['ASD', 'DSA']);
     }
 
+    const borrarInfo = ()=>{
+        setDescrip(null);
+    }
+
     return (
         <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
             <div className='md:w-[500px] sm:w-full pb-8 flex flex-1 flex-col gap-4'>
@@ -71,6 +75,14 @@ export default function Prueba(){
                 onClick={cargarInfo}
                 >
                     Cargar Rutina
+                </Button>
+
+                <Button
+                variant="destructive"
+                type="button"
+                onClick={borrarInfo}
+                >
+                    Borrar Info
                 </Button>
 
             </div>
