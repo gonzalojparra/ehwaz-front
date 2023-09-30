@@ -9,6 +9,13 @@ import axios from "@/lib/axios";
 import { createEventId } from "../utils/event-utils";
 
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -30,6 +37,7 @@ import { Label } from "@/components/ui/label";
 import InputError from "@/components/ui/InputError";
 import SpinerCustom from "@/components/ui/spiner-custom";
 import SimpleSpiner from "@/components/ui/simple-spiner";
+import MultipleDescription from "./MultipleDescription";
 
 export default function CalendarComponent({ student }) {
   const [open, setOpen] = useState(false);
@@ -40,7 +48,7 @@ export default function CalendarComponent({ student }) {
   const [studentGoals, setStudentGoals] = useState([]);
   const [studentGoalId, setStudentGoalId] = useState("");
   const [studentGoalName, setStudentGoalName] = useState("");
-  const [descripcion, setDescripcion] = useState("");
+  const [descripcion, setDescripcion] = useState([]);
   const [precio, setPrecio] = useState("");
   const [calendarApi, setCalendarApi] = useState({});
   const [rutinas, setRutinas] = useState(null);
@@ -49,6 +57,21 @@ export default function CalendarComponent({ student }) {
   const [rutinaId, setRutinaId] = useState("");
   const [sending, setSending] = useState(false);
   const [color, setColor] = useState("");
+  const [descrip, setDescrip] = useState(null);
+
+  const set_descriptions = () => {
+    //console.log(document.getElementsByName('description'));
+    let descripciones = [];
+    let inputs = document.getElementsByName("description_asd");
+    console.log(inputs);
+    if (inputs.length > 0) {
+      inputs.forEach((input) => {
+        descripciones.push(input.value);
+      });
+    }
+    console.log(descripciones);
+    return descripciones;
+  };
 
   const getRoutines = async () => {
     await axios
@@ -72,7 +95,7 @@ export default function CalendarComponent({ student }) {
             )}`;
             fecha_fin = nueva_fecha_fin;
 
-            //console.log(nueva_fecha_fin);
+            console.log(nueva_fecha_fin);
             return {
               id: event.id,
               title: event.name,
@@ -125,6 +148,8 @@ export default function CalendarComponent({ student }) {
     setFechaInicio(selectInfo.startStr);
     setFechaFin(selectInfo.startStr);
     setVer("guardar");
+    setDescripcion([]);
+    setPrecio('');
   };
 
   const sendInfo = async () => {
@@ -134,7 +159,7 @@ export default function CalendarComponent({ student }) {
         initial_date: fechaInicio,
         final_date: fechaFin,
         name: nombre,
-        descriptions: descripcion,
+        descriptions: set_descriptions(),
         id_student: student,
         id_student_goal: studentGoalId,
         amount: precio,
@@ -155,27 +180,11 @@ export default function CalendarComponent({ student }) {
   };
 
   const createRoutine = async () => {
+    set_descriptions();
     // Validar la creación
     if (await sendInfo()) {
       const nuevaRutina = calendarApi;
       getRoutines();
-      //nuevaRutina.view.calendar.refetchEvents();
-      /* let nuevaFechaFin = new Date(fechaFin);
-      nuevaFechaFin = nuevaFechaFin.setDate(nuevaFechaFin.getDate() + 1);
-      nuevaRutina.addEvent({
-        id: createEventId(),
-        title: nombre,
-        start: fechaInicio,
-        end: nuevaFechaFin,
-        allDay: true,
-        extendedProps: {
-          descripcion: descripcion,
-          precio: precio,
-          fecha_inicio: fechaInicio,
-          fecha_fin: nuevaFechaFin,
-          id_student_goal: studentGoalId,
-        },
-      }); */
       setOpen(false);
       setVer("");
       setInfoEvento({});
@@ -238,7 +247,7 @@ export default function CalendarComponent({ student }) {
   };
 
   return (
-    <>
+    <div className="w-full">
       {rutinas != null ? (
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -261,115 +270,124 @@ export default function CalendarComponent({ student }) {
       ) : (
         <SpinerCustom text={"Cargando Rutinas"} />
       )}
-
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+      <Dialog open={open} onOpenChange={setOpen} className="max-w-[1500px]">
+        <DialogContent className="md:max-w-[1200px] lg:max-w-[1200px]">
           <DialogHeader>
             <DialogTitle className="flex justify-center mb-4">
               {ver === "ver" ? "Ver Rutina" : "Agregar Rutina"}
             </DialogTitle>
-            <DialogDescription className="flex flex-1 flex-col gap-4">
-              {/*Voy a poner el componente en el calendar para poder obtener la fecha seleccionada */}
-              <Label htmlFor="color" className="flex ml-1">
-                Color:
-              </Label>
-              <input
-                id="color"
-                type="color"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                value={color}
-                onChange={(e) => setColor(e.target.value)}
-                disabled={ver === "ver"}
-              />
-
-              <Label htmlFor="fechaInicio" className="flex ml-1">
-                Fecha Inicio:
-              </Label>
-              <input
-                id="fechaInicio"
-                type="date"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                value={fechaInicio}
-                onChange={(e) => setFechaInicio(e.target.value)}
-                disabled={ver === "ver"}
-              />
-              <InputError messages={errors?.initial_date} />
-
-              <Label htmlFor="fechaFin" className="flex ml-1">
-                Fecha Fin:
-              </Label>
-              <input
-                id="fechaFin"
-                type="date"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                value={fechaFin}
-                onChange={(e) => setFechaFin(e.target.value)}
-                disabled={ver === "ver"}
-              />
-              <InputError messages={errors?.final_date} />
-
-              <Label htmlFor="nombre" className="flex ml-1">
-                Nombre de Rutina:
-              </Label>
-              <Input
-                required
-                id="nombre"
-                type="text"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
-                className="w-full"
-                placeholder="Bajar de peso..."
-                disabled={ver === "ver"}
-              />
-              <InputError messages={errors?.name} />
-
-              <div className="space-y-2">
-                <Label htmlFor="estudiantes" className="flex ml-1">
-                  Objetivo del estudiante
-                </Label>
-                {ver === "ver" ? (
-                  <Input disabled value={studentGoalName} />
-                ) : (
-                  <Select onValueChange={(e) => setStudentGoalId(e)}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder="Seleccione un objetivo" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {studentGoals.map((studentGoal) => {
-                        return (
-                          <SelectItem
-                            key={studentGoal.id}
-                            value={studentGoal.id}
-                          >
-                            {studentGoal.name}
-                          </SelectItem>
-                        );
-                      })}
-                    </SelectContent>
-                  </Select>
-                )}
+            <DialogDescription className="flex flex-2 flex-col gap-4">
+              <div className="flex flex-row gap-2">
+                <div className="w-full">
+                  {/*Voy a poner el componente en el calendar para poder obtener la fecha seleccionada */}
+                  <Label htmlFor="color" className="flex ml-1">
+                    Color:
+                  </Label>
+                  <input
+                    id="color"
+                    type="color"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                    disabled={ver === "ver"}
+                  />
+                </div>
+                <div className="w-full">
+                  <Label htmlFor="fechaInicio" className="flex ml-1">
+                    Fecha Inicio:
+                  </Label>
+                  <input
+                    id="fechaInicio"
+                    type="date"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    value={fechaInicio}
+                    onChange={(e) => setFechaInicio(e.target.value)}
+                    disabled={ver === "ver"}
+                  />
+                  <InputError messages={errors?.initial_date} />
+                </div>
+                <div className="w-full">
+                  <Label htmlFor="fechaFin" className="flex ml-1">
+                    Fecha Fin:
+                  </Label>
+                  <input
+                    id="fechaFin"
+                    type="date"
+                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    value={fechaFin}
+                    onChange={(e) => setFechaFin(e.target.value)}
+                    disabled={ver === "ver"}
+                  />
+                  <InputError messages={errors?.final_date} />
+                </div>
               </div>
-              <InputError messages={errors?.id_student_goal} />
+              <div className="flex flex-row gap-2">
+                <div className="w-full">
+                  <Label htmlFor="nombre" className="flex ml-1">
+                    Nombre de Rutina:
+                  </Label>
+                  <Input
+                    required
+                    id="nombre"
+                    type="text"
+                    value={nombre}
+                    onChange={(e) => setNombre(e.target.value)}
+                    className="w-full"
+                    placeholder="Bajar de peso..."
+                    disabled={ver === "ver"}
+                  />
+                  <InputError messages={errors?.name} />
+                </div>
 
-              <Label htmlFor="precio" className="flex ml-1">
-                Precio:
-              </Label>
-              <Input
-                required
-                id="precio"
-                type="number"
-                value={precio}
-                onChange={(e) => setPrecio(e.target.value)}
-                className="w-full"
-                placeholder="$ xxxx"
-                disabled={ver === "ver"}
-              />
-              <InputError messages={errors?.amount} />
+                <div className="w-full">
+                  <Label htmlFor="estudiantes" className="flex ml-1">
+                    Objetivo del estudiante
+                  </Label>
+                  {ver === "ver" ? (
+                    <Input disabled value={studentGoalName} />
+                  ) : (
+                    <Select onValueChange={(e) => setStudentGoalId(e)}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Seleccione un objetivo" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {studentGoals.map((studentGoal) => {
+                          return (
+                            <SelectItem
+                              key={studentGoal.id}
+                              value={studentGoal.id}
+                            >
+                              {studentGoal.name}
+                            </SelectItem>
+                          );
+                        })}
+                      </SelectContent>
+                    </Select>
+                  )}
+                  <InputError messages={errors?.id_student_goal} />
+                </div>
+                <div className="w-full">
+                  <Label htmlFor="precio" className="flex ml-1">
+                    Precio:
+                  </Label>
+                  <Input
+                    required
+                    id="precio"
+                    type="number"
+                    value={precio}
+                    onChange={(e) => setPrecio(e.target.value)}
+                    className="w-full"
+                    placeholder="$ xxxx"
+                    disabled={ver === "ver"}
+                  />
+                  <InputError messages={errors?.amount} />
+                </div>
+              </div>
 
-              <Label htmlFor="descripcion" className="flex ml-1">
+              {/* <Label htmlFor="descripcion" className="flex ml-1">
                 Descripción:
-              </Label>
-              <Textarea
+              </Label> */}
+              {/* <Textarea
                 id="descripcion"
                 placeholder='Añada una descripción, puede añadir descripciones para diferentes días separandolos con "|"'
                 value={descripcion ? descripcion : null}
@@ -378,7 +396,20 @@ export default function CalendarComponent({ student }) {
                 }}
                 disabled={ver === "ver"}
               />
-              <InputError messages={errors?.description} />
+              <InputError messages={errors?.description} /> */}
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger>Descripciones</AccordionTrigger>
+                  <AccordionContent>
+                    <MultipleDescription
+                      fecha_inicio={fechaInicio}
+                      fecha_fin={fechaFin}
+                      classes={"flex flex-1 flex-col gap-4"}
+                      descrip={descripcion}
+                    />
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -399,6 +430,6 @@ export default function CalendarComponent({ student }) {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-    </>
+    </div>
   );
 }
