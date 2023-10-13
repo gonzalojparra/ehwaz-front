@@ -43,14 +43,14 @@ const get_permissions = async (url_request) => {
 };
 
 export default async function middleware(request) {
-  console.log(request);
+  /* console.log(request);
   const {pathname} = request.nextUrl;
   const data = await get_permissions(pathname);
   if (data.perms) {
     return NextResponse.redirect(new URL("/prueba", request.url));
   } else {
     return NextResponse.next();
-  }
+  } */
 
   /* const token = request.cookies.get('token')?.value;
   const signInUrl = new URL('/', request.nextUrl);
