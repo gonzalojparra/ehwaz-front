@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -14,9 +15,20 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/toast';
 import { useAuth } from '@/hooks/auth';
+
+import axios from '@/lib/axios';
 
 const profileFormSchema = z.object({
   username: z
@@ -51,6 +63,17 @@ const defaultValues = {
 
 export function FichaTecnicaForm() {
   const { user } = useAuth({ middleware: 'auth' });
+  const [role, setRole] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/get-role')
+      .then((res) => {
+        setRole(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const form = useForm({
     resolver: zodResolver(profileFormSchema),
@@ -104,7 +127,34 @@ export function FichaTecnicaForm() {
             </FormItem>
           )}
         />
-        
+
+        {role.includes('Alumno') && (
+          <FormField
+            control={form.control}
+            name="goal"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Objetivo</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccione una meta" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Aumentar masa muscular">Aumentar masa muscular</SelectItem>
+                    <SelectItem value="Disminuir grasa corporal">Disminuir grasa corporal</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormDescription>
+                  Puede modificar sus objetivos para que su entrenador pueda ayudarlo a alcanzarlos.
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+
         <Button type='submit'>Actualizar perfil</Button>
       </form>
     </Form>
