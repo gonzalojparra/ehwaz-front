@@ -3,7 +3,9 @@ const nextConfig = {
   images: {
     domains: [
       'images.unsplash.com',
-      'thumbs.dreamstime.com'
+      'thumbs.dreamstime.com',
+      'wger.de',
+      'wger.denull'
     ],
   }
 }
