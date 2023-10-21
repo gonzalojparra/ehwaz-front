@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -21,25 +21,26 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import axios from "@/lib/axios";
+import SimpleSpiner from "@/components/ui/simple-spiner";
 
 const estados = [
   {
     id: 0,
-    label: "Iniciado"
+    label: "Iniciado",
   },
   {
     id: 1,
-    label: "Aceptado"
+    label: "Aceptado",
   },
   {
     id: 2,
-    label: "Cancelado"
-  }
+    label: "Cancelado",
+  },
 ];
 
 function conocer_id_estado(estado) {
   let current = null;
-  estados.forEach(element => {
+  estados.forEach((element) => {
     if (element.label == estado) {
       current = element.id;
     }
@@ -56,7 +57,25 @@ function conocer_id_estado(estado) {
 }
 
 export function Modal({ payment_id, estado, obtenerPagos }) {
+  let color = "";
+  switch (estado) {
+    case "Activo":
+      color = "primary";
+      break;
+
+    case "Inactivo":
+      color = "secondary";
+      break;
+
+    case "Cancelado":
+      color = "destructive";
+      break;
+
+    default:
+      break;
+  }
   const [nuevoEstado, setNuevoEstado] = useState(conocer_id_estado(estado));
+  const [sending, setSending] = useState(false);
   const [open, setOpen] = useState(false);
 
   const toggleModal = () => {
@@ -65,24 +84,33 @@ export function Modal({ payment_id, estado, obtenerPagos }) {
     } else {
       setOpen(true);
     }
-  }
+  };
 
   const enviarInfo = async () => {
-    console.log(nuevoEstado)
-    await axios.post('/api/set_payment_status', {
-      payment_id: payment_id,
-      payment_status: nuevoEstado
-    })
+    console.log(nuevoEstado);
+    setSending(true);
+    await axios
+      .post("/api/set_payment_status", {
+        payment_id: payment_id,
+        payment_status: nuevoEstado,
+      })
       .then((res) => {
         setOpen(false);
         obtenerPagos();
-      })
-  }
+      });
+    setSending(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={toggleModal}>{estado}</Button>
+        <Button
+          variant={color == "primary" ? "default" : color}
+          className={color}
+          onClick={toggleModal}
+        >
+          {estado}
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-[425px]">
         <DialogHeader>
@@ -91,11 +119,15 @@ export function Modal({ payment_id, estado, obtenerPagos }) {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-1 items-center gap-4">
             <Select
-              onValueChange={(e) => { setNuevoEstado(e) }}
+              onValueChange={(e) => {
+                setNuevoEstado(e);
+              }}
               defaultValue={nuevoEstado}
             >
               <SelectTrigger className="w-full">
-                <SelectValue placeholder="Seleccione un estado" /* defaultValue={nuevoEstado} */ />
+                <SelectValue
+                  placeholder="Seleccione un estado" /* defaultValue={nuevoEstado} */
+                />
               </SelectTrigger>
               <SelectContent>
                 {estados.map((estad) => {
@@ -110,7 +142,9 @@ export function Modal({ payment_id, estado, obtenerPagos }) {
           </div>
         </div>
         <DialogFooter>
-          <Button type="button" onClick={enviarInfo}>Guardar Estado</Button>
+          <Button type="button" disabled={sending} onClick={enviarInfo}>
+            Guardar Estado {sending && <SimpleSpiner/>}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

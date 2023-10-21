@@ -57,25 +57,6 @@ export function Tabla({data}) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const columns = [
-    /* {
-      id: 'select',
-      header: ({ table }) => (
-        <Checkbox
-          checked={table.getIsAllPageRowsSelected()}
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-          aria-label='Select all'
-        />
-      ),
-      cell: ({ row }) => (
-        <Checkbox
-          checked={row.getIsSelected()}
-          onCheckedChange={(value) => row.toggleSelected(!!value)}
-          aria-label='Select row'
-        />
-      ),
-      enableSorting: false,
-      enableHiding: false,
-    }, */
     {
       accessorKey: "status",
       nombre: "Estado",
@@ -139,7 +120,8 @@ export function Tabla({data}) {
 
         // Custom Dropdown Menu para cada fila
         return (
-          <DropdownMenu>
+
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="h-8 w-8 p-0">
                 <span className="sr-only">Open menu</span>
@@ -154,7 +136,7 @@ export function Tabla({data}) {
                 Cambiar Estado
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
         );
       },
     },
@@ -172,7 +154,7 @@ export function Tabla({data}) {
   const [estado, setEstado] = useState('');
   const [errors, setErrors] = useState([]);
   const [id_tupla, setId_tupla] = useState("");
-  const [sending, setSending] = useState(false);
+
   //const [data, setData] = useState(datos);
 
   //setData(getRequests)
@@ -364,7 +346,7 @@ export function Tabla({data}) {
         </div>
       </div>
       {/*Inicio del modal */}
-      <Dialog open={open} onOpenChange={setOpen}>
+      {/* <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="flex justify-center mb-4">
@@ -390,7 +372,7 @@ export function Tabla({data}) {
                   </SelectContent>
                 </Select>
               </div>
-              {/* <InputError messages={errors?.state} /> */}
+              
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -399,7 +381,7 @@ export function Tabla({data}) {
             </Button>
           </DialogFooter>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </section>
   );
 }
