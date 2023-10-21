@@ -1,4 +1,5 @@
-"use client";
+'use client'
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,45 +22,61 @@ import {
 } from "@/components/ui/select";
 import axios from "@/lib/axios";
 
-const estados = [{id:0,label:"Iniciado"}, {id:1,label:"Aceptado"}, {id:2, label:"Cancelado"}];
+const estados = [
+  {
+    id: 0,
+    label: "Iniciado"
+  },
+  {
+    id: 1,
+    label: "Aceptado"
+  },
+  {
+    id: 2,
+    label: "Cancelado"
+  }
+];
 
-function conocer_id_estado(estado){
-    let current = null;
-    estados.forEach(element => {
-        if(element.label == estado){
-            current = element.id;
-        }
-    });
-    return current;
-    /* let esta = estados.filter((est)=>{
-        if(est.label == estado){
-            //console.log(est.id);
-            return est
-        }
-    });
-    //console.log(est);
-    return esta; */
+function conocer_id_estado(estado) {
+  let current = null;
+  estados.forEach(element => {
+    if (element.label == estado) {
+      current = element.id;
+    }
+  });
+  return current;
+  /* let esta = estados.filter((est)=>{
+      if(est.label == estado){
+          //console.log(est.id);
+          return est
+      }
+  });
+  //console.log(est);
+  return esta; */
 }
 
 export function Modal({ payment_id, estado, obtenerPagos }) {
   const [nuevoEstado, setNuevoEstado] = useState(conocer_id_estado(estado));
   const [open, setOpen] = useState(false);
 
-  const toggleModal = ()=>{
-    if(open){
-        setOpen(false);
-    }else{
-        setOpen(true);
+  const toggleModal = () => {
+    if (open) {
+      setOpen(false);
+    } else {
+      setOpen(true);
     }
   }
 
-  const enviarInfo = async()=>{
+  const enviarInfo = async () => {
     console.log(nuevoEstado)
     await axios.post('/api/set_payment_status', {
-        payment_id:payment_id,
-        payment_status: nuevoEstado
+      payment_id: payment_id,
+      payment_status: nuevoEstado
     })
-    .then((res)=>{setOpen(false); obtenerPagos();})
+      .then((res) => {
+        setOpen(false);
+        obtenerPagos();
+      })
   }
 
   return (
@@ -74,7 +91,7 @@ export function Modal({ payment_id, estado, obtenerPagos }) {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-1 items-center gap-4">
             <Select
-              onValueChange={(e) => {setNuevoEstado(e)}}
+              onValueChange={(e) => { setNuevoEstado(e) }}
               defaultValue={nuevoEstado}
             >
               <SelectTrigger className="w-full">
