@@ -182,6 +182,7 @@ export default function CalendarComponent({ trainer }) {
             center: "title",
             right: "dayGridMonth",
           }}
+          locale={"es"}
           initialView="dayGridMonth"
           editable={false}
           selectable={true}

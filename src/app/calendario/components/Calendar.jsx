@@ -256,6 +256,7 @@ export default function CalendarComponent({ student }) {
             center: "title",
             right: "dayGridMonth",
           }}
+          locale={"es"}
           initialView="dayGridMonth"
           editable={false}
           selectable={true}
