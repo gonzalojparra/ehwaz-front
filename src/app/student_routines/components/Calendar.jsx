@@ -59,6 +59,7 @@ export default function CalendarComponent({ trainer }) {
   const [feedback, setFeedback] = useState("");
   const [id_evento, setId_evento] = useState(null);
   const [fecha_actual, setFecha_actual ]= useState(fecha_string);
+  const [payment, setPayment] = useState(null);
 
 
   const getRoutines = async () => {
@@ -90,6 +91,7 @@ export default function CalendarComponent({ trainer }) {
                 amount: event.routine.amount,
                 initial_date: event.routine.initial_date,
                 final_date: event.routine.final_date,
+                payment: event.routine.payment
               },
             };
           })
@@ -142,6 +144,7 @@ export default function CalendarComponent({ trainer }) {
     setStudentGoalId(selectInfo.event.extendedProps.id_student_goal);
     setDescripcion(selectInfo.event.extendedProps.description);
     setFeedback(selectInfo.event.extendedProps.student_feedback);
+    setPayment(selectInfo.event.extendedProps.payment);
     setStudentGoalName(() => {
       const studentGoal = studentGoals.find(
         (studentGoal) =>
@@ -200,8 +203,10 @@ export default function CalendarComponent({ trainer }) {
             <DialogTitle className="flex justify-center mb-4">
               Ver Evento
             </DialogTitle>
+            {payment != null && payment.status == 'Aceptado' ? 
             <DialogDescription className="flex flex-1 flex-col gap-4">
               {/*Voy a poner el componente en el calendar para poder obtener la fecha seleccionada */}
+              
               <Label htmlFor="fechaInicio" className="flex ml-1">
                 Fecha Inicio:
               </Label>
@@ -285,12 +290,13 @@ export default function CalendarComponent({ trainer }) {
                   setFeedback(e.target.value);
                 }}
               />
-            </DialogDescription>
+            </DialogDescription> : <DialogDescription className="flex flex-1 flex-col gap-4"> La rutina se encuentra impaga, no podrá ver el contenido de la misma hasta que se encuentre pagada y aceptada.</DialogDescription>}
           </DialogHeader>
           <DialogFooter>
+            {payment != null && payment.status == 'Aceptado' ? 
             <Button type="submit" onClick={sendFeedback} disabled={sending}>
               Enviar Feedback {sending && <SimpleSpiner />}
-            </Button>
+            </Button> : <></>}
           </DialogFooter>
         </DialogContent>
       </Dialog>
