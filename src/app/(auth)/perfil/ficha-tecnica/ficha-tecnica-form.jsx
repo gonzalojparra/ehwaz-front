@@ -26,13 +26,13 @@ import { useAuth } from '@/hooks/auth';
 
 import axios from '@/lib/axios';
 
-const defaultValues = {
-  weight: 73.5,
-  height: 1.82,
-};
 
 export function FichaTecnicaForm() {
   const [role, setRole] = useState([]);
+  const [weight, setWeight] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [goal, setGoal] = useState('');
+
   const { toast } = useToast();
   const { user } = useAuth({ middleware: 'auth' });
 
@@ -44,7 +44,24 @@ export function FichaTecnicaForm() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    if (user) {
+      axios.get(`/api/get_student_data/${user.id}`)
+        .then((res) => {
+          setWeight(res.data.data.weight);
+          setHeight(res.data.data.height);
+          setGoal(res.data.data.goal);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [user]);
+
+  const defaultValues = {
+    weight: weight,
+    height: height,
+    goal: goal,
+  };
 
   const form = useForm({
     defaultValues,

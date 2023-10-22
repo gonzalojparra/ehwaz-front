@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import * as z from 'zod';
+import axios from '@/lib/axios';
 
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -16,13 +17,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/toast';
 import { useAuth } from '@/hooks/auth';
@@ -36,7 +30,14 @@ import { useAuth } from '@/hooks/auth';
  * @property {Array.<{value: string}>|undefined} urls - Array opcional de objetos con propiedad 'value' que debe ser una URL válida.
  */
 const profileFormSchema = z.object({
-  username: z
+  name: z.string().min(2, {
+    message: 'El nombre debe contener al menos 2 caracteres.',
+  }),
+  last_name: z.string().min(2, {
+    message: 'El apellido debe contener al menos 2 caracteres.',
+  }),
+  description: z.string().max(160).min(4),
+  /* username: z
     .string()
     .min(2, {
       message: 'El nombre de usuario debe contener al menos 2 caracteres.',
@@ -56,7 +57,7 @@ const profileFormSchema = z.object({
         value: z.string().url({ message: 'Por favor ingrese una URL válida.' }),
       })
     )
-    .optional(),
+    .optional(), */
 });
 
 // Valores por default que se utilizarán para inicializar el formulario.
@@ -91,15 +92,21 @@ export function ProfileForm() {
     control: form.control,
   });
 
-  function onSubmit(data) {
-    toast({
-      title: 'Ha enviado los siguentes datos:',
-      description: (
-        <pre className='mt-2 w-[340px] rounded-md bg-slate-950 p-4'>
-          <code className='text-white'>{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
+  async function onSubmit(data) {
+    await axios.post('/api/set_perfil_data', {
+      name: data.name,
+      last_name: data.last_name,
+      description: data.description,
     })
+      .then((res) => {
+        toast({
+          title: 'Datos actualizados',
+          description: 'Se han actualizado los datos de su ficha técnica.',
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
