@@ -20,6 +20,8 @@ import { getTrainer } from '@/modules/trainers';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
+import axios from '@/lib/axios';
+
 export default function TrainerPage({ params: { id } }) {
   const [trainer, setTrainer] = useState({});
   const [loading, setLoading] = useState(false);
@@ -28,7 +30,7 @@ export default function TrainerPage({ params: { id } }) {
   const router = useRouter();
 
   useEffect(() => {
-    if (pathname != '/login' && pathname != '/registro') {
+    /* if (pathname != '/login' && pathname != '/registro') {
       axios.post('/api/permissions', { url: pathname })
         .then((res) => {
           if (res.data.data == false) {
@@ -39,7 +41,7 @@ export default function TrainerPage({ params: { id } }) {
             });
           }
         });
-    }
+    } */
     
     
   }, [id]);

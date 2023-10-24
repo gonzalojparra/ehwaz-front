@@ -19,6 +19,8 @@ import {
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
+import axios from "@/lib/axios";
+
 export default function TrainersPage() {
 
   const [trainers, setTrainers] = useState([]);
