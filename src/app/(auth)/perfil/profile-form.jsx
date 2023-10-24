@@ -23,12 +23,11 @@ import { toast } from '@/components/ui/toast';
 import { useAuth } from '@/hooks/auth';
 
 /**
- * Esquema de validación para el formulario de perfil de usuario.
+ * Schema del formulario de perfil.
  * @typedef {Object} ProfileFormSchema
- * @property {string} username - Nombre de usuario con longitud entre 2 y 30 caracteres.
- * @property {string} email - Dirección de correo electrónico válida.
- * @property {string} bio - Biografía del usuario con longitud entre 4 y 160 caracteres.
- * @property {Array.<{value: string}>|undefined} urls - Array opcional de objetos con propiedad 'value' que debe ser una URL válida.
+ * @property {string} name
+ * @property {string} last_name
+ * @property {string} description
  */
 const profileFormSchema = z.object({
   name: z.string().min(2, {
@@ -38,35 +37,13 @@ const profileFormSchema = z.object({
     message: 'El apellido debe contener al menos 2 caracteres.',
   }),
   description: z.string().max(160).min(4),
-  /* username: z
-    .string()
-    .min(2, {
-      message: 'El nombre de usuario debe contener al menos 2 caracteres.',
-    })
-    .max(30, {
-      message: 'El nombre de usuario debe contener como máximo 30 caracteres.',
-    }),
-  email: z
-    .string({
-      required_error: 'Por favor seleccione un email para mostrar.',
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: 'Por favor ingrese una URL válida.' }),
-      })
-    )
-    .optional(), */
 });
-
-// Valores por default que se utilizarán para inicializar el formulario.
-// Deben venir de la db.
-
 
 export function ProfileForm() {
   const [role, setRole] = useState([]);
+  const [name, setName] = useState('');
+  const [last_name, setLastName] = useState('');
+  const [description, setDescription] = useState('');
   const { user } = useAuth({ middleware: 'auth' });
 
   useEffect(() => {
@@ -78,34 +55,46 @@ export function ProfileForm() {
         console.log(err);
       });
     if (user) {
-      axios.get(`/api/get_student_data/${user.id}`)
-        .then((res) => {
-          setWeight(res.data.data.weight);
-          setHeight(res.data.data.height);
-          setGoal(res.data.data.goal);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      if (role.includes('Alumno')) {
+        axios.get(`/api/get_student_data/${user.id}`)
+          .then((res) => {
+            setName(res.data.data.name);
+            setLastName(res.data.data.last_name);
+            setDescription(res.data.data.description);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      if (role.includes('Trainer')) {
+        axios.get(`/api/get_trainer_data/${user.id}`)
+          .then((res) => {
+            setName(res.data.data.name);
+            setLastName(res.data.data.last_name);
+            setDescription(res.data.data.description);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      if (role.includes('Especialista')) {
+        axios.get(`/api/get_specialist_data/${user.id}`)
+          .then((res) => {
+            setName(res.data.data.name);
+            setLastName(res.data.data.last_name);
+            setDescription(res.data.data.description);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   }, [user]);
 
   const defaultValues = {
-    description:
-      axios.get(`/api/get_perfil_data`)
-        .then((res) => {
-          return res.data.description;
-        }),
-    name:
-      axios.get(`/api/get_perfil_data`)
-        .then((res) => {
-          return res.data.name;
-        }),
-    /* description: 'Especialista en tonificar los cojone',
-    urls: [
-      { value: 'https://instagram.com/leomessi' },
-      { value: 'http://twitter.com/elonmusk' },
-    ], */
+    name: name,
+    last_name: last_name,
+    description: description,
   }
 
   /**
@@ -211,7 +200,7 @@ export function ProfileForm() {
                     URLs
                   </FormLabel>
                   <FormDescription className={cn(index !== 0 && 'sr-only')}>
-                    Add links to your website, blog, or social media profiles.
+                    Añade links a tus redes sociales o sitio web.
                   </FormDescription>
                   <FormControl>
                     <Input {...field} />
