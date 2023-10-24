@@ -21,45 +21,55 @@ import {
 import { Menu } from 'lucide-react';
 import ProfileButton from './ProfileButton';
 
+
 const components = [
   {
     title: 'Rutinas',
     href: '/student_routines',
+    perms: ['Alumno'],
     description:
       'Ver rutinas asignadas por el personal trainer.',
   },
   {
     title: 'Calendario',
     href: '/calendario',
+    perms: ['Trainer'],
     description:
       'Ver calendario con el cronograma de rutinas asignadas por todos los profesionales.',
   },
   {
     title: 'Progreso',
-    href: '/',
+    href: '/metricas',
+    perms: ['Alumno'],
     description:
       'Ver progreso de los objetivos basados en los ejercicios especificados.',
   },
   {
-    title: 'Planes',
-    href: '/',
-    description: 'Ver planes asignados por los profesionales.',
+    title: 'Mis Pago',
+    href: '/payment',
+    perms: ['Alumno'],
+    description: 'Generar mis pagos.',
   },
   {
     title: 'Pagos',
-    href: '/',
+    href: '/payments',
+    perms: ['Trainer', 'Alumno'],
     description:
       'Ver pagos realizados y pendientes de los planes asignados por los profesionales.',
   },
   {
     title: 'Alumnos',
     href: '/trainer_request',
+    perms: ['Trainer'],
     description:
       'Ver eventos que se realizarán y que pueden ser de interés para que te inscribas!',
   },
 ]
 
+
+
 const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
+    
   return (
     <li>
       <NavigationMenuLink asChild>
@@ -82,7 +92,7 @@ const ListItem = React.forwardRef(({ className, title, children, ...props }, ref
 })
 ListItem.displayName = 'ListItem'
 
-const AuthLayout = (user, logout) => {
+const AuthLayout = (user, logout, role) => {
   return (
     <header className='sm:flex sm:justify-between py-3 px-4 border-b bg-background'>
       <Container>
@@ -95,15 +105,18 @@ const AuthLayout = (user, logout) => {
               </SheetTrigger>
               <SheetContent side='left' className='w-[300px] sm:w-[400px]'>
                 <nav className='flex flex-col gap-4'>
-                  {components.map((component) => (
-                    <Link
+                  {components.filter((component) => {
+                    if(component.perms.includes(role)){
+                      <Link
                       key={component.title}
                       href={component.href}
                       className='block px-2 py-1 text-lg'
                     >
                       {component.title}
                     </Link>
-                  ))}
+                    }
+                  }
+                  )}
                 </nav>
               </SheetContent>
             </Sheet>

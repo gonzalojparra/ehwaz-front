@@ -6,10 +6,14 @@ import { useEffect, useState } from "react";
 import { Tabla } from "./components/Tabla";
 
 import SpinerCustom from "@/components/ui/spiner-custom";
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Payments(){
     const [pagos, setPagos] = useState(null);
     const [rol, setRol] = useState(null);
+    const pathname = usePathname();
+    const router = useRouter();
 
     const obtenerPagos = async()=>{
         await axios.get('/api/payments')
@@ -31,8 +35,18 @@ export default function Payments(){
     }
 
     useEffect(()=>{
-        obtenerPagos();
-        obtenerRol();
+        if (pathname != '/login' && pathname != '/registro') {
+            axios.post('/api/permissions', { url: pathname })
+              .then((res) => {
+                if (res.data.data == false) {
+                  router.push('/')
+                }else{
+                    obtenerPagos();
+                    obtenerRol();
+                }
+              });
+          }
+        
     }, []);
 
     return (

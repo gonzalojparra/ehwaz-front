@@ -16,18 +16,30 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs';
-
-
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function TrainersPage() {
 
   const [trainers, setTrainers] = useState([]);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
-    getTrainers().then((trainers) => {
-      console.log(trainers);
-      setTrainers(trainers);
-    });
+    if (pathname != '/login' && pathname != '/registro') {
+      axios.post('/api/permissions', { url: pathname })
+        .then((res) => {
+          if (res.data.data == false) {
+            router.push('/')
+          }else{
+            getTrainers().then((trainers) => {
+              console.log(trainers);
+              setTrainers(trainers);
+            });
+          }
+        });
+    }
+    
   }, []);
 
   return (

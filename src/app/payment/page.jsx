@@ -15,12 +15,16 @@ import { Label } from '@/components/ui/label';
 import { Button } from "@/components/ui/button";
 import InputError from "@/components/ui/InputError";
 import SimpleSpiner from "@/components/ui/simple-spiner";
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Page(){
     const [rutina_id, setRutina_id] = useState(null);
     const [rutinas, setRutinas] = useState(null);
     const [rutinaInfo, setRutinaInfo] = useState(null);
     const [loadingRutina, setLoadingRutina] = useState(false);
+    const pathname = usePathname();
+    const router = useRouter();
 
     /* campos formulario */
     const [amount, setAmount] = useState('');
@@ -35,7 +39,17 @@ export default function Page(){
     }
 
     useEffect(()=>{
-        getRutinasImpagas();
+        if (pathname != '/login' && pathname != '/registro') {
+            axios.post('/api/permissions', { url: pathname })
+              .then((res) => {
+                if (res.data.data == false) {
+                  router.push('/')
+                }else{
+                    getRutinasImpagas();
+                }
+              });
+          }
+       
     },[]);
 
     const get_rutina_info = async(e)=>{

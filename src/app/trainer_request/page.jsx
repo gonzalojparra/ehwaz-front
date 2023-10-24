@@ -7,9 +7,13 @@ import axios from "@/lib/axios";
 
 import SpinerCustom from "@/components/ui/spiner-custom";
 import TablaMejorada from "./components/TablaMejorada";
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function TrainerRequestPage() {
   const [requests, setRequests] = useState(null);
+  const pathname = usePathname();
+  const router = useRouter();
 
   const obtenerInfo = async()=>{
     await axios.get('/api/trainer_students')
@@ -19,7 +23,17 @@ export default function TrainerRequestPage() {
   }
 
   useEffect(() => {
-    obtenerInfo();
+    if (pathname != '/login' && pathname != '/registro') {
+      axios.post('/api/permissions', { url: pathname })
+        .then((res) => {
+          if (res.data.data == false) {
+            router.push('/')
+          }else{
+            obtenerInfo();
+          }
+        });
+    }
+    
   }, [])
 
   return (

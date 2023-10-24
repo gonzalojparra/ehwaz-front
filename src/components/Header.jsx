@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import axios from '@/lib/axios';
@@ -14,19 +14,20 @@ export default function Header() {
   //const perms = get_permissions();
   const router = useRouter();
 
-  useEffect(() => {
-    /* if (window.location.pathname != '/login' && window.location.pathname != '/registro') {
-      axios.post('/api/permissions', { url: window.location.pathname })
-        .then((res) => {
-          if (res.data.data == false) {
-            router.push('/')
-          }
-        });
-    } */
-  }, []);
+  const [role, setRole] = useState(null);
+  
+  useEffect(()=>{
+    axios.get('/api/get-role')
+    .then((res) => {
+      setRole(res.data.data[0]);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }, [])
 
   if (user) {
-    return AuthLayout(user, logout);
+    return AuthLayout(user, logout, role);
   } else {
     return GuestLayout();
   }

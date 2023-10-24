@@ -12,6 +12,7 @@ const data01 = [
   { name: "Group F", value: 189, fill:"#FF00AA", descripcion:"Hat que hacer algo" },
 ];
 
+
 export default function Chart(){
     return (
         <PieChart width={1000} height={400}>

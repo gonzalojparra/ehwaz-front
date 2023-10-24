@@ -22,12 +22,27 @@ import './swiper.css';
 // import required modules
 import { Navigation } from 'swiper/modules';
 import InputError from "@/components/ui/InputError";
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function Page() {
   const [busqueda, setBusqueda] = useState("");
   const [suggestions, setSuggestions] = useState(null);
   const [loading, setLoading] = useState(false);
   const swiperRef = useRef(null);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useEffect(()=>{
+    if (pathname != '/login' && pathname != '/registro') {
+      axios.post('/api/permissions', { url: pathname })
+        .then((res) => {
+          if (res.data.data == false) {
+            router.push('/')
+          }
+        });
+    }
+  },[]);
 
   const obtenerEjercicio = async () => {
     if (busqueda != null && busqueda != "") {

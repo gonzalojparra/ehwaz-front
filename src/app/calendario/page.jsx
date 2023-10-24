@@ -15,6 +15,8 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import SpinerCustom from '@/components/ui/spiner-custom';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 
 export default function Calendario() {
@@ -22,6 +24,8 @@ export default function Calendario() {
   const [student_id, setStudent_id] = useState('');
   const [recargarEventos, setRecargarEventos] = useState(false);
   const [rutinas, setRutinas] = useState(null);
+  const pathname = usePathname();
+  const router = useRouter();
 
   const getStudents = async () => {
     await axios.get('/api/trainer_students')
@@ -29,7 +33,16 @@ export default function Calendario() {
   };
 
   useEffect(() => {
-    getStudents();
+    if (pathname != '/login' && pathname != '/registro') {
+      axios.post('/api/permissions', { url: pathname })
+        .then((res) => {
+          if (res.data.data == false) {
+            router.push('/')
+          }else{
+            getStudents();
+          }
+        });
+    }
   }, []);
 
   return (

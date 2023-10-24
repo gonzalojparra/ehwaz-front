@@ -17,16 +17,30 @@ import {
 
 import { assignTrainer, isConnectedTrainer } from '@/modules/students';
 import { getTrainer } from '@/modules/trainers';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function TrainerPage({ params: { id } }) {
   const [trainer, setTrainer] = useState({});
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
-    getTrainer(id).then((trainer) => {
-      setTrainer(trainer);
-    });
+    if (pathname != '/login' && pathname != '/registro') {
+      axios.post('/api/permissions', { url: pathname })
+        .then((res) => {
+          if (res.data.data == false) {
+            router.push('/')
+          }else{
+            getTrainer(id).then((trainer) => {
+              setTrainer(trainer);
+            });
+          }
+        });
+    }
+    
     
   }, [id]);
 
