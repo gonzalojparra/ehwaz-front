@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useFieldArray, useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -62,16 +63,50 @@ const profileFormSchema = z.object({
 
 // Valores por default que se utilizarán para inicializar el formulario.
 // Deben venir de la db.
-const defaultValues = {
-  description: 'Especialista en tonificar los cojone',
-  urls: [
-    { value: 'https://instagram.com/leomessi' },
-    { value: 'http://twitter.com/elonmusk' },
-  ],
-}
+
 
 export function ProfileForm() {
+  const [role, setRole] = useState([]);
   const { user } = useAuth({ middleware: 'auth' });
+
+  useEffect(() => {
+    axios.get('/api/get-role')
+      .then((res) => {
+        setRole(res.data.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    if (user) {
+      axios.get(`/api/get_student_data/${user.id}`)
+        .then((res) => {
+          setWeight(res.data.data.weight);
+          setHeight(res.data.data.height);
+          setGoal(res.data.data.goal);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, [user]);
+
+  const defaultValues = {
+    description:
+      axios.get(`/api/get_perfil_data`)
+        .then((res) => {
+          return res.data.description;
+        }),
+    name:
+      axios.get(`/api/get_perfil_data`)
+        .then((res) => {
+          return res.data.name;
+        }),
+    /* description: 'Especialista en tonificar los cojone',
+    urls: [
+      { value: 'https://instagram.com/leomessi' },
+      { value: 'http://twitter.com/elonmusk' },
+    ], */
+  }
 
   /**
    * Crea un formulario utilizando la librería useForm de React Hook Form.
