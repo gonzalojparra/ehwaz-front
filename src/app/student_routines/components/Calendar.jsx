@@ -107,8 +107,8 @@ export default function CalendarComponent({ trainer }) {
   };
 
   useEffect(() => {
-    getRoutines();
     getStudentGoals();
+    getRoutines();
   }, [trainer]);
 
   const sendInfo = async () => {
