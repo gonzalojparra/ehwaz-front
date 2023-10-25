@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import SelectCustom from "./components/SelectCustom";
 import Collapsable from "./components/Collapsable";
 import SpinerCustom from "@/components/ui/spiner-custom";
+import Calendario from "./components/Calendario";
 
 
 export default function Page(){
@@ -61,6 +62,9 @@ export default function Page(){
             <div className="md:w-[1200px] sm:w-full pb-8">
                 {rutinas != null ? <Collapsable data={rutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
                 {rutinas == null && alumnoId != null ? <SpinerCustom text={"Obteniendo rutinas..."}/> : <></>}
+            </div>
+            <div className="md:w-[1200px] sm:w-full pb-8">
+                {rutinas != null ? <Calendario/> : <></>}
             </div>
         </div>
     )
