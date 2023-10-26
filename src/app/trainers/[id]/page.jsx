@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
@@ -15,12 +17,9 @@ import {
   Users
 } from 'lucide-react';
 
+import axios from '@/lib/axios';
 import { assignTrainer, isConnectedTrainer } from '@/modules/students';
 import { getTrainer } from '@/modules/trainers';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
-
-import axios from '@/lib/axios';
 
 export default function TrainerPage({ params: { id } }) {
   const [trainer, setTrainer] = useState({});
@@ -35,22 +34,22 @@ export default function TrainerPage({ params: { id } }) {
         .then((res) => {
           if (res.data.data == false) {
             router.push('/')
-          }else{
-            getTrainer(id).then((trainer) => {
-              setTrainer(trainer);
+          } else { */
+    getTrainer(id).then((trainer) => {
+      setTrainer(trainer);
+    });
+    /*           }
             });
-          }
-        });
-    } */
-    
-    
+        } */
+
+
   }, [id]);
 
   useEffect(() => {
-    isConnectedTrainer(id).then((isConnected) => {
-      console.log(isConnected);
-      setIsConnected(isConnected);
-    })
+    isConnectedTrainer(id)
+      .then((isConnected) => {
+        setIsConnected(isConnected);
+      })
   }, []);
 
   const birthDate = new Date(trainer.day_of_birth);
@@ -122,8 +121,8 @@ export default function TrainerPage({ params: { id } }) {
                     <ScrollText />
                   </CardHeader>
                   <CardContent>
-                    <div className='text-2xl font-bold'>+12,234</div>
-                    <p className='text-xs text-muted-foreground'>+19% from last month</p>
+                    <div className='text-2xl font-bold'>{trainer.qty_certificates}</div>
+                    <p className='text-xs text-muted-foreground'>Títulos de estudio</p>
                   </CardContent>
                 </Card>
               </div>
@@ -134,8 +133,8 @@ export default function TrainerPage({ params: { id } }) {
                     <Users />
                   </CardHeader>
                   <CardContent>
-                    <div className='text-2xl font-bold'>+573</div>
-                    <p className='text-xs text-muted-foreground'>+201 since last hour</p>
+                    <div className='text-2xl font-bold'>{trainer.qty_students}</div>
+                    <p className='text-xs text-muted-foreground'>Alumnos entrenados</p>
                   </CardContent>
                 </Card>
               </div>

@@ -23,10 +23,10 @@ export const assignTrainer = async (trainerId) => {
 
 export const isConnectedTrainer = async (trainerId) => {
   try {
-    const res = axios.post('/api/is_connected_trainer', {
+    const response = await axios.post('/api/is_connected_trainer', {
       trainer_id: trainerId,
     });
-    return res.data;
+    return response.data.data;
   } catch (err) {
     console.log(err);
     return err;
