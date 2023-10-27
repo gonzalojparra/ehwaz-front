@@ -12,6 +12,7 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas }){
     const [open, setOpen] = useState(false);
     const [nuevo, setNuevo] = useState(false);
     const [data, setData] = useState(null);
+    const [calendarApi, setCalendarApi] = useState({});
 
     const cargar_eventos = ()=>{
       let events = [];
@@ -48,17 +49,23 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas }){
     }
 
     const verEvento = (selectInfo)=>{
-      console.log(selectInfo.event._def);
+      let calendarApi = selectInfo.view.calendar;
+      calendarApi.unselect();
+      setCalendarApi(calendarApi);
+      //console.log(selectInfo.event._def);
       setData(selectInfo.event._def);
       setNuevo(false);
       setOpen(true);
     }
 
     const crearEvento = (selectInfo)=>{
+      let calendarApi = selectInfo.view.calendar;
+      calendarApi.unselect();
+      setCalendarApi(calendarApi);
       setData(selectInfo);
       setNuevo(true);
       setOpen(true);
-      console.log(selectInfo);
+      //console.log(selectInfo);
     }
     
     useEffect(()=>{
@@ -87,7 +94,7 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas }){
           themeSystem="Pulse"
           events={eventos}
         />}
-        <ModalEvento open={open} setOpen={setOpen} nuevo={nuevo} data={data} rutinas={rutinas}/>
+        <ModalEvento open={open} setOpen={setOpen} nuevo={nuevo} data={data} rutinas={rutinas} calendarApi={calendarApi}/>
       </>
     )
 }

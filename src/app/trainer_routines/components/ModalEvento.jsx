@@ -25,22 +25,37 @@ import {
 import SimpleSpiner from "@/components/ui/simple-spiner";
 import axios from "@/lib/axios";
 
-export default function ModalEvento({ open, setOpen, nuevo, data, rutinas }) {
+export default function ModalEvento({ open, setOpen, nuevo, data, rutinas, calendarApi }) {
   const [date, setDate] = useState('');
-  const [trainerRoutineId, setTrainerRoutineId] = useState(null);
+  const [trainerRoutineId, setTrainerRoutineId] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [errors, setErrors] = useState([]);
+  const [name, setName] = useState('');
 
-  useEffect(()=>{
-    if(nuevo){
-      setDate(data.startStr);
-      setTrainerRoutineId('');
-      setDescripcion('');
-    }else{
-      setDate(data.extendedProps.initial_date);
-      setTrainerRoutineId(data.defId);
-      setDescripcion(data.extendedProps.description);
+  console.log(calendarApi);
+
+  const actualizar = (data, nuevo)=>{
+    setDate('');
+    setTrainerRoutineId('');
+    setDescripcion('');
+    setName('');
+    if(data != null){
+      if(nuevo){
+        setDate(data.startStr);
+        console.log(data.startStr);
+        setTrainerRoutineId('');
+        setDescripcion('');
+      }else{
+        setDate(data.extendedProps.event_date);
+        setTrainerRoutineId(data.extendedProps.trainer_routine_id);
+        setDescripcion(data.extendedProps.description);
+        setName(data.extendedProps.name_routine);
+      }
     }
+  }
+
+  useEffect((data, nuevo)=>{
+    actualizar(data, nuevo);
   }, [])
 
   return (
@@ -61,7 +76,7 @@ export default function ModalEvento({ open, setOpen, nuevo, data, rutinas }) {
               className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              disabled={data != null}
+              disabled={true}
             />
             <InputError messages={errors?.date} />
           </div>
@@ -69,7 +84,8 @@ export default function ModalEvento({ open, setOpen, nuevo, data, rutinas }) {
             <Label htmlFor="rutina" className="flex ml-1">
               Rutina
             </Label>
-            <Select onValueChange={(e) => setTrainerRoutineId(e)}>
+            {nuevo ?
+            <Select onValueChange={(e) => setTrainerRoutineId(e)} defaultValue={trainerRoutineId}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Seleccione una rutina" />
               </SelectTrigger>
@@ -83,6 +99,16 @@ export default function ModalEvento({ open, setOpen, nuevo, data, rutinas }) {
                 })}
               </SelectContent>
             </Select>
+             : 
+             <input
+              id="rutina"
+              type="text"
+              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              disabled={true}
+            />
+             }
             <InputError messages={errors?.trainer_routine_id} />
           </div>
           <div className="">
@@ -96,6 +122,7 @@ export default function ModalEvento({ open, setOpen, nuevo, data, rutinas }) {
                 onChange={(e) => {
                   setDescripcion(e.target.value);
                 }}
+                disabled={!nuevo}
             />
             <InputError messages={errors?.descripcion} />
           </div>
