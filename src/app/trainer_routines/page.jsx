@@ -17,6 +17,7 @@ export default function Page(){
     const [alumnoId, setAlumnoId] = useState(null);
     const [rutinas, setRutinas] = useState(null);
     const [eventosCalendario, setEventosCalendario] = useState(null);
+    const [goals, setGoals] = useState(null);
 
 
     useEffect(()=>{
@@ -47,6 +48,13 @@ export default function Page(){
         .then((response) => {
             setRutinas(response.data.data); console.log(response.data.data);
         })
+
+        await axios.post("api/student_goals", {
+            student_id: e
+        })
+        .then((res)=>{
+            setGoals(res.data.data); console.log(res.data.data);
+        })
     }
 
     const obtener_eventos = async(e)=>{
@@ -60,11 +68,11 @@ export default function Page(){
 
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {rutinas != null ? <Collapsable data={rutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
+                {rutinas != null ? <Collapsable data={rutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas} goals={goals}/> : <></>}
                 {rutinas == null && alumnoId != null ? <SpinerCustom text={"Obteniendo rutinas..."}/> : <></>}
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {rutinas != null ? <Calendario/> : <></>}
+                {rutinas != null ? <Calendario rutinas={rutinas} alumnoId={alumnoId}/> : <></>}
             </div>
         </div>
     )

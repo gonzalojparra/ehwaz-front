@@ -12,12 +12,12 @@ import {
 import { Label } from "@/components/ui/label";
 import { ModalCrearRutina } from "./ModalCrearRutina";
 
-export default function TablaRutinas({ data, alumnoId, obtener_rutinas }) {
+export default function TablaRutinas({ data, alumnoId, obtener_rutinas, goals }) {
   return (
     <div className="flex justify-center flex-col">
       {/* <Label className="text-center pb-3">Listado de Rutinas</Label> */}
       <div className="md:w-[150px]">
-        <ModalCrearRutina />
+        <ModalCrearRutina goals={goals} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/>
       </div>
       <Table>
         <TableHeader>

@@ -24,7 +24,7 @@ export default function Header() {
     .catch((err) => {
       console.log(err);
     });
-  }, [])
+  }, [user])
 
   if (user) {
     return AuthLayout(user, logout, role);

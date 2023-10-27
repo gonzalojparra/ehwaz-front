@@ -26,41 +26,41 @@ const components = [
   {
     title: 'Rutinas',
     href: '/student_routines',
-    perms: ['Alumno'],
+    perms: 'Alumno',
     description:
       'Ver rutinas asignadas por el personal trainer.',
   },
   {
     title: 'Calendario',
     href: '/calendario',
-    perms: ['Trainer'],
+    perms: 'Trainer',
     description:
       'Ver calendario con el cronograma de rutinas asignadas por todos los profesionales.',
   },
   {
     title: 'Progreso',
     href: '/metricas',
-    perms: ['Alumno'],
+    perms: 'Alumno',
     description:
       'Ver progreso de los objetivos basados en los ejercicios especificados.',
   },
   {
     title: 'Mis Pago',
     href: '/payment',
-    perms: ['Alumno'],
+    perms: 'Alumno',
     description: 'Generar mis pagos.',
   },
   {
     title: 'Pagos',
     href: '/payments',
-    perms: ['Trainer', 'Alumno'],
+    perms: 'Trainer, Alumno',
     description:
       'Ver pagos realizados y pendientes de los planes asignados por los profesionales.',
   },
   {
     title: 'Alumnos',
     href: '/trainer_request',
-    perms: ['Trainer'],
+    perms: 'Trainer',
     description:
       'Ver eventos que se realizarán y que pueden ser de interés para que te inscribas!',
   },
@@ -106,6 +106,9 @@ const AuthLayout = (user, logout, role) => {
               <SheetContent side='left' className='w-[300px] sm:w-[400px]'>
                 <nav className='flex flex-col gap-4'>
                   {components.filter((component) => {
+                    console.log(role);
+                    console.log(component.perms.includes(role));
+                    console.log(component);
                     if(component.perms.includes(role)){
                       <Link
                       key={component.title}
