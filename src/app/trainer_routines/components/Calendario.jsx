@@ -10,6 +10,8 @@ import ModalEvento from "./ModalEvento";
 export default function Calendario({ rutinas, alumnoId, obtener_rutinas }){
     const [eventos, setEventos] = useState(null);
     const [open, setOpen] = useState(false);
+    const [nuevo, setNuevo] = useState(false);
+    const [data, setData] = useState(null);
 
     const cargar_eventos = ()=>{
       let events = [];
@@ -45,11 +47,16 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas }){
       setEventos(events);
     }
 
-    const verEvento = ()=>{
+    const verEvento = (selectInfo)=>{
+      console.log(selectInfo.event._def);
+      setData(selectInfo.event._def);
+      setNuevo(false);
       setOpen(true);
     }
 
     const crearEvento = (selectInfo)=>{
+      setData(selectInfo);
+      setNuevo(true);
       setOpen(true);
       console.log(selectInfo);
     }
@@ -80,7 +87,7 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas }){
           themeSystem="Pulse"
           events={eventos}
         />}
-        <ModalEvento open={open} setOpen={setOpen}/>
+        <ModalEvento open={open} setOpen={setOpen} nuevo={nuevo} data={data} rutinas={rutinas}/>
       </>
     )
 }
