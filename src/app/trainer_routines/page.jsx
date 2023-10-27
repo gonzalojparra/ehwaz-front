@@ -16,7 +16,6 @@ export default function Page(){
     const [alumnos, setAlumnos] = useState(null);
     const [alumnoId, setAlumnoId] = useState(null);
     const [rutinas, setRutinas] = useState(null);
-    const [eventosCalendario, setEventosCalendario] = useState(null);
     const [goals, setGoals] = useState(null);
 
 
@@ -57,10 +56,6 @@ export default function Page(){
         })
     }
 
-    const obtener_eventos = async(e)=>{
-        //aca hay que obtener los RoutineEvents para el calendario
-    }
-
     return (
         <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
             <div className='md:w-[500px] sm:w-full pb-8'>
@@ -72,7 +67,7 @@ export default function Page(){
                 {rutinas == null && alumnoId != null ? <SpinerCustom text={"Obteniendo rutinas..."}/> : <></>}
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {rutinas != null ? <Calendario rutinas={rutinas} alumnoId={alumnoId}/> : <></>}
+                {rutinas != null ? <Calendario rutinas={rutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
             </div>
         </div>
     )
