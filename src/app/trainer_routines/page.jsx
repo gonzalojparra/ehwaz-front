@@ -67,7 +67,7 @@ export default function Page(){
                 {rutinas == null && alumnoId != null ? <SpinerCustom text={"Obteniendo rutinas..."}/> : <></>}
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {rutinas != null ? <Calendario rutinas={rutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
+                {rutinas != null ? <Calendario rutinas={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
             </div>
         </div>
     )

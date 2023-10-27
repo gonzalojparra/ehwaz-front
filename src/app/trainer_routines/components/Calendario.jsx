@@ -28,8 +28,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import SimpleSpiner from "@/components/ui/simple-spiner";
+import axios from "@/lib/axios";
 
-export default function Calendario({ rutinas, alumnoId, obtener_rutinas }) {
+export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRutinas }) {
   const [eventos, setEventos] = useState(null);
   const [open, setOpen] = useState(false);
   const [nuevo, setNuevo] = useState(false);
@@ -103,10 +104,11 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas }) {
     setLoading(true);
     await axios.post('/api/routine_event_store', {
       event_date: date,
-      trainer_routine_id: trainer_routine_id,
+      trainer_routine_id: trainerRoutineId,
       description: descripcion
     })
     .then((res)=>{
+      setRutinas(null);
       obtener_rutinas(alumnoId); setOpen(false);
     })
     .catch((e)=>{
