@@ -32,7 +32,7 @@ const components = [
   },
   {
     title: 'Calendario',
-    href: '/calendario',
+    href: '/trainer_routines',
     perms: 'Trainer',
     description:
       'Ver calendario con el cronograma de rutinas asignadas por todos los profesionales.',
