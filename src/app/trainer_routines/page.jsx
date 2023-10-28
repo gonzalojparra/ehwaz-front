@@ -52,6 +52,13 @@ export default function Page(){
             console.log(res.data.data);
         })
 
+        await axios.get('/api/get_estados')
+        .then((res)=>{
+            setEstados(res.data.data);
+            console.log("estados:");
+            console.log(res.data.data);
+        })
+
         await axios
         .post("/api/student_routines", {
           student_id: e,
@@ -60,13 +67,6 @@ export default function Page(){
             setRutinas(response.data.data);
             console.log("rutinas:");
             console.log(response.data.data);
-        })
-
-        await axios.get('/api/get_estados')
-        .then((res)=>{
-            setEstados(res.data.data);
-            console.log("estados:");
-            console.log(res.data.data);
         })
     }
 
@@ -77,11 +77,11 @@ export default function Page(){
 
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {(rutinas != null && alumnoId != null && estados != null && goals != null) ? <Collapsable data={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas} goals={goals} estados={estados}/> : <></>}
-                {(rutinas == null && alumnoId != null && estados == null && goals == null) ? <SpinerCustom text={"Obteniendo rutinas..."}/> : <></>}
+                {(rutinas != null && alumnoId != null) ? <Collapsable data={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas} goals={goals} estados={estados}/> : <></>}
+                {(rutinas == null && alumnoId != null) ? <SpinerCustom text={"Obteniendo rutinas..."}/> : <></>}
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {(rutinas != null && alumnoId != null && estados != null && goals != null) ? <Calendario rutinas={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
+                {(rutinas != null && alumnoId != null) ? <Calendario rutinas={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
             </div>
         </div>
     )

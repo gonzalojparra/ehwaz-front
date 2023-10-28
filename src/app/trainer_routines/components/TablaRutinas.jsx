@@ -32,7 +32,7 @@ export default function TablaRutinas({ data, alumnoId, obtener_rutinas, goals, e
     <div className="flex justify-center flex-col">
       {/* <Label className="text-center pb-3">Listado de Rutinas</Label> */}
       <div className="md:w-[150px]">
-        <ModalCrearRutina goals={goals} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/>
+        <ModalCrearRutina goals={goals} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas} setRutinas={setRutinas}/>
       </div>
       <Table>
         <TableHeader>
