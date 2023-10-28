@@ -106,9 +106,9 @@ const AuthLayout = (user, logout, role) => {
               <SheetContent side='left' className='w-[300px] sm:w-[400px]'>
                 <nav className='flex flex-col gap-4'>
                   {components.filter((component) => {
-                    console.log(role);
+                    /* console.log(role);
                     console.log(component.perms.includes(role));
-                    console.log(component);
+                    console.log(component); */
                     if(component.perms.includes(role)){
                       <Link
                       key={component.title}

@@ -78,7 +78,7 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
         events.push(eve);
       });
     });
-    console.log(events);
+    //console.log(events);
     setEventos(events);
   };
 
@@ -204,9 +204,15 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
                   </SelectTrigger>
                   <SelectContent>
                     {rutinas.map((rut) => {
-                      if(rut.status == 1){
+                      if(rut.id_routine_status == 1){
                         return (
                           <SelectItem key={rut.id} value={rut.id}>
+                            {rut.name}
+                          </SelectItem>
+                        );
+                      }else{
+                        return (
+                          <SelectItem disabled key={rut.id} value={rut.id}>
                             {rut.name}
                           </SelectItem>
                         );

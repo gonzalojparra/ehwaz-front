@@ -17,6 +17,7 @@ export default function Page(){
     const [alumnoId, setAlumnoId] = useState(null);
     const [rutinas, setRutinas] = useState(null);
     const [goals, setGoals] = useState(null);
+    const [estados, setEstados] = useState(null);
 
 
     useEffect(()=>{
@@ -35,24 +36,37 @@ export default function Page(){
     const obtener_alumnos = async()=>{
         await axios.get('/api/trainer_students')
         .then((res)=>{
-            setAlumnos(res.data); console.log(res.data);
+            setAlumnos(res.data);
+            console.log('estudiantes:');
+            console.log(res.data);
         })
     }
 
     const obtener_rutinas = async(e)=>{
+        await axios.post("api/student_goals", {
+            student_id: e
+        })
+        .then((res)=>{
+            setGoals(res.data.data);
+            console.log("goals:");
+            console.log(res.data.data);
+        })
+
         await axios
         .post("/api/student_routines", {
           student_id: e,
         })
         .then((response) => {
-            setRutinas(response.data.data); console.log(response.data.data);
+            setRutinas(response.data.data);
+            console.log("rutinas:");
+            console.log(response.data.data);
         })
 
-        await axios.post("api/student_goals", {
-            student_id: e
-        })
+        await axios.get('/api/get_estados')
         .then((res)=>{
-            setGoals(res.data.data); console.log(res.data.data);
+            setEstados(res.data.data);
+            console.log("estados:");
+            console.log(res.data.data);
         })
     }
 
@@ -63,11 +77,11 @@ export default function Page(){
 
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {rutinas != null ? <Collapsable data={rutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas} goals={goals}/> : <></>}
-                {rutinas == null && alumnoId != null ? <SpinerCustom text={"Obteniendo rutinas..."}/> : <></>}
+                {(rutinas != null && alumnoId != null && estados != null && goals != null) ? <Collapsable data={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas} goals={goals} estados={estados}/> : <></>}
+                {(rutinas == null && alumnoId != null && estados == null && goals == null) ? <SpinerCustom text={"Obteniendo rutinas..."}/> : <></>}
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {rutinas != null ? <Calendario rutinas={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
+                {(rutinas != null && alumnoId != null && estados != null && goals != null) ? <Calendario rutinas={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/> : <></>}
             </div>
         </div>
     )
