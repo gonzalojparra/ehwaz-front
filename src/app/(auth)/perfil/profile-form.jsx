@@ -46,6 +46,12 @@ export function ProfileForm() {
   const [description, setDescription] = useState('');
   const { user } = useAuth({ middleware: 'auth' });
 
+  const defaultValues = {
+    name: '',
+    last_name: '',
+    description: '',
+  };
+
   useEffect(() => {
     axios.get('/api/get-role')
       .then((res) => {
@@ -61,6 +67,7 @@ export function ProfileForm() {
             setName(res.data.data.name);
             setLastName(res.data.data.last_name);
             setDescription(res.data.data.description);
+            form.reset({ ...defaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
           })
           .catch((err) => {
             console.log(err);
@@ -72,6 +79,7 @@ export function ProfileForm() {
             setName(res.data.data.name);
             setLastName(res.data.data.last_name);
             setDescription(res.data.data.description);
+            form.reset({ ...defaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
           })
           .catch((err) => {
             console.log(err);
@@ -83,6 +91,7 @@ export function ProfileForm() {
             setName(res.data.data.name);
             setLastName(res.data.data.last_name);
             setDescription(res.data.data.description);
+            form.reset({ ...defaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
           })
           .catch((err) => {
             console.log(err);
@@ -90,12 +99,6 @@ export function ProfileForm() {
       }
     }
   }, [user]);
-
-  const defaultValues = {
-    name: name,
-    last_name: last_name,
-    description: description,
-  }
 
   /**
    * Crea un formulario utilizando la librería useForm de React Hook Form.
@@ -182,7 +185,9 @@ export function ProfileForm() {
                 />
               </FormControl>
               <FormDescription>
-                Acerca de qué aspectos del entrenamiento te enfocas.
+                {role == 'Alumno'
+                  ? 'Cuéntanos sobre ti, tus metas y objetivos.'
+                  : 'Acerca de qué aspectos del entrenamiento te enfocas.'}
               </FormDescription>
               <FormMessage />
             </FormItem>

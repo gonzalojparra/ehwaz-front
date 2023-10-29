@@ -1,8 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
@@ -17,7 +15,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import SimpleSpiner from '@/components/ui/simple-spiner';
 import {
   User2,
@@ -28,7 +25,6 @@ import {
   Users
 } from 'lucide-react';
 
-import axios from '@/lib/axios';
 import { assignTrainer, isConnectedTrainer } from '@/modules/students';
 import { getTrainer } from '@/modules/trainers';
 
@@ -36,32 +32,16 @@ export default function TrainerPage({ params: { id } }) {
   const [trainer, setTrainer] = useState({});
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
-    /* if (pathname != '/login' && pathname != '/registro') {
-      axios.post('/api/permissions', { url: pathname })
-        .then((res) => {
-          if (res.data.data == false) {
-            router.push('/')
-          } else { */
     getTrainer(id).then((trainer) => {
       setTrainer(trainer);
     });
-    /*           }
-            });
-        } */
-
-
-  }, [id]);
-
-  useEffect(() => {
     isConnectedTrainer(id)
       .then((isConnected) => {
         setIsConnected(isConnected);
       })
-  }, []);
+  }, [id]);
 
   const birthDate = new Date(trainer.day_of_birth);
   const today = new Date();
@@ -147,16 +127,20 @@ export default function TrainerPage({ params: { id } }) {
                       </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
-                      {trainer.certificates.map((certificate) => (
-                        <div className="grid grid-cols-4 items-center gap-4">
-                          <Input
-                            id="name"
-                            defaultValue={certificate.name}
-                            className="col-span-3"
-                            disabled
-                          />
+                      {trainer.certificates && Array.isArray(trainer.certificates) && (
+                        <div className="grid gap-4 py-4">
+                          {trainer.certificates.map((certificate) => (
+                            <div className="grid grid-cols-4 items-center gap-4">
+                              <Input
+                                id="name"
+                                defaultValue={certificate.name}
+                                className="col-span-3"
+                                disabled
+                              />
+                            </div>
+                          ))}
                         </div>
-                      ))}
+                      )}
                     </div>
                     <DialogFooter>
                     </DialogFooter>

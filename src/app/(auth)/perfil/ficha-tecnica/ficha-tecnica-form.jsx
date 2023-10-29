@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from '@/lib/axios';
 import { useToast } from '@/components/ui/use-toast';
@@ -26,14 +26,15 @@ import {
 
 export function FichaTecnicaForm() {
   const [role, setRole] = useState([]);
-  const [weight, setWeight] = useState(0);
-  const [height, setHeight] = useState(0);
-  const [goal, setGoal] = useState('');
   const { toast } = useToast();
   const { user } = useAuth({ middleware: 'auth' });
-
   const form = useForm({
     mode: 'onChange',
+    defaultValues: {
+      weight: '',
+      height: '',
+      goal: '',
+    },
   });
 
   useEffect(() => {
@@ -41,61 +42,47 @@ export function FichaTecnicaForm() {
       .get('/api/get-role')
       .then((res) => {
         setRole(res.data.data[0]);
+        if (user) {
+          if (role.includes('Trainer')) {
+            axios
+              .get(`/api/get_trainer_data/${user.id}`)
+              .then((res) => {
+                const { weight, height } = res.data.data;
+                form.setValue('weight', weight);
+                form.setValue('height', height);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else if (role.includes('Alumno')) {
+            axios
+              .get(`/api/get_student_data/${user.id}`)
+              .then((res) => {
+                const { weight, height, goal } = res.data.data;
+                form.setValue('weight', weight);
+                form.setValue('height', height);
+                form.setValue('goal', goal);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          } else if (role.includes('Especialista')) {
+            axios
+              .get(`/api/get_specialist_data/${user.id}`)
+              .then((res) => {
+                const { weight, height } = res.data.data;
+                form.setValue('weight', weight);
+                form.setValue('height', height);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-
-    if (user) {
-      if (role.includes('Trainer')) {
-        axios
-          .get(`/api/get_trainer_data/${user.id}`)
-          .then((res) => {
-            setWeight(res.data.data.weight);
-            setHeight(res.data.data.height);
-
-            form.setDefaultValues({
-              weight: res.data.data.weight,
-              height: res.data.data.height,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else if (role.includes('Alumno')) {
-        axios
-          .get(`/api/get_student_data/${user.id}`)
-          .then((res) => {
-            setWeight(res.data.data.weight);
-            setHeight(res.data.data.height);
-            setGoal(res.data.data.goal);
-
-            form.setDefaultValues({
-              weight: res.data.data.weight,
-              height: res.data.data.height,
-              goal: res.data.data.goal,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      } else if (role.includes('Especialista')) {
-        axios
-          .get(`/api/get_specialist_data/${user.id}`)
-          .then((res) => {
-            setWeight(res.data.data.weight);
-            setHeight(res.data.data.height);
-
-            form.setDefaultValues({
-              weight: res.data.data.weight,
-              height: res.data.data.height,
-            });
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
-    }
   }, [user]);
 
   const enviarData = async (data) => {
@@ -154,10 +141,7 @@ export function FichaTecnicaForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Objetivo</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select {...field}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder='Seleccione una meta' />
