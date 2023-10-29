@@ -65,7 +65,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Añadir Rutina</Button>
+        <Button className="ml-3">Añadir Rutina</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

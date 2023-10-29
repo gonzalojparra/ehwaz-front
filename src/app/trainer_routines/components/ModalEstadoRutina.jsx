@@ -23,7 +23,7 @@ import axios from "@/lib/axios";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
 
-export default function ModalEstadoRutina({ estado_id, rutinaId, estados, estado_nombre, obtener_rutinas, alumnoId }) {
+export default function ModalEstadoRutina({ row, rutinaId, estados, obtener_rutinas, alumnoId }) {
     const [estadoId, setEstadoId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
@@ -41,7 +41,7 @@ export default function ModalEstadoRutina({ estado_id, rutinaId, estados, estado
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline">{estado_nombre}</Button>
+        <Button variant="outline">{row.status.status}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -54,7 +54,7 @@ export default function ModalEstadoRutina({ estado_id, rutinaId, estados, estado
             </Label>
               <Select
                 onValueChange={(e) => setEstadoId(e)}
-                defaultValue={estado_id}
+                defaultValue={row.status.id}
               >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Seleccione una rutina" />
