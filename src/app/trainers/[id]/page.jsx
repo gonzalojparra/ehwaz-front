@@ -7,6 +7,17 @@ import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import SimpleSpiner from '@/components/ui/simple-spiner';
 import {
   User2,
@@ -115,16 +126,42 @@ export default function TrainerPage({ params: { id } }) {
                 </Card>
               </div>
               <div className='w-full md:w-1/2'>
-                <Card className='m-2 hover:scale-105 transition-transform cursor-pointer'>
-                  <CardHeader className='flex flex-row items-center justify-between space-y-0'>
-                    <CardTitle className='text-sm font-medium'>Certificados</CardTitle>
-                    <ScrollText />
-                  </CardHeader>
-                  <CardContent>
-                    <div className='text-2xl font-bold'>{trainer.qty_certificates}</div>
-                    <p className='text-xs text-muted-foreground'>Títulos de estudio</p>
-                  </CardContent>
-                </Card>
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Card className='m-2 hover:scale-105 transition-transform cursor-pointer'>
+                      <CardHeader className='flex flex-row items-center justify-between space-y-0'>
+                        <CardTitle className='text-sm font-medium'>Certificados</CardTitle>
+                        <ScrollText />
+                      </CardHeader>
+                      <CardContent>
+                        <div className='text-2xl font-bold'>{trainer.qty_certificates}</div>
+                        <p className='text-xs text-muted-foreground'>Títulos de estudio</p>
+                      </CardContent>
+                    </Card>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[425px]">
+                    <DialogHeader>
+                      <DialogTitle>Certificados</DialogTitle>
+                      <DialogDescription>
+                        El trainer posee los siguientes certificados:
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="grid gap-4 py-4">
+                      {trainer.certificates.map((certificate) => (
+                        <div className="grid grid-cols-4 items-center gap-4">
+                          <Input
+                            id="name"
+                            defaultValue={certificate.name}
+                            className="col-span-3"
+                            disabled
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    <DialogFooter>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </div>
               <div className='w-full md:w-1/2'>
                 <Card className='m-2 hover:scale-105 transition-transform cursor-pointer'>
