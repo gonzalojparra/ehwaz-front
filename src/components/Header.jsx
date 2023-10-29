@@ -22,7 +22,7 @@ export default function Header() {
       setRole(res.data.data[0]);
     })
     .catch((err) => {
-      console.log(err);
+      //console.log(err);
     });
   }, [user])
 

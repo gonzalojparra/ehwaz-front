@@ -44,6 +44,8 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
   const [errors, setErrors] = useState([]);
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState('');
+  const [eventoId, setEventoId] = useState(null);
 
   const cargar_eventos = () => {
     let events = [];
@@ -58,8 +60,9 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
           backgroundColor: rutina.color,
           borderColor: rutina.color,
           extendedProps: {
+            event_id: ev.id,
             trainer_routine_id: rutina.id,
-            student_feedback: ev.student_feedback,
+            feedback: ev.student_feedback,
             description: ev.description,
             id_student_goal: rutina.id_student_goal,
             name_routine: rutina.name,
@@ -75,22 +78,27 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
         events.push(eve);
       });
     });
-    console.log(events);
+    //console.log(events);
     setEventos(events);
   };
 
   const verEvento = (selectInfo) => {
+    setErrors([]);
     //console.log(selectInfo.event._def);
     setData(selectInfo.event._def);
+    setEventoId(selectInfo.event._def.extendedProps.event_id);
     setDate(selectInfo.event._def.extendedProps.event_date);
     setTrainerRoutineId(selectInfo.event._def.extendedProps.trainer_routine_id);
     setDescripcion(selectInfo.event._def.extendedProps.description);
     setName(selectInfo.event._def.extendedProps.name_routine);
+    setFeedback(selectInfo.event._def.extendedProps.feedback);
     setNuevo(false);
     setOpen(true);
+    console.log(selectInfo.event._def.extendedProps.event_id);
   };
 
   const crearEvento = (selectInfo) => {
+    setErrors([]);
     setData(selectInfo);
     setDate(selectInfo.startStr);
     setTrainerRoutineId("");
@@ -109,10 +117,26 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
     })
     .then((res)=>{
       setRutinas(null);
-      obtener_rutinas(alumnoId); setOpen(false);
+      obtener_rutinas(alumnoId); setOpen(false); setLoading(false);
     })
     .catch((e)=>{
-      setErrors(e.response.data.errors); 
+      setErrors(e.response.data.errors); setLoading(false); 
+    })
+  }
+
+  const borrarEvento = async()=>{
+    setLoading(true);
+    await axios.post('/api/borrar_evento', {
+      evento_id : eventoId
+    })
+    .then((res)=>{
+      setRutinas(null);
+      obtener_rutinas(alumnoId);
+      setOpen(false);
+      setLoading(false);
+    })
+    .catch((e)=>{
+      setErrors(e.response.data.errors); setLoading(false);
     })
   }
 
@@ -163,7 +187,7 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
                 onChange={(e) => setDate(e.target.value)}
                 disabled={true}
               />
-              <InputError messages={errors?.date} />
+              <InputError messages={errors?.event_date} />
             </div>
             <div className="">
               <Label htmlFor="rutina" className="flex ml-1">
@@ -180,11 +204,19 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
                   </SelectTrigger>
                   <SelectContent>
                     {rutinas.map((rut) => {
-                      return (
-                        <SelectItem key={rut.id} value={rut.id}>
-                          {rut.name}
-                        </SelectItem>
-                      );
+                      if(rut.id_routine_status == 1){
+                        return (
+                          <SelectItem key={rut.id} value={rut.id}>
+                            {rut.name}
+                          </SelectItem>
+                        );
+                      }else{
+                        return (
+                          <SelectItem disabled key={rut.id} value={rut.id}>
+                            {rut.name}
+                          </SelectItem>
+                        );
+                      }
                     })}
                   </SelectContent>
                 </Select>
@@ -204,10 +236,31 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
                 disabled={!nuevo}
               />
               <InputError messages={errors?.descripcion} />
+              <InputError messages={errors?.general}/>
             </div>
+            {!nuevo &&
+            feedback != '' ? 
+            <div className="">
+              <Label htmlFor="feedback" className="flex ml-1">
+                Feedback del Alumno
+              </Label>
+              <Textarea
+                id="feedback"
+                placeholder=""
+                value={feedback != null ? feedback : ''}
+                onChange={(e) => {
+                  
+                }}
+                disabled={true}
+              />
+              <InputError messages={errors?.descripcion} />
+            </div>
+            : !nuevo && <Label>No existe Feedback del Alumno</Label>
+            }
           </div>
           <DialogFooter>
-            {nuevo && <Button type="button" onClick={enviarEvento} disabled={loading}>Crear Rutina {loading && <SimpleSpiner/>}</Button>}
+            {nuevo && <Button type="button" onClick={enviarEvento} disabled={loading}>Crear Evento {loading && <SimpleSpiner/>}</Button>}
+            {!nuevo && feedback == null && <Button type="button" variant="destructive" onClick={borrarEvento} disabled={loading}>Borrar Evento {loading && <SimpleSpiner/>}</Button>}
           </DialogFooter>
         </DialogContent>
       </Dialog>

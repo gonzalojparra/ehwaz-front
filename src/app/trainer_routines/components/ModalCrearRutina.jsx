@@ -25,7 +25,7 @@ import {
 import SimpleSpiner from "@/components/ui/simple-spiner";
 import axios from "@/lib/axios";
 
-export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas }) {
+export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas }) {
   const [goalId, setGoalId] = useState(null);
   const [nombre, setNombre] = useState('');
   const [fechaInicial, setFechaInicial] = useState('');
@@ -49,7 +49,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas }) {
       color: color 
     })
     .then((res)=>{
-      console.log(res.data); obtener_rutinas(alumnoId); setOpen(false); setLoading(false);
+      console.log(res.data); setRutinas(null); obtener_rutinas(alumnoId); setOpen(false); setLoading(false);
     })
     .catch((e)=>{
       setErrors(e.response.data.errors); setLoading(false);
