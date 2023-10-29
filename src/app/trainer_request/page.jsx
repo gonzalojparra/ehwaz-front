@@ -9,16 +9,26 @@ import SpinerCustom from "@/components/ui/spiner-custom";
 import TablaMejorada from "./components/TablaMejorada";
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+import Tabla from "./components/Tabla";
 
 export default function TrainerRequestPage() {
   const [requests, setRequests] = useState(null);
   const pathname = usePathname();
   const router = useRouter();
+  const [estados, setEstados] = useState(null);
+  const [loading, setLoading] = useState(null);
+
+  const getEstados = async()=>{
+    await axios.get('/api/status_student')
+    .then((res)=>{
+      setEstados(res.data.data);
+    })
+  }
 
   const obtenerInfo = async()=>{
     await axios.get('/api/trainer_students')
     .then((res)=>{
-      setRequests(res.data)
+      setRequests(res.data.data)
     })
   }
 
@@ -29,6 +39,7 @@ export default function TrainerRequestPage() {
           if (res.data.data == false) {
             router.push('/')
           }else{
+            getEstados();
             obtenerInfo();
           }
         });
@@ -41,7 +52,7 @@ export default function TrainerRequestPage() {
        <div className='md:w-[1200px] sm:w-full pb-8'>
        {
         requests != null 
-        ? <TablaMejorada data={requests} getRequests={obtenerInfo}/>
+        ?  <Tabla data={requests} estados={estados} getAlumnos={obtenerInfo} loading={loading} setLoading={setLoading}/>
         : <SpinerCustom text={'Cargando Tabla'} />
       }
        </div>

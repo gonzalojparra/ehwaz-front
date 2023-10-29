@@ -34,11 +34,13 @@ export default function SelectCustom({alumnos, setAlumnoId, alumnoId, obtener_pl
                     </SelectTrigger>
                     <SelectContent>
                         {alumnos.map((student) => {
-                            return (
-                                <SelectItem key={student.id} value={`${student.id}`}>
-                                    {student.name}
-                                </SelectItem>
-                            );
+                            if(student.pivot.status_student_id == 2){
+                                return (
+                                    <SelectItem key={student.id} value={`${student.id}`}>
+                                        {student.name}
+                                    </SelectItem>
+                                );
+                            }
                         })}
                     </SelectContent>
                 </Select>

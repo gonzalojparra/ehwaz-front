@@ -1,6 +1,5 @@
-'use client'
+"use client";
 
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,142 +10,79 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import axios from "@/lib/axios";
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
+import InputError from "@/components/ui/InputError";
 import SimpleSpiner from "@/components/ui/simple-spiner";
+import axios from "@/lib/axios";
+import { useState } from "react";
+import { Label } from "@/components/ui/label";
 
-export default function ModalEstado({tupla_id, estado, getRequests}){
-    let color = '';
-    switch (estado) {
-        case "Activo":
-          color = "primary"
-          break;
-  
-        case "Inactivo":
-          color = "secondary";
-          break;
-  
-        case "Cancelado":
-          color = "destructive";
-          break;
-  
-        default:
-          break;
-      }
-
-
-    useEffect(()=>{
-        cambiarEstado(tupla_id, estado);
-    }, [])
-
-    //const [color, setColor] = useState();
-    const [idTupla, setIdTupla] = useState();
-    const [estados, setEstados] = useState([
-        { id: 1, label: "Activo" },
-        { id: 2, label: "Inactivo" },
-        { id: 3, label: "Cancelado" },
-      ]);
-    const [stado, setStado] = useState(null);
-    const cambiarEstado = (id_de_tupla, state) => {
-        console.log(state);
-        console.log(id_de_tupla)
-        setIdTupla(id_de_tupla);
-        switch (state) {
-          case "Activo":
-            setStado(1);
-            //setColor("primary");
-            break;
-    
-          case "Inactivo":
-            setStado(2);
-            //setColor("secondary");
-            break;
-    
-          case "Cancelado":
-            setStado(3);
-            //setColor("destructive");
-            break;
-    
-          default:
-            break;
-        }
-        //console.log(color);
-    };
+export default function ModalEstado({ row, relationId, estados, getAlumnos }) {
+    const [estadoId, setEstadoId] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
-    const [sending, setSending] = useState(false);
-    const toggleModal = () => {
-        if (open) {
-          setOpen(false);
-        } else {
-          setOpen(true);
-        }
+    const [errors, setErrors] = useState([]);
+    /* console.log("planId:"+planId);
+    console.log("estados:"+estados);
+    console.log("alumnoId:"+alumnoId);*/
+
+
+    const enviarEstado = async()=>{
+        setLoading(true);
+        await axios.post('/api/change_student_trainer', {
+            relation_id: relationId,
+            estado_id: estadoId
+        })
+        .then((res)=>{
+            setOpen(false); getAlumnos(); setLoading(false);
+        })
     }
-
-    const sendInfo = async () => {
-        const res = await axios
-          .post("/api/change_status", {
-            id_tupla: idTupla,
-            estado: stado,
-          })
-          .then((response) => {
-            return true;
-          })
-        return res;
-      };
-
-    const enviarInfo = async()=>{
-        setSending(true);
-        if (await sendInfo()) {
-            setSending(false);
-            setOpen(false);
-            getRequests();
-        } else {
-          setSending(false);
-        }
-    }
-
-    return (
-        <Dialog open={open} onOpenChange={setOpen}>
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant={color == "primary" ? "default" : color} className={color} onClick={toggleModal}>{estado}</Button>
+        <Button variant="outline">{row.status_student.status}</Button>
       </DialogTrigger>
-      <DialogContent className="max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Cambiar Estado</DialogTitle>
+          <DialogTitle>Estado</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-1 items-center gap-4">
-            <Select
-              onValueChange={(e) => setStado(e)} 
-              defaultValue={stado}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Seleccione un estado"/>
-              </SelectTrigger>
-              <SelectContent>
-                {estados.map((estad) => {
-                  return (
-                    <SelectItem key={estad.id} value={estad.id}>
-                      {estad.label}
-                    </SelectItem>
-                  );
-                })}
-              </SelectContent>
-            </Select>
+          <div className="">
+            <Label htmlFor="plan" className="flex ml-1">
+              Plan
+            </Label>
+              <Select
+                onValueChange={(e) => setEstadoId(e)}
+                defaultValue={row.status_student.id}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Seleccione un plan" />
+                </SelectTrigger>
+                <SelectContent>
+                  {estados.map((estado) => {
+                    return (
+                      <SelectItem key={estado.id} value={estado.id}>
+                        {estado.status}
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+            <InputError messages={errors?.estado_id} />
           </div>
         </div>
         <DialogFooter>
-          <Button type="button" onClick={enviarInfo} disabled={sending}>Guardar Nuevo Estado {sending && <SimpleSpiner/>}</Button>
+          <Button type="button" onClick={enviarEstado} disabled={loading}>Guardar Estado {loading && <SimpleSpiner/>}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-    )
+  );
 }
+
+
