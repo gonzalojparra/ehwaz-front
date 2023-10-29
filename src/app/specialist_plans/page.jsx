@@ -8,6 +8,7 @@ import SelectCustom from "./components/SelectCustom";
 import Collapsable from "./components/Collapsable";
 import SimpleSpiner from "@/components/ui/simple-spiner";
 import SpinerCustom from "@/components/ui/spiner-custom";
+import Calendario from "./components/Calendario";
 
 export default function Page(){
     const pathname = usePathname();
@@ -63,8 +64,11 @@ export default function Page(){
                 <SelectCustom alumnos={alumnos} setAlumnoId={setAlumnoId} alumnoId={alumnoId} obtener_planes={obtener_planes}/>
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
-                {planes != null && alumnoId != null ? <Collapsable data={planes} alumnoId={alumnoId} obtener_planes={obtener_planes} goals={goals} estados={estados} setPlanes={setPlanes}/> : <></>}
+                {planes != null && alumnoId != null ? <Collapsable data={planes} alumnoId={alumnoId} obtener_planes={obtener_planes} estados={estados} setPlanes={setPlanes}/> : <></>}
                 {planes == null && alumnoId != null ? <SpinerCustom text={"Cargando planes..."}/> : <></>}
+            </div>
+            <div className="md:w-[1200px] sm:w-full pb-8">
+                {planes != null && alumnoId != null ? <Calendario planes={planes}/> : <></>}
             </div>
         </div>
     )
