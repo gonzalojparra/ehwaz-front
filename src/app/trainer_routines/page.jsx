@@ -36,9 +36,9 @@ export default function Page(){
     const obtener_alumnos = async()=>{
         await axios.get('/api/trainer_students')
         .then((res)=>{
-            setAlumnos(res.data);
+            setAlumnos(res.data.data);
             console.log('estudiantes:');
-            console.log(res.data);
+            console.log(res.data.data);
         })
     }
 
@@ -73,7 +73,7 @@ export default function Page(){
     return (
         <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
             <div className='md:w-[500px] sm:w-full pb-8'>
-                <SelectCustom alumnos={alumnos} setAlumnoId={setAlumnoId} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/>
+                {alumnos != null && <SelectCustom alumnos={alumnos} setAlumnoId={setAlumnoId} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/>}
 
             </div>
             <div className="md:w-[1200px] sm:w-full pb-8">
