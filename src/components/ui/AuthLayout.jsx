@@ -156,7 +156,7 @@ const AuthLayout = (user, logout, role) => {
                       <ListItem href='/trainers' title='Personal Trainers'>
                         Ver todos los Personal Trainers
                       </ListItem>
-                      <ListItem href='/' title='Profesionales'>
+                      <ListItem href='/specialists' title='Profesionales'>
                         Ver todos los profesionales
                       </ListItem>
                       <ListItem href='/' title='Algo más'>
