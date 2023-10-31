@@ -64,6 +64,34 @@ const components = [
     description:
       'Ver eventos que se realizarán y que pueden ser de interés para que te inscribas!',
   },
+  {
+    title: 'Planes',
+    href: '/specialist_plans',
+    perms: 'Especialista',
+    description:
+      'Generar Planes para alumnos',
+  },
+  {
+    title: 'Alumnos',
+    href: '/specialist_request',
+    perms: 'Especialista',
+    description:
+      'Ver listado de alumnos',
+  },
+  {
+    title: 'Listado de Pagos',
+    href: '/student_payment',
+    perms: 'Student',
+    description:
+      'Ver pagos realizados',
+  },
+  {
+    title: 'Ver planes de especialistas',
+    href: '/student_plans',
+    perms: 'Student',
+    description:
+      'Ver planes creados a tu medida',
+  },
 ]
 
 
@@ -159,8 +187,8 @@ const AuthLayout = (user, logout, role) => {
                       <ListItem href='/specialists' title='Profesionales'>
                         Ver todos los profesionales
                       </ListItem>
-                      <ListItem href='/' title='Algo más'>
-                        Ver algo más
+                      <ListItem href='/exercises' title='Buscador de Ejercicios'>
+                        Buscar ejercicios
                       </ListItem>
                     </ul>
                   </NavigationMenuContent>

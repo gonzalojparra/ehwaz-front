@@ -1,6 +1,7 @@
 "use client";
 
-import axios from "axios";
+import ax from "axios";
+import axios from "@/lib/axios";
 import { useEffect, useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import 'swiper/css';
@@ -48,7 +49,7 @@ export default function Page() {
     if (busqueda != null && busqueda != "") {
         setLoading(true);
         setSuggestions(null);
-      await axios
+      await ax
         .get(
           "https://wger.de/api/v2/exercise/search/?language=spanish&term=" +
             busqueda
