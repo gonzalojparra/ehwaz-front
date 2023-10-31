@@ -1,42 +1,39 @@
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react';
 
-import React, { PureComponent } from "react";
-import { PieChart, Pie, Legend, Tooltip, ResponsiveContainer } from "recharts";
+import { Card, DonutChart, Title } from "@tremor/react";
 
-/* const data01 = [
-  { name: "Group A", value: 400, fill:"#FFFF20", descripcion:"Hat que hacer algo" },
-  { name: "Group B", value: 300, fill:"#FF0020", descripcion:"Hat que hacer algo" },
-  { name: "Group C", value: 300, fill:"#FF5020", descripcion:"Hat que hacer algo" },
-  { name: "Group D", value: 200, fill:"#55FF20", descripcion:"Hat que hacer algo" },
-  { name: "Group E", value: 278, fill:"#00FF20", descripcion:"Hat que hacer algo" },
-  { name: "Group F", value: 189, fill:"#FF00AA", descripcion:"Hat que hacer algo" },
-]; */
+const cities = [
+  {
+    name: "New York",
+    sales: 9800,
+  },
+  // ...
+  {
+    name: "Zurich",
+    sales: 1398,
+  },
+];
 
-export default function Chart({ data }) {
+const valueFormatter = (number) => `$ ${new Intl.NumberFormat("us").format(number).toString()}`;
 
-  const receivedEvents = data[0].events;
-  let events = [];
-
-  receivedEvents.map((events))
-
-  const [parsed, setParsed] = useState();
+export const Chart = () => {
+  const [value, setValue] = useState(null);
   return (
-    <PieChart width={1000} height={400}>
-      <Pie
-        dataKey="value"
-        isAnimationActive={true}
-        data={data}
-        cx={200}
-        cy={200}
-        outerRadius={120}
-        label={"Cantidad de días por rutina"}
-        cursor={"pointer"}
-        onSelect={(e) => console.log(e)}
-        onClick={(e) => console.log(e)}
-      />
-      <Tooltip />
-    </PieChart>
+    <>
+      <Card className="mx-auto">
+        <Title>Sales</Title>
+        <DonutChart
+          className="mt-6"
+          data={cities}
+          category="sales"
+          index="name"
+          colors={["rose", "yellow", "orange", "indigo", "blue", "emerald"]}
+          onValueChange={(v) => setValue(v)}
+        />
+      </Card>
+      <pre>{JSON.stringify(value)}</pre>
+    </>
   );
-}
+};
