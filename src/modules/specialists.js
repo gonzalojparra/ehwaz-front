@@ -13,7 +13,7 @@ export const getSpecialists = async () => {
 export const getSpecialist = async (id) => {
   try {
     const res = await axios.get(`/api/specialists/${id}`);
-    return res.data;
+    return res.data.data;
   } catch (err) {
     console.log(err);
     return err;
