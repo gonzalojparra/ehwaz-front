@@ -21,10 +21,34 @@ export const assignTrainer = async (trainerId) => {
   }
 };
 
+export const assignSpecialist = async (specialistId) => {
+  try {
+    const res = axios.post('/api/asign_specialist', {
+      specialist_id: specialistId,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+};
+
 export const isConnectedTrainer = async (trainerId) => {
   try {
     const response = await axios.post('/api/is_connected_trainer', {
       trainer_id: trainerId,
+    });
+    return response.data.data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
+}
+
+export const isConnectedSpecialist = async (specialistId) => {
+  try {
+    const response = await axios.post('/api/is_connected_specialist', {
+      specialist_id: specialistId,
     });
     return response.data.data;
   } catch (err) {

@@ -1,12 +1,12 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 import { getSpecialists } from '@/modules/specialists';
 
 import Sidebar from './components/Sidebar';
 import SpecialistCard from './components/SpecialistCard';
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
@@ -19,9 +19,9 @@ import {
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
-import axios from "@/lib/axios";
+import axios from '@/lib/axios';
 
-export default function TrainersPage() {
+export default function SpecialistsPage() {
 
   const [specialists, setSpecialists] = useState([]);
   const pathname = usePathname();
@@ -51,10 +51,10 @@ export default function TrainersPage() {
             <Sidebar specialists={specialists} className='hidden lg:block' />
             <div className='col-span-3 lg:col-span-5 lg:border-l'>
               <div className='px-4 py-6 lg:px-8 min-h-[83.9vh]'>
-                <Tabs defaultValue='trainers' className='h-full space-y-6'>
+                <Tabs defaultValue='specialists' className='h-full space-y-6'>
                   <div className='flex justify-around '>
                     <TabsList className='flex justify-center'>
-                      <TabsTrigger value='trainers' className='relative' aria-current={true}>
+                      <TabsTrigger value='specialists' className='relative' aria-current={true}>
                         Listado de Profesionales
                       </TabsTrigger>
                       <TabsTrigger value='topten' className='relative lg:hidden sm:block text-primary'>
@@ -103,7 +103,7 @@ export default function TrainersPage() {
                         <h2 className='text-2xl font-semibold tracking-tight'>
                           ¡Nuestros <span className='text-primary'>Profesionales</span> mas buscados!
                         </h2>
-                        <Badge variant="destructive" className=''>OnFire!</Badge>
+                        <Badge variant='destructive' className=''>OnFire!</Badge>
                       </div>
                     </div>
                     <Separator className='my-4' />

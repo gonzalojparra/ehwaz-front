@@ -70,8 +70,8 @@ export default function SpecialistCard({
         </ContextMenuContent>
       </ContextMenu>
       <div className='space-y-1 text-sm'>
-        <h3 className='font-medium leading-none'>{trainer.name} {trainer.last_name}</h3>
-        <p className='text-xs text-muted-foreground'>{trainer.description}</p>
+        <h3 className='font-medium leading-none'>{specialist.name} {specialist.last_name}</h3>
+        <p className='text-xs text-muted-foreground'>{specialist.description}</p>
       </div>
     </div>
   )
