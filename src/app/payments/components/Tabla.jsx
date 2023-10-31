@@ -35,13 +35,13 @@ function color_boton(status) {
   return string;
 }
 
-/* const estados = [{id:0,label:"Iniciado"}, {id:1,label:"Aceptado"}, {id:2, label:"Cancelado"}];
+const estados = [{id:1,label:"Iniciado"}, {id:2,label:"Aceptado"}, {id:3, label:"Cancelado"}];
 
-const obtener_obj_estado = (estado)=>{
+/*const obtener_obj_estado = (estado)=>{
 
 } */
 
-export function Tabla({ data, rol, obtenerPagos }) {
+export function Tabla({ data, obtenerPagos }) {
   return (
     <div className="flex justify-center flex-col">
       <Label className="text-center pb-3">Listado de Pagos</Label>
@@ -52,7 +52,7 @@ export function Tabla({ data, rol, obtenerPagos }) {
             <TableHead className="text-center">Tipo de Pago</TableHead>
             <TableHead className="text-center">Monto</TableHead>
             <TableHead className="text-center">
-              {rol == "Trainer" ? "Alumno" : "Trainer"}
+             Alumno
             </TableHead>
             <TableHead className="text-center">Estado</TableHead>
           </TableRow>
@@ -61,21 +61,19 @@ export function Tabla({ data, rol, obtenerPagos }) {
           {data.map((payment) => (
             <TableRow key={payment.payment_identificator}>
               <TableCell className="text-center">
-                {payment.routine_name}
+                {payment.name}
               </TableCell>
               <TableCell className="text-center">
-                {payment.payment_type}
+                {payment.payment.payment_type}
               </TableCell>
               <TableCell className="text-center">{payment.amount}</TableCell>
               <TableCell className="text-center">
-                {payment.person_name}
+                {payment.student.name + ' ' + payment.student.name}
               </TableCell>
               <TableCell className="text-center">
-                {rol == "Trainer" ? (
-                  <Modal payment_id={payment.payment_identificator} estado={payment.status} obtenerPagos={obtenerPagos} />
-                ) : (
-                  payment.status
-                )}
+                
+                  <Modal payment_id={payment.payment.id} estado={payment.payment.status} obtenerPagos={obtenerPagos} />
+                
               </TableCell>
             </TableRow>
           ))}
