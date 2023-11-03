@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import axFiles from "@/lib/axfiles";
 
 import { Fragment, useEffect, useState } from "react";
 import SpinerCustom from "@/components/ui/spiner-custom";
@@ -21,6 +22,7 @@ export default function FormRutina({ data, getRutinasImpagas, setRutinas }) {
     const [payment_type, setPayment_type] = useState('');
     const [amount, setAmount] = useState('');
     const [loadingRutina, setLoadingRutina] = useState(null);
+    const [files, setFiles] = useState('');
     const [sending, setSending] = useState(false);
     const [errors, setErrors] = useState([]);
 
@@ -33,13 +35,14 @@ export default function FormRutina({ data, getRutinasImpagas, setRutinas }) {
 
     const createPayment = async()=>{
         setSending(true);
-        await axios.post('/api/payment_store', {
+        await axFiles.post('/api/payment_store', {
             trainerroutine_id: rutinaId,
             amount: amount,
             reason: reason,
-            payment_type: payment_type 
-        })
-        .then((res)=>{setErrors(null); setRutinaInfo(null); setRutinaId(null); setAmount(''); setReason(''); setPayment_type(''); setRutinas(null); getRutinasImpagas(); })
+            payment_type: payment_type,
+            files: [files] 
+        } )
+        .then((res)=>{setErrors(null); setRutinaInfo(null); setRutinaId(null); setAmount(''); setReason(''); setPayment_type(''); setFiles(''); setRutinas(null); getRutinasImpagas(); })
         .catch((e) => {setErrors(e.response.data.errors);})
         setSending(false)
     }
@@ -132,6 +135,18 @@ export default function FormRutina({ data, getRutinasImpagas, setRutinas }) {
                                 placeholder='Transferencia, pago en efectivo...'
                                 />
                                 <InputError messages={errors?.payment_type} />
+
+                                <Label htmlFor="file" className="flex ml-1 pb-3 pt-3">
+                                    Comprobante:
+                                </Label>
+                                <input
+                                id="file"
+                                type="file"
+                                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                value={files}
+                                onChange={(e)=>setFiles(e.target.value)}
+                                placeholder='Seleccione archivos'
+                                />
 
                                 <div className='flex justify-center'>
                                     <Button type="submit" onClick={createPayment} disabled={sending} className="mt-3">
