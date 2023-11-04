@@ -6,7 +6,8 @@ const nextConfig = {
       'unsplash.com',
       'thumbs.dreamstime.com',
       'wger.de',
-      'wger.denull'
+      'wger.denull',
+      'www.oorsprong.org'
     ],
   }
 }
