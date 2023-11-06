@@ -1,6 +1,7 @@
 "use client";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import ModalImg from "./ModalImg";
 
 import {
   Table,
@@ -54,6 +55,7 @@ export function Tabla({ data, obtenerPagos }) {
             <TableHead className="text-center">
              Alumno
             </TableHead>
+            <TableHead className="text-center">Comprobante</TableHead>
             <TableHead className="text-center">Estado</TableHead>
           </TableRow>
         </TableHeader>
@@ -71,9 +73,12 @@ export function Tabla({ data, obtenerPagos }) {
                 {payment.student.name + ' ' + payment.student.name}
               </TableCell>
               <TableCell className="text-center">
-                
+                {payment.payment.path_archivo != null ?
+                <ModalImg src={payment.payment}/> 
+                : <></>}
+              </TableCell>
+              <TableCell className="text-center">
                   <Modal payment_id={payment.payment.id} estado={payment.payment.status} obtenerPagos={obtenerPagos} />
-                
               </TableCell>
             </TableRow>
           ))}
