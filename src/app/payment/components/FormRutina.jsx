@@ -34,12 +34,8 @@ export default function FormRutina({ data, getRutinasImpagas, setRutinas }) {
   }
 
   const createPayment = async (e) => {
+    setSending(true);
     e.preventDefault();
-    /*console.log(e);
-    console.log(e.target[4].files); */
-    /* let pepe = e.target.querySelectorAll('input');
-    console.log(pepe); */
-    /* setSending(true); */
     let formData = new FormData();
     formData = {
       trainerroutine_id: rutinaId,
@@ -48,19 +44,7 @@ export default function FormRutina({ data, getRutinasImpagas, setRutinas }) {
       payment_type: payment_type,
       files: document.getElementById('file').files
     }
-    /* formData.append('trainerroutine_id', rutinaId);
-    formData.append('amount', amount);
-    formData.append('reason', reason);
-    formData.append('payment_type', payment_type);
-    formData.append('files', files);
-    console.log(formData.get('files')); */
-    await axFiles.post('/api/payment_store', formData/* {
-            trainerroutine_id: rutinaId,
-            amount: amount,
-            reason: reason,
-            payment_type: payment_type,
-            files: [files] 
-        } */ )
+    await axFiles.post('/api/payment_store', formData )
       .then((res) => { setErrors(null); setRutinaInfo(null); setRutinaId(null); setAmount(''); setReason(''); setPayment_type(''); setFiles(''); setRutinas(null); getRutinasImpagas(); })
       .catch((e) => { setErrors(e.response.data.errors); })
     setSending(false)
