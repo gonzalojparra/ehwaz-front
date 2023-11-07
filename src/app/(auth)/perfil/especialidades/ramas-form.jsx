@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import axios from '@/lib/axios';
 import { useToast } from '@/components/ui/use-toast';
+import { useForm } from 'react-hook-form';
 import { useAuth } from '@/hooks/auth';
+
+import axios from '@/lib/axios';
+
 import {
   Form,
   FormControl,
@@ -14,7 +16,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -108,63 +109,32 @@ export function RamasForm() {
       <form onSubmit={form.handleSubmit(enviarData)} className='space-y-8'>
         <FormField
           control={form.control}
-          name='weight'
+          name='especialidad'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Peso</FormLabel>
-              <FormControl>
-                <Input placeholder='73.5' {...field} />
-              </FormControl>
-              <FormDescription>Peso expresado en kilogramos.</FormDescription>
+              <FormLabel>Rama</FormLabel>
+              <Select {...field}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Seleccione una rama' />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value='Nutricionista'>
+                    Nutricionista
+                  </SelectItem>
+                  <SelectItem value='Kinesiologo deportologo'>
+                    Kinesiologo deportologo
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                Puede modificar su rama para que los alumnos puedan contactarlo.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <FormField
-          control={form.control}
-          name='height'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Altura</FormLabel>
-              <FormControl>
-                <Input placeholder='1.82' {...field} />
-              </FormControl>
-              <FormDescription>Altura expresada en metros.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {role.includes('Alumno') && (
-          <FormField
-            control={form.control}
-            name='goal'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Objetivo</FormLabel>
-                <Select {...field}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder='Seleccione una meta' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value='Aumentar masa muscular'>
-                      Aumentar masa muscular
-                    </SelectItem>
-                    <SelectItem value='Disminuir grasa corporal'>
-                      Disminuir grasa corporal
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormDescription>
-                  Puede modificar sus objetivos para que su entrenador pueda
-                  ayudarlo a alcanzarlos.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
         <Button type='submit'>Actualizar perfil</Button>
       </form>
     </Form>

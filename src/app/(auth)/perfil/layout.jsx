@@ -23,6 +23,7 @@ const sidebarNavItems = [
     rol: [
       'Admin',
       'Trainer',
+      'Especialista',
       'Alumno',
     ],
   },
