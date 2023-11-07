@@ -1,13 +1,32 @@
 'use client'
 
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 
-import { cn } from '@/lib/utils'
-import { buttonVariants } from '@/components/ui/button'
+import axios from '@/lib/axios';
+
+import { cn } from '@/lib/utils';
+import { buttonVariants } from '@/components/ui/button';
 
 export function SidebarNav({ className, items, ...props }) {
-  const pathname = usePathname()
+  const [rol, setRol] = useState(null);
+  const pathname = usePathname();
+
+  const obtenerRol = async () => {
+    await axios.get('api/get-role')
+      .then((res) => {
+        setRol(res.data.data[0]);
+        //console.log(res.data.data[0]);
+      })
+      .catch((e) => {
+        console.log(e.errors);
+      });
+  }
+
+  useEffect(() => {
+    obtenerRol();
+  }, []);
 
   return (
     <nav
@@ -17,21 +36,26 @@ export function SidebarNav({ className, items, ...props }) {
       )}
       {...props}
     >
-      {items.map((item) => (
-        <Link
-          key={item.href}
-          href={item.href}
-          className={cn(
-            buttonVariants({ variant: 'ghost' }),
-            pathname === item.href
-              ? 'bg-muted hover:bg-muted'
-              : 'hover:bg-transparent hover:underline',
-            'justify-start'
-          )}
-        >
-          {item.title}
-        </Link>
-      ))}
+      {items.map((item) => {
+        if (item.rol.includes(rol)) {
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                buttonVariants({ variant: 'ghost' }),
+                pathname === item.href
+                  ? 'bg-muted hover:bg-muted'
+                  : 'hover:bg-transparent hover:underline',
+                'justify-start'
+              )}
+            >
+              {item.title}
+            </Link>
+          );
+        }
+        return null;
+      })}
     </nav>
   )
 }

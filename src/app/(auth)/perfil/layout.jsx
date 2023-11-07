@@ -10,10 +10,29 @@ const sidebarNavItems = [
   {
     title: 'Perfil',
     href: '/perfil',
+    rol: [
+      'Admin',
+      'Trainer',
+      'Especialista',
+      'Alumno',
+    ],
   },
   {
     title: 'Ficha Técnica',
     href: '/perfil/ficha-tecnica',
+    rol: [
+      'Admin',
+      'Trainer',
+      'Alumno',
+    ],
+  },
+  {
+    title: 'Especialidades',
+    href: '/perfil/especialidades',
+    rol: [
+      'Admin',
+      'Especialista',
+    ],
   },
 ];
 
