@@ -27,59 +27,28 @@ import {
 
 export function RamasForm() {
   const [role, setRole] = useState([]);
+  const [branches, setBranches] = useState([]);
   const { toast } = useToast();
   const { user } = useAuth({ middleware: 'auth' });
   const form = useForm({
     mode: 'onChange',
-    defaultValues: {
-      weight: '',
-      height: '',
-      goal: '',
-    },
   });
 
+  const getBranches = async () => {
+    await axios.get('/api/get_branches')
+      .then((res) => {
+        setBranches(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   useEffect(() => {
-    axios
-      .get('/api/get-role')
+    axios.get('/api/get-role')
       .then((res) => {
         setRole(res.data.data[0]);
-        if (user) {
-          if (role.includes('Trainer')) {
-            axios
-              .get(`/api/get_trainer_data/${user.id}`)
-              .then((res) => {
-                const { weight, height } = res.data.data;
-                form.setValue('weight', weight);
-                form.setValue('height', height);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          } else if (role.includes('Alumno')) {
-            axios
-              .get(`/api/get_student_data/${user.id}`)
-              .then((res) => {
-                const { weight, height, goal } = res.data.data;
-                form.setValue('weight', weight);
-                form.setValue('height', height);
-                form.setValue('goal', goal);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          } else if (role.includes('Especialista')) {
-            axios
-              .get(`/api/get_specialist_data/${user.id}`)
-              .then((res) => {
-                const { weight, height } = res.data.data;
-                form.setValue('weight', weight);
-                form.setValue('height', height);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-        }
+        getBranches();
       })
       .catch((err) => {
         console.log(err);
@@ -88,15 +57,13 @@ export function RamasForm() {
 
   const enviarData = async (data) => {
     await axios
-      .post('/api/set_profile_data', {
-        weight: data.weight,
-        height: data.height,
-        goal: data.goal,
+      .post('/api/set_branch', {
+        branch: data.especialidad,
       })
       .then((res) => {
         toast({
           title: 'Datos actualizados',
-          description: 'Se han actualizado los datos de su ficha técnica.',
+          description: 'Se han actualizado los datos de su especialidad.',
         });
       })
       .catch((err) => {
@@ -120,12 +87,11 @@ export function RamasForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value='Nutricionista'>
-                    Nutricionista
-                  </SelectItem>
-                  <SelectItem value='Kinesiologo deportologo'>
-                    Kinesiologo deportologo
-                  </SelectItem>
+                  {branches.map((branch) => (
+                    <SelectItem key={branch.id} value={branch.name}>
+                      {branch.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormDescription>
