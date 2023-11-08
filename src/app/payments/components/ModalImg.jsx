@@ -31,7 +31,7 @@ export default function ModalImg({src}){
         <DialogTrigger asChild>
           <Button variant="outline">Ver Archivo</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className="sm:max-w-[800px]">
           <DialogHeader>
             <DialogTitle>Comprobante</DialogTitle>
           </DialogHeader>
