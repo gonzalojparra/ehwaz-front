@@ -58,7 +58,7 @@ export function RamasForm() {
   const enviarData = async (data) => {
     await axios
       .post('/api/set_branch', {
-        branch: data.especialidad,
+        branch: data.branch,
       })
       .then((res) => {
         toast({
@@ -67,6 +67,7 @@ export function RamasForm() {
         });
       })
       .catch((err) => {
+        console.log(data.branch);
         console.log(err);
       });
   };
@@ -76,11 +77,11 @@ export function RamasForm() {
       <form onSubmit={form.handleSubmit(enviarData)} className='space-y-8'>
         <FormField
           control={form.control}
-          name='especialidad'
+          name='branch'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Rama</FormLabel>
-              <Select {...field}>
+              <Select {...field} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder='Seleccione una rama' />
