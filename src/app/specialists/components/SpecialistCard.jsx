@@ -71,7 +71,7 @@ export default function SpecialistCard({
       </ContextMenu>
       <div className='space-y-1 text-sm'>
         <h3 className='font-medium leading-none'>{specialist.name} {specialist.last_name}</h3>
-        <p className='text-xs text-muted-foreground'>{specialist.description}</p>
+        <p className='text-xs text-muted-foreground'>{specialist.branch}</p>
       </div>
     </div>
   )

@@ -123,7 +123,7 @@ export default function SpecialistPage({ params: { id } }) {
                     <DialogHeader>
                       <DialogTitle>Certificados</DialogTitle>
                       <DialogDescription>
-                        El trainer posee los siguientes certificados:
+                        El especialista posee los siguientes certificados:
                       </DialogDescription>
                     </DialogHeader>
                     <div className='grid gap-4 py-4'>
@@ -155,7 +155,7 @@ export default function SpecialistPage({ params: { id } }) {
                   </CardHeader>
                   <CardContent>
                     <div className='text-2xl font-bold'>{specialist.qty_students}</div>
-                    <p className='text-xs text-muted-foreground'>Alumnos entrenados</p>
+                    <p className='text-xs text-muted-foreground'>Alumnos asociados</p>
                   </CardContent>
                 </Card>
               </div>
