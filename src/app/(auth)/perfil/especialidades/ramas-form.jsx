@@ -56,20 +56,19 @@ export function RamasForm() {
   }, [user]);
 
   const enviarData = async (data) => {
-    await axios
-      .post('/api/set_branch', {
-        branch: data.branch,
-      })
-      .then((res) => {
-        toast({
-          title: 'Datos actualizados',
-          description: 'Se han actualizado los datos de su especialidad.',
-        });
-      })
-      .catch((err) => {
-        console.log(data.branch);
-        console.log(err);
+    console.log(data);
+    const { branch } = data;
+    try {
+      console.log(branch);
+      await axios.post('/api/set_branch', { branch });
+      toast({
+        title: 'Datos actualizados',
+        description: 'Se han actualizado los datos de su especialidad.',
       });
+    } catch (err) {
+      console.log(branch);
+      console.log(err);
+    }
   };
 
   return (
@@ -81,7 +80,10 @@ export function RamasForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Rama</FormLabel>
-              <Select {...field} value={field.value}>
+              <Select
+                {...field}
+                onValueChange={field.onChange} defaultValue={field.value}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder='Seleccione una rama' />
@@ -106,4 +108,6 @@ export function RamasForm() {
       </form>
     </Form>
   );
+
+
 }

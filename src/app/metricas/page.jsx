@@ -76,6 +76,8 @@ export default function Metricas() {
         ) : (
           <SpinerCustom text={'Cargando objetivos...'} />
         )}
+      </div>
+      <div className='w-full px-16'>
         {dataObj != null ? <Chart goalId={objetivoId} /> : <></>}
       </div>
     </div>

@@ -7,6 +7,29 @@ import { Card, DonutChart, Title } from '@tremor/react';
 import axios from '@/lib/axios';
 
 export const Chart = ({ goalId }) => {
+  /**
+   * Estructura del objeto value
+   * 
+    {
+      id,
+      date,
+      trainer_routine_id,
+      student_feedback,
+      description,
+      routine: {
+        id,
+        id_student,
+        id_trainer,
+        id_student_goal,
+        name,
+        initial_date,
+        final_date,
+        description,
+        id_payment,
+        payment
+      }
+    }
+   */
   const [value, setValue] = useState(null);
   const [eventos, setEventos] = useState(null);
 
@@ -48,11 +71,15 @@ export const Chart = ({ goalId }) => {
               onValueChange={(v) => setValue(v)}
             />
           </Card>
-          <pre>{JSON.stringify(value)}</pre>
         </div>
       ) : (
         <></>
-      )}
+        )}
+        {value !== null && (
+          <div className='pt-4'>
+            {JSON.stringify(value)}
+          </div>
+        )}
     </>
   );
 };
