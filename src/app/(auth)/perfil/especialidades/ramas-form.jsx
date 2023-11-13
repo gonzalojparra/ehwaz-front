@@ -82,7 +82,8 @@ export function RamasForm() {
               <FormLabel>Rama</FormLabel>
               <Select
                 {...field}
-                onValueChange={field.onChange} defaultValue={field.value}
+                onValueChange={field.onChange}
+                defaultValue={field.value}
               >
                 <FormControl>
                   <SelectTrigger>
