@@ -78,7 +78,11 @@ export default function Metricas() {
         )}
       </div>
       <div className='w-full px-16'>
-        {dataObj != null ? <Chart goalId={objetivoId} /> : <></>}
+        {
+          dataObj != null
+          ? <Chart goalId={objetivoId} />
+          : <></>
+        }
       </div>
     </div>
   );
