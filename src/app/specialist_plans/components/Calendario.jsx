@@ -44,7 +44,8 @@ export default function Calendario({ planes }) {
             amount: pl.amount,
             payment: pl.payment,
             initial_date: pl.initial_date,
-            final_date: pl.final_date
+            final_date: pl.final_date,
+            branches: pl.specialist.branches[0].name
           },
         };
         events.push(eve);
@@ -127,6 +128,18 @@ export default function Calendario({ planes }) {
               <Textarea
                 id="descripcion"
                 value={data != null ? data.extendedProps.description : ''}
+                onChange={(e) => {
+                }}
+                disabled={true}
+              />
+            </div>
+            <div className="">
+              <Label htmlFor="branch" className="flex ml-1">
+                Branch
+              </Label>
+              <Textarea
+                id="branch"
+                value={data != null ? data.extendedProps.branches : ''}
                 onChange={(e) => {
                 }}
                 disabled={true}

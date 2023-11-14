@@ -44,7 +44,7 @@ export default function FormPlan({ data, getRutinasImpagas, setRutinas }) {
       payment_type: payment_type,
       files: document.getElementById('file').files
     }
-    await axFiles.post('/api/planpayment_store', formData )
+    await axFiles.post('/api/plan_payment_store', formData )
       .then((res) => { setErrors(null); setRutinaInfo(null); setRutinaId(null); setAmount(''); setReason(''); setPayment_type(''); setFiles(''); setRutinas(null); getRutinasImpagas(); })
       .catch((e) => { setErrors(e.response.data.errors); })
     setSending(false)
