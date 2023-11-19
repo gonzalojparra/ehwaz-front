@@ -8,7 +8,6 @@ import { useAuth } from '@/hooks/auth';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,24 +15,20 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
-export function FichaTecnicaForm() {
+export function SocialsForm() {
   const [role, setRole] = useState([]);
   const { toast } = useToast();
   const { user } = useAuth({ middleware: 'auth' });
   const form = useForm({
     mode: 'onChange',
     defaultValues: {
-      weight: '',
-      height: '',
-      goal: '',
+      facebook: '',
+      instagram: '',
+      twitter: '',
+      linkedin: '',
+      whatsapp: '',
+      telephone: '',
     },
   });
 
@@ -87,15 +82,18 @@ export function FichaTecnicaForm() {
 
   const enviarData = async (data) => {
     await axios
-      .post('/api/set_profile_data', {
-        weight: data.weight,
-        height: data.height,
-        goal: data.goal,
+      .post('/api/set_socials_data', {
+        facebook: data.facebook,
+        instagram: data.instagram,
+        twitter: data.twitter,
+        linkedin: data.linkedin,
+        whatsapp: data.whatsapp,
+        telephone: data.telephone,
       })
       .then((res) => {
         toast({
           title: 'Datos actualizados',
-          description: 'Se han actualizado los datos de su ficha técnica.',
+          description: 'Se han actualizado los datos de sus redes sociales.',
         });
       })
       .catch((err) => {
@@ -108,64 +106,83 @@ export function FichaTecnicaForm() {
       <form onSubmit={form.handleSubmit(enviarData)} className='space-y-8'>
         <FormField
           control={form.control}
-          name='weight'
+          name='facebook'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Peso</FormLabel>
+              <FormLabel>Facebook</FormLabel>
               <FormControl>
-                <Input placeholder='73.5' {...field} />
+                <Input placeholder='facebook.com/leomessi' {...field} />
               </FormControl>
-              <FormDescription>Peso expresado en kilogramos.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name='height'
+          name='instagram'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Altura</FormLabel>
+              <FormLabel>Instagram</FormLabel>
               <FormControl>
-                <Input placeholder='1.82' {...field} />
+                <Input placeholder='instagram.com/leomessi' {...field} />
               </FormControl>
-              <FormDescription>Altura expresada en metros.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        {role.includes('Alumno') && (
-          <FormField
-            control={form.control}
-            name='goal'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Objetivo</FormLabel>
-                <Select {...field}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder='Seleccione una meta' />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value='Aumentar masa muscular'>
-                      Aumentar masa muscular
-                    </SelectItem>
-                    <SelectItem value='Disminuir grasa corporal'>
-                      Disminuir grasa corporal
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormDescription>
-                  Puede modificar sus objetivos para que su entrenador pueda
-                  ayudarlo a alcanzarlos.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
-        <Button type='submit'>Actualizar ficha</Button>
+        <FormField
+          control={form.control}
+          name='twitter'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Twitter</FormLabel>
+              <FormControl>
+                <Input placeholder='twitter.com/leomessi' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='linkedin'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Linkedin</FormLabel>
+              <FormControl>
+                <Input placeholder='linkedin.com/in/leomessi' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='whatsapp'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>WhatsApp</FormLabel>
+              <FormControl>
+                <Input placeholder='+54 299 XXXXXXX' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name='telephone'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Teléfono</FormLabel>
+              <FormControl>
+                <Input placeholder='+54 299 XXXXXXX' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type='submit'>Actualizar redes</Button>
       </form>
     </Form>
   );

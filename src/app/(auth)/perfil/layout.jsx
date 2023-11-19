@@ -18,6 +18,16 @@ const sidebarNavItems = [
     ],
   },
   {
+    title: 'Redes Sociales',
+    href: '/perfil/socials',
+    rol: [
+      'Admin',
+      'Trainer',
+      'Especialista',
+      'Alumno',
+    ],
+  },
+  {
     title: 'Ficha Técnica',
     href: '/perfil/ficha-tecnica',
     rol: [
