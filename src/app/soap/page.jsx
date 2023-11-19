@@ -7,11 +7,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import SimpleSpiner from "@/components/ui/simple-spiner";
+import { useToast } from "@/components/ui/use-toast"
+
 
 export default function Page() {
     const [codigo, setCodigo] = useState('');
     const [rta, setRta] = useState(null);
     const [loading, setLoading] = useState(false);
+    const {toast} = useToast()
 
     const consulta = async()=>{
         setLoading(true)
@@ -20,6 +23,11 @@ export default function Page() {
             setRta(res.data);
             console.log(res.data);
             setLoading(false);
+            toast({
+                title: "Información Obtenida",
+                description: "tu vieja con tangalanga",
+                duration: 1000
+              })
         })
         .catch((e)=>{
             console.log(e.response.data.error);

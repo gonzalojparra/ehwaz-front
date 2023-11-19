@@ -19,7 +19,7 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { toast } from '@/components/ui/toast';
+import { useToast } from '@/components/ui/use-toast';
 import { useAuth } from '@/hooks/auth';
 
 /**
@@ -45,17 +45,30 @@ export function ProfileForm() {
   const [last_name, setLastName] = useState('');
   const [description, setDescription] = useState('');
   const { user } = useAuth({ middleware: 'auth' });
+  const {toast} = useToast()
 
-  const defaultValues = {
+  const [defaultValues, setDefaultValues] = useState({
     name: '',
     last_name: '',
     description: '',
-  };
+  });
 
   useEffect(() => {
     axios.get('/api/get-role')
       .then((res) => {
-        setRole(res.data.data[0]);
+        setRole(res.data.data);
+        if (res.data.data.includes('Trainer')) {
+          axios.get(`/api/get_trainer_data/${user.id}`)
+            .then((res) => {
+              setName(res.data.data.name);
+              setLastName(res.data.data.last_name);
+              setDescription(res.data.data.description);
+              form.reset({ ...setDefaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -67,7 +80,7 @@ export function ProfileForm() {
             setName(res.data.data.name);
             setLastName(res.data.data.last_name);
             setDescription(res.data.data.description);
-            form.reset({ ...defaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
+            form.reset({ ...setDefaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
           })
           .catch((err) => {
             console.log(err);
@@ -79,7 +92,7 @@ export function ProfileForm() {
             setName(res.data.data.name);
             setLastName(res.data.data.last_name);
             setDescription(res.data.data.description);
-            form.reset({ ...defaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
+            form.reset({ ...setDefaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
           })
           .catch((err) => {
             console.log(err);
@@ -91,7 +104,7 @@ export function ProfileForm() {
             setName(res.data.data.name);
             setLastName(res.data.data.last_name);
             setDescription(res.data.data.description);
-            form.reset({ ...defaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
+            form.reset({ ...setDefaultValues, name: res.data.data.name, last_name: res.data.data.last_name, description: res.data.data.description });
           })
           .catch((err) => {
             console.log(err);
