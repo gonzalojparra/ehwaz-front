@@ -27,11 +27,13 @@ import {
 
 import { assignSpecialist, isConnectedSpecialist } from '@/modules/students';
 import { getSpecialist } from '@/modules/specialists';
+import { useToast } from "@/components/ui/use-toast"
 
 export default function SpecialistPage({ params: { id } }) {
   const [specialist, setSpecialist] = useState({});
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const {toast} = useToast()
 
   useEffect(() => {
     getSpecialist(id).then((specialist) => {

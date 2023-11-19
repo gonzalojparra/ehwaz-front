@@ -29,6 +29,7 @@ import {
 } from "@/components/ui/select";
 import SimpleSpiner from "@/components/ui/simple-spiner";
 import axios from "@/lib/axios";
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRutinas }) {
   const [eventos, setEventos] = useState(null);
@@ -46,6 +47,8 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
   const [loading, setLoading] = useState(false);
   const [feedback, setFeedback] = useState('');
   const [eventoId, setEventoId] = useState(null);
+  
+  const {toast } = useToast();
 
   const cargar_eventos = () => {
     let events = [];
@@ -105,6 +108,7 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
     setDescripcion("");
     setNuevo(true);
     setOpen(true);
+
     //console.log(selectInfo);
   };
 
@@ -118,6 +122,11 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
     .then((res)=>{
       setRutinas(null);
       obtener_rutinas(alumnoId); setOpen(false); setLoading(false);
+      toast({
+        title: "Evento añadido a rutina",
+        description: `En fecha ${date}`,
+        duration: 4000
+      })
     })
     .catch((e)=>{
       setErrors(e.response.data.errors); setLoading(false); 

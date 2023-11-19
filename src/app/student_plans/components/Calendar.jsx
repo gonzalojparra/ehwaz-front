@@ -20,6 +20,7 @@ import { Label } from "@/components/ui/label";
 import InputError from "@/components/ui/InputError";
 import SpinerCustom from "@/components/ui/spiner-custom";
 import SimpleSpiner from "@/components/ui/simple-spiner";
+import { useToast } from "@/components/ui/use-toast"
 
 export default function Calendar({ specialist_id }) {
 
@@ -40,6 +41,7 @@ export default function Calendar({ specialist_id }) {
   const [feedback, setFeedback] = useState("");
   const [id_evento, setId_evento] = useState(null);
   const [payment, setPayment] = useState(null);
+  const {toast} = useToast()
 
 
   const getPlanes = async () => {
@@ -91,6 +93,11 @@ export default function Calendar({ specialist_id }) {
       .then((response) => {
         setErrors([]);
         setSending(false);
+        toast({
+          title: "Feedback enviado",
+          description: "El Especialista podrá ver su feedback",
+          duration: 4000
+        })
         return true;
       })
       .catch((e) => {

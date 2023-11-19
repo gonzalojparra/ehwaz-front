@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import SimpleSpiner from "@/components/ui/simple-spiner";
 import axios from "@/lib/axios";
+import { useToast } from "@/components/ui/use-toast"
 
 export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas }) {
   const [goalId, setGoalId] = useState(null);
@@ -36,6 +37,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [open, setOpen] = useState(false);
+  const {toast } = useToast();
 
   const enviarRutina = async()=>{
     await axios.post('/api/trainer_routine_store', {
@@ -50,6 +52,11 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
     })
     .then((res)=>{
       console.log(res.data); setRutinas(null); obtener_rutinas(alumnoId); setOpen(false); setLoading(false);
+      toast({
+        title: "Rutina Creada correctamente",
+        description: `Rutina: ${nombre}`,
+        duration: 4000
+      })
     })
     .catch((e)=>{
       setErrors(e.response.data.errors); setLoading(false);

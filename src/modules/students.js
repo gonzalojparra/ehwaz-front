@@ -14,6 +14,11 @@ export const assignTrainer = async (trainerId) => {
     const res = axios.post('/api/asign_trainer', {
       trainer_id: trainerId,
     });
+    toast({
+      title: "Se ha solicitado conectar",
+      description: "El Trainer podrá ver su solicitud",
+      duration: 4000
+    })
     return res.data;
   } catch (err) {
     console.log(err);
@@ -26,7 +31,13 @@ export const assignSpecialist = async (specialistId) => {
     const res = axios.post('/api/asign_specialist', {
       specialist_id: specialistId,
     });
+    toast({
+      title: "Se ha solicitado conectar",
+      description: "El Especialista podrá ver su solicitud",
+      duration: 1000
+    })
     return res.data;
+
   } catch (err) {
     console.log(err);
     return err;

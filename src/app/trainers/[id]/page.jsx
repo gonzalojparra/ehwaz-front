@@ -27,11 +27,13 @@ import {
 
 import { assignTrainer, isConnectedTrainer } from '@/modules/students';
 import { getTrainer } from '@/modules/trainers';
+import { useToast } from "@/components/ui/use-toast"
 
 export default function TrainerPage({ params: { id } }) {
   const [trainer, setTrainer] = useState({});
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+  const {toast} = useToast()
 
   useEffect(() => {
     getTrainer(id).then((trainer) => {

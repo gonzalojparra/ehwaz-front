@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import SimpleSpiner from "@/components/ui/simple-spiner";
 import axios from "@/lib/axios";
+import { useToast } from "@/components/ui/use-toast"
 
 export function ModalCrearPlan({ alumnoId, obtener_planes }) {
   const [goalId, setGoalId] = useState(null);
@@ -36,6 +37,7 @@ export function ModalCrearPlan({ alumnoId, obtener_planes }) {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState([]);
   const [open, setOpen] = useState(false);
+  const {toast} = useToast()
 
   const enviarPlan = async () => {
     await axios
@@ -53,6 +55,11 @@ export function ModalCrearPlan({ alumnoId, obtener_planes }) {
         obtener_planes(alumnoId);
         setOpen(false);
         setLoading(false);
+        toast({
+          title: "Plan creado con éxito",
+          description: `Se ha creado el plan ${nombre}`,
+          duration: 1000
+        })
       })
       .catch((e) => {
         setErrors(e.response.data.errors);

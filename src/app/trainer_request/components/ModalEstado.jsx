@@ -22,12 +22,15 @@ import SimpleSpiner from "@/components/ui/simple-spiner";
 import axios from "@/lib/axios";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
+import { useToast } from "@/components/ui/use-toast"
 
 export default function ModalEstado({ row, relationId, estados, getAlumnos }) {
     const [estadoId, setEstadoId] = useState(null);
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [errors, setErrors] = useState([]);
+    const {toast} = useToast()
+
     /* console.log("planId:"+planId);
     console.log("estados:"+estados);
     console.log("alumnoId:"+alumnoId);*/
@@ -41,6 +44,11 @@ export default function ModalEstado({ row, relationId, estados, getAlumnos }) {
         })
         .then((res)=>{
             setOpen(false); getAlumnos(); setLoading(false);
+            toast({
+              title: "Estado cambiado correctamente",
+              description: "",
+              duration: 4000
+            })
         })
     }
   return (

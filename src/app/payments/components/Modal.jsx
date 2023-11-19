@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import axios from "@/lib/axios";
 import SimpleSpiner from "@/components/ui/simple-spiner";
+import { useToast } from "@/components/ui/use-toast"
 
 const estados = [
   {
@@ -77,6 +78,7 @@ export function Modal({ payment_id, estado, obtenerPagos }) {
   const [nuevoEstado, setNuevoEstado] = useState(conocer_id_estado(estado));
   const [sending, setSending] = useState(false);
   const [open, setOpen] = useState(false);
+  const {toast} = useToast()
 
   const toggleModal = () => {
     if (open) {
@@ -97,6 +99,11 @@ export function Modal({ payment_id, estado, obtenerPagos }) {
       .then((res) => {
         setOpen(false);
         obtenerPagos();
+        toast({
+          title: "Información del pago modificada",
+          description: "Se ha modificado el estado del pago",
+          duration: 4000
+        })
       });
     setSending(false);
   };

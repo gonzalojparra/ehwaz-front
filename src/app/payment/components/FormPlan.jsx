@@ -14,6 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import InputError from "@/components/ui/InputError";
 import SimpleSpiner from "@/components/ui/simple-spiner";
+import { useToast } from "@/components/ui/use-toast"
 
 export default function FormPlan({ data, getRutinasImpagas, setRutinas }) {
   const [rutinaId, setRutinaId] = useState(null);
@@ -25,6 +26,7 @@ export default function FormPlan({ data, getRutinasImpagas, setRutinas }) {
   const [loadingRutina, setLoadingRutina] = useState(null);
   const [sending, setSending] = useState(false);
   const [errors, setErrors] = useState([]);
+  const {toast} = useToast()
 
   const get_rutina_info = async (e) => {
     setLoadingRutina(true);
@@ -45,7 +47,20 @@ export default function FormPlan({ data, getRutinasImpagas, setRutinas }) {
       files: document.getElementById('file').files
     }
     await axFiles.post('/api/plan_payment_store', formData )
-      .then((res) => { setErrors(null); setRutinaInfo(null); setRutinaId(null); setAmount(''); setReason(''); setPayment_type(''); setFiles(''); setRutinas(null); getRutinasImpagas(); })
+      .then((res) => { setErrors(null); 
+        setRutinaInfo(null); 
+        setRutinaId(null); 
+        setAmount(''); 
+        setReason(''); 
+        setPayment_type(''); 
+        setFiles(''); 
+        setRutinas(null); 
+        getRutinasImpagas(); 
+        toast({
+          title: "Pago realizado con éxito",
+          description: "Cuando el Especialista acepte el pago podrá ver el plan",
+          duration: 4000
+        })})
       .catch((e) => { setErrors(e.response.data.errors); })
     setSending(false)
   }

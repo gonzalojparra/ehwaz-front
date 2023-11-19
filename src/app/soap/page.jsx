@@ -25,8 +25,8 @@ export default function Page() {
             setLoading(false);
             toast({
                 title: "Información Obtenida",
-                description: "tu vieja con tangalanga",
-                duration: 1000
+                description: "",
+                duration: 4000
               })
         })
         .catch((e)=>{
