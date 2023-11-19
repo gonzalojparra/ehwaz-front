@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
@@ -22,27 +23,36 @@ import {
   Dumbbell,
   Ruler,
   ScrollText,
-  Users
+  Instagram,
+  Users,
+  Facebook,
+  Twitter,
+  Linkedin
 } from 'lucide-react';
-
 import { assignSpecialist, isConnectedSpecialist } from '@/modules/students';
-import { getSpecialist } from '@/modules/specialists';
+import { getSpecialistSocials, getSpecialist } from '@/modules/specialists';
 import { useToast } from "@/components/ui/use-toast"
 
 export default function SpecialistPage({ params: { id } }) {
   const [specialist, setSpecialist] = useState({});
   const [loading, setLoading] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const {toast} = useToast()
+  const [socials, setSocials] = useState({});
+  const { toast } = useToast()
 
   useEffect(() => {
-    getSpecialist(id).then((specialist) => {
-      setSpecialist(specialist);
-    });
+    getSpecialist(id)
+      .then((specialist) => {
+        setSpecialist(specialist);
+      });
     isConnectedSpecialist(id)
       .then((isConnected) => {
         setIsConnected(isConnected);
-      })
+      });
+    getSpecialistSocials(id)
+      .then((socials) => {
+        setSocials(socials);
+      });
   }, [id]);
 
   const birthDate = new Date(specialist.day_of_birth);
@@ -162,7 +172,39 @@ export default function SpecialistPage({ params: { id } }) {
                 </Card>
               </div>
             </div>
-            <div className='flex justify-start px-10'>
+            <div className='flex flex-col'>
+              <div className='flex flex-wrap justify-center p-2 pb-8'>
+                {socials.facebook && (
+                  <div className='px-2'>
+                    <Link href={`${socials.facebook}`} target='blank'>
+                      <Facebook />
+                    </Link>
+                  </div>
+                )}
+                {socials.instagram && (
+                  <div className='px-2'>
+                    <Link href={`${socials.instagram}`} target='blank'>
+                      <Instagram />
+                    </Link>
+                  </div>
+                )}
+                {socials.twitter && (
+                  <div className='px-2'>
+                    <Link href={`${socials.twitter}`} target='blank'>
+                      <Twitter />
+                    </Link>
+                  </div>
+                )}
+                {socials.linkedin && (
+                  <div className='px-2'>
+                    <Link href={`${socials.linkedin}`} target='blank'>
+                      <Linkedin />
+                    </Link>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className='flex justify-center md:justify-start px-10'>
               <Button onClick={handleAssignSpecialist} disabled={isConnected}>
                 {
                   isConnected ? (

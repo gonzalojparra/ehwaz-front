@@ -28,3 +28,12 @@ export const getRequests = async () => {
     return error;
   }
 }
+
+export const getSpecialistSocials = async (id) => {
+  try {
+    const res = await axios.get(`/api/get_specialist_socials/${id}`);
+    return res.data.data;
+  } catch (error) {
+    return error;
+  }
+}
