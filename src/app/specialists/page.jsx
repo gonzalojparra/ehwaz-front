@@ -21,9 +21,10 @@ import { useRouter } from 'next/navigation';
 
 import axios from '@/lib/axios';
 
-export default function SpecialistsPage() {
-
+export default function SpecialistsPage({ }) {
+  const [selectedBranch, setSelectedBranch] = useState(null);
   const [specialists, setSpecialists] = useState([]);
+  const [filteredSpecialists, setFilteredSpecialists] = useState([]);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -42,6 +43,15 @@ export default function SpecialistsPage() {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (selectedBranch) {
+      const filtered = specialists.filter(specialist => specialist.branch === selectedBranch);
+      setFilteredSpecialists(filtered);
+    } else {
+      setFilteredSpecialists(specialists);
+    }
+  }, [selectedBranch, specialists, filteredSpecialists]);
 
   return (
     <div className='block'>
@@ -83,14 +93,18 @@ export default function SpecialistsPage() {
                     <div className='relative'>
                       <ScrollArea>
                         <div className='flex space-x-4 pb-4'>
-                          {Array.isArray(specialists) && specialists.length > 0 && specialists.map((specialist) => (
-                            <SpecialistCard
-                              key={specialist.name}
-                              specialist={specialist}
-                              width={160}
-                              height={160}
-                            />
-                          ))}
+                        {Array.isArray(filteredSpecialists) && filteredSpecialists.length > 0 ? (
+                filteredSpecialists.map((specialist) => (
+                  <SpecialistCard
+                    key={specialist.name}
+                    specialist={specialist}
+                    width={160}
+                    height={160}
+                  />
+                ))
+              ) : (
+                <p>No se encontraron especialistas</p>
+              )}
                         </div>
                         <ScrollBar orientation='horizontal' />
                       </ScrollArea>
@@ -110,14 +124,18 @@ export default function SpecialistsPage() {
                     <div className='relative'>
                       <ScrollArea>
                         <div className='flex space-x-4 pb-4'>
-                          {Array.isArray(specialists) && specialists.length > 0 && specialists.map((specialist) => (
-                            <SpecialistCard
-                              key={specialist.name}
-                              specialist={specialist}
-                              width={160}
-                              height={160}
-                            />
-                          ))}
+                        {Array.isArray(filteredSpecialists) && filteredSpecialists.length > 0 ? (
+                filteredSpecialists.map((specialist) => (
+                  <SpecialistCard
+                    key={specialist.name}
+                    specialist={specialist}
+                    width={160}
+                    height={160}
+                  />
+                ))
+              ) : (
+                <p>No se encontraron especialistas</p>
+              )}
                         </div>
                         <ScrollBar orientation='horizontal' />
                       </ScrollArea>
