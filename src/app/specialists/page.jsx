@@ -93,18 +93,18 @@ export default function SpecialistsPage({ }) {
                     <div className='relative'>
                       <ScrollArea>
                         <div className='flex space-x-4 pb-4'>
-                        {Array.isArray(filteredSpecialists) && filteredSpecialists.length > 0 ? (
-                filteredSpecialists.map((specialist) => (
-                  <SpecialistCard
-                    key={specialist.name}
-                    specialist={specialist}
-                    width={160}
-                    height={160}
-                  />
-                ))
-              ) : (
-                <p>No se encontraron especialistas</p>
-              )}
+                          {Array.isArray(filteredSpecialists) && filteredSpecialists.length > 0 ? (
+                            filteredSpecialists.map((specialist) => (
+                              <SpecialistCard
+                                key={specialist.name}
+                                specialist={specialist}
+                                width={160}
+                                height={160}
+                              />
+                            ))
+                          ) : (
+                            <p>No se encontraron especialistas</p>
+                          )}
                         </div>
                         <ScrollBar orientation='horizontal' />
                       </ScrollArea>
@@ -124,18 +124,18 @@ export default function SpecialistsPage({ }) {
                     <div className='relative'>
                       <ScrollArea>
                         <div className='flex space-x-4 pb-4'>
-                        {Array.isArray(filteredSpecialists) && filteredSpecialists.length > 0 ? (
-                filteredSpecialists.map((specialist) => (
-                  <SpecialistCard
-                    key={specialist.name}
-                    specialist={specialist}
-                    width={160}
-                    height={160}
-                  />
-                ))
-              ) : (
-                <p>No se encontraron especialistas</p>
-              )}
+                          {Array.isArray(filteredSpecialists) && filteredSpecialists.length > 0 ? (
+                            filteredSpecialists.map((specialist) => (
+                              <SpecialistCard
+                                key={specialist.name}
+                                specialist={specialist}
+                                width={160}
+                                height={160}
+                              />
+                            ))
+                          ) : (
+                            <p>No se encontraron especialistas</p>
+                          )}
                         </div>
                         <ScrollBar orientation='horizontal' />
                       </ScrollArea>
