@@ -34,7 +34,7 @@ export default function Page() {
   const pathname = usePathname();
   const router = useRouter();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (pathname != '/login' && pathname != '/registro') {
       axios.post('/api/permissions', { url: pathname })
         .then((res) => {
@@ -43,22 +43,22 @@ export default function Page() {
           }
         });
     }
-  },[]);
+  }, []);
 
   const obtenerEjercicio = async () => {
     if (busqueda != null && busqueda != "") {
-        setLoading(true);
-        setSuggestions(null);
+      setLoading(true);
+      setSuggestions(null);
       await ax
         .get(
           "https://wger.de/api/v2/exercise/search/?language=spanish&term=" +
-            busqueda
+          busqueda
         )
         .then((res) => {
           setSuggestions(res.data.suggestions);
           console.log(res.data.suggestions);
         });
-        setLoading(false)
+      setLoading(false)
       //https://wger.de/api/v2/exercise/search/?language=spanish&term=biceps
     }
   };
@@ -80,42 +80,42 @@ export default function Page() {
             obtenerEjercicio();
           }}
         >
-          Buscar {loading && <SimpleSpiner/>}
+          Buscar {loading && <SimpleSpiner />}
         </Button>
       </div>
-      
-      {suggestions == null ? <></>:
+
+      {suggestions == null ? <></> :
         <>
-            {suggestions.length > 0 ? 
+          {suggestions.length > 0 ?
             <div className="md:w-[500px] sm:w-[80%] pb-8 w-[80%]">
-            <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-            {suggestions.map((sug)=>{
-                return (
+              <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+                {suggestions.map((sug) => {
+                  return (
                     <SwiperSlide>
-                        <Card className="w-full px-4">
-                            <CardHeader>
-                                <CardTitle>{sug.value}</CardTitle>
-                                <CardDescription>{sug.value}</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <p>Nombre: {sug.data.name}</p>
-                                <p>Parte del cuerpo: {sug.data.category}</p>
-                                {sug.data.image != null ? <ModalImage sug={sug}/> : <></>}
-                            </CardContent>
-                        </Card>
+                      <Card className="w-full px-4">
+                        <CardHeader>
+                          <CardTitle>{sug.value}</CardTitle>
+                          <CardDescription>{sug.value}</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                          <p>Nombre: {sug.data.name}</p>
+                          <p>Parte del cuerpo: {sug.data.category}</p>
+                          {sug.data.image != null ? <ModalImage sug={sug} /> : <></>}
+                        </CardContent>
+                      </Card>
                     </SwiperSlide>
-                )
-            })}
-            </Swiper> 
+                  )
+                })}
+              </Swiper>
 
             </div> :
             <div className="md:w-[500px] sm:w-full pb-8">
-                <InputError messages={"No hemos encontrado ejercicios con dicha búsqueda"}/>
+              <InputError messages={"No hemos encontrado ejercicios con dicha búsqueda"} />
             </div>
-        }
+          }
         </>
-        }
-        
+      }
+
     </div>
   );
 }

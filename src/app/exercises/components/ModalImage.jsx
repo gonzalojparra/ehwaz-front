@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,8 +23,8 @@ export function ModalImage({ sug }) {
         <div className="">
           <Image
             src={"https://wger.de" + sug.data.image}
-            width={500}
-            height={500}
+            width={350}
+            height={350}
             alt={sug.data.name}
           ></Image>
         </div>

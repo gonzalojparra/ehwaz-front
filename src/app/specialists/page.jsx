@@ -63,7 +63,7 @@ export default function SpecialistsPage({ }) {
       let res = await axios.get('/api/specialists');
       let specialists = res.data.specialists;
 
-      if(searchQuery != '' || searchQuery != null) {
+      if (searchQuery != '' || searchQuery != null) {
         res = specialists.filter(specialist => specialist.name.toLowerCase().includes(searchQuery.toLowerCase()));
         setSpecialists(res);
       };
@@ -97,7 +97,7 @@ export default function SpecialistsPage({ }) {
                     <div className='ml-auto mr-4 '>
                       <Input
                         className='w-full'
-                        placeholder='Buscar personal...'
+                        placeholder='Buscar especialista...'
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                       />
