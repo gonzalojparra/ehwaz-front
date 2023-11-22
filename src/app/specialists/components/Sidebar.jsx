@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Link from 'next/link';
 
 import {
@@ -21,12 +20,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 import { cn } from '@/lib/utils';
 
-export default function Sidebar({ specialists, className }) {
-  const [selectedBranch, setSelectedBranch] = useState(null);
-  
-  const filteredSpecialists = selectedBranch 
-  ? specialists.filter(specialist => specialist.branch === selectedBranch) 
-  : specialists;
+export default function Sidebar({ specialists, className, selectedBranch, setSelectedBranch }) {
 
   return (
     <div className={cn('pb-12', className)}>
@@ -75,7 +69,7 @@ export default function Sidebar({ specialists, className }) {
           <Separator className="w-[90%] mx-auto" />
           <ScrollArea className='px-1'>
             <div className='p-2'>
-            {filteredSpecialists?.map((specialist, i) => (
+            {specialists?.map((specialist, i) => (
                 <div className="flex items-center space-x-4 ml-2 h-full my-5" key={`${specialist.name}-${i}`}>
                   <Avatar>
                     <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />

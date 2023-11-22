@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
+import { useSearchSpecialist } from '@/context/SearchSpecialistContext';
 
 import { getSpecialists } from '@/modules/specialists';
 
@@ -25,8 +26,11 @@ export default function SpecialistsPage({ }) {
   const [selectedBranch, setSelectedBranch] = useState(null);
   const [specialists, setSpecialists] = useState([]);
   const [filteredSpecialists, setFilteredSpecialists] = useState([]);
+
   const pathname = usePathname();
   const router = useRouter();
+
+  const { searchQuery, setSearchQuery } = useSearchSpecialist();
 
   useEffect(() => {
     if (pathname != '/login' && pathname != '/registro') {
@@ -53,12 +57,31 @@ export default function SpecialistsPage({ }) {
     }
   }, [selectedBranch, specialists, filteredSpecialists]);
 
+  // Context query
+  useEffect(() => {
+    const fetchSpecialists = async () => {
+      let res = await axios.get('/api/specialists');
+      let specialists = res.data.specialists;
+
+      if(searchQuery != '' || searchQuery != null) {
+        res = specialists.filter(specialist => specialist.name.toLowerCase().includes(searchQuery.toLowerCase()));
+        setSpecialists(res);
+      };
+    }
+    fetchSpecialists();
+  }, [searchQuery]);
+
   return (
     <div className='block'>
       <div className='border-t'>
         <div className='bg-background'>
           <div className='grid lg:grid-cols-6'>
-            <Sidebar specialists={specialists} className='hidden lg:block' />
+            <Sidebar
+              specialists={specialists}
+              selectedBranch={selectedBranch}
+              setSelectedBranch={setSelectedBranch}
+              className='hidden lg:block'
+            />
             <div className='col-span-3 lg:col-span-5 lg:border-l'>
               <div className='px-4 py-6 lg:px-8 min-h-[83.9vh]'>
                 <Tabs defaultValue='specialists' className='h-full space-y-6'>
@@ -72,7 +95,12 @@ export default function SpecialistsPage({ }) {
                       </TabsTrigger>
                     </TabsList>
                     <div className='ml-auto mr-4 '>
-                      <Input className='w-full' placeholder='Buscar personal...' />
+                      <Input
+                        className='w-full'
+                        placeholder='Buscar personal...'
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                      />
                     </div>
                   </div>
                   <TabsContent value='specialists' className='border-none p-0 outline-none'>
