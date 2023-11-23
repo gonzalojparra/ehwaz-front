@@ -34,7 +34,9 @@ export default function SpecialistCard({
                 height={height}
                 quality={100}
                 className={cn(
-                  'h-auto w-auto object-cover transition-all hover:scale-105 cursor-pointer', aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square'
+                  'h-auto w-auto object-cover transition-all hover:scale-105 cursor-pointer',
+                  aspectRatio === 'portrait' ? 'aspect-[3/4]' : 'aspect-square',
+                  'max-w-[350px] max-h-[350px]'
                 )}
               />
             </div>

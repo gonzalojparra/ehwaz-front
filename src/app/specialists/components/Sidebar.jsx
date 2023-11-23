@@ -30,7 +30,7 @@ export default function Sidebar({ specialists, className, selectedBranch, setSel
             Profesionales
           </h2>
           <div className='space-y-1'>
-            <Button variant='secondary' className='w-full justify-start'>
+            <Button variant='secondary' className='w-full justify-start' onClick={() => setSelectedBranch('')}>
               <ListIcon className='mr-2 h-4 w-4' />
               Lista de profesionales
             </Button>

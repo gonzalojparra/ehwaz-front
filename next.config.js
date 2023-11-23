@@ -7,7 +7,9 @@ const nextConfig = {
       'thumbs.dreamstime.com',
       'wger.de',
       'wger.denull',
-      'www.oorsprong.org'
+      'www.oorsprong.org',
+      'static.wikia.nocookie.net',
+      'i.pinimg.com'
     ],
   }
 }
