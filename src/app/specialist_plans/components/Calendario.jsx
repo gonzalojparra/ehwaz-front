@@ -73,9 +73,9 @@ export default function Calendario({ planes }) {
           headerToolbar={{
             left: "prev,next today",
             center: "title",
-            right: "dayGridMonth",
+            right: ''
           }}
-          locale={"es"}
+          locale={'es'}
           initialView="dayGridMonth"
           editable={false}
           selectable={true}
