@@ -52,7 +52,7 @@ export default function Page() {
 
   return (
     <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
-            <div className='md:w-[1200px] sm:w-full pb-8'>
+            <div className='md:w-[1200px] sm:w-full pb-8 w-full'>
                 <Tabs defaultValue="rutinas" className="w-full">
                     <TabsList className="grid w-full grid-cols-2">
                         <TabsTrigger value="rutinas">Pagos de Rutinas</TabsTrigger>
