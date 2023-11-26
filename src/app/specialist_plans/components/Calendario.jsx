@@ -31,7 +31,7 @@ export default function Calendario({ planes }) {
           id: pl.id,
           title: pl.name,
           start: pl.initial_date,
-          end: pl.final_date,
+          end: pl.nueva_fecha_final,
           allDay: true,
           backgroundColor: pl.color,
           borderColor: pl.color,
