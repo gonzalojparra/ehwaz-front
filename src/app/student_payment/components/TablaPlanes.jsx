@@ -31,7 +31,7 @@ import {
 import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 
-export default function TablaRutinas({data}){
+export default function TablaPlanes({data}){
     const [open, setOpen] = useState(false);
 
     const columns = [
@@ -69,7 +69,7 @@ export default function TablaRutinas({data}){
           },
           cell: ({ row }) => (
             <div className="lowercase">
-              {row.original.name+' - '+row.original.trainer.name}
+              {row.original.name+' - '+row.original.specialist.name}
             </div>
           ),
         },

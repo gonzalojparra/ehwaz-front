@@ -13,6 +13,7 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import TablaRutinas from "./components/TablaRutinas";
+import TablaPlanes from "./components/TablaPlanes";
 
 export default function Page() {
   const pathname = usePathname();
@@ -64,7 +65,7 @@ export default function Page() {
                     </TabsContent>
                     <TabsContent value="planes">
                         {pagosPlanes != null ?
-                        <TablaRutinas data={pagosPlanes} />
+                        <TablaPlanes data={pagosPlanes} />
                          : <SpinerCustom text={"Cargando pagos..."}/>}
                     </TabsContent>
                 </Tabs>
