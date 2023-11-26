@@ -73,12 +73,14 @@ export function Tabla({ data, obtenerPagos }) {
                 {payment.student.name + ' ' + payment.student.name}
               </TableCell>
               <TableCell className="text-center">
-                {payment.payment.path_archivo != null ?
+                {payment.payment.path_archivo != '' ?
                 <ModalImg src={payment.payment}/> 
-                : <></>}
+                : 'No hay comprobante'}
               </TableCell>
               <TableCell className="text-center">
+                
                   <Modal payment_id={payment.payment.id} estado={payment.payment.status} obtenerPagos={obtenerPagos} />
+                
               </TableCell>
             </TableRow>
           ))}

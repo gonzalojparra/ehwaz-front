@@ -14,6 +14,7 @@ import { useEffect, useState } from "react"
 
 export default function ModalImg({src}){
     const [base, setBase] = useState(null);
+    const [open, setOpen] = useState(false);
 
     const obtenerBase = async()=>{
         await axios.get('api/ver_archivo/'+src.id)
@@ -27,9 +28,9 @@ export default function ModalImg({src}){
     }, [])
 
     return (
-        <Dialog>
+        <Dialog  open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button variant="outline">Ver Archivo</Button>
+          <Button variant="outline" onClick={()=>{setOpen(true)}}>Ver Archivo</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[800px]">
           <DialogHeader>
