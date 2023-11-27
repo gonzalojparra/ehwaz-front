@@ -161,7 +161,10 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
           headerToolbar={{
             left: "prev,next today",
             center: "title",
-            right: "dayGridMonth",
+            right: ''
+          }}
+          buttonText={{
+            today:'Hoy'
           }}
           locale={"es"}
           initialView="dayGridMonth"
@@ -172,7 +175,7 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
           weekends={true}
           select={crearEvento}
           eventClick={verEvento}
-          themeSystem="Pulse"
+          themeSystem="Bootstrap5"
           events={eventos}
         />
       )}
