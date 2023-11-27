@@ -4,6 +4,7 @@ import axios from '@/lib/axios';
 import { useEffect, useState } from 'react';
 
 import { Tabla } from './components/Tabla';
+import Tablita from './components/Tablita';
 
 import SpinerCustom from '@/components/ui/spiner-custom';
 import { usePathname } from 'next/navigation';
@@ -51,8 +52,10 @@ export default function Payments() {
   return (
     <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
       <div className='md:w-[1200px] sm:w-full pb-8'>
-        {(pagos != null) ? <Tabla data={pagos} obtenerPagos={obtenerPagos} /> : <SpinerCustom text={'Cargando pagos...'} />}
+        {/* {(pagos != null) ? <Tabla data={pagos} obtenerPagos={obtenerPagos} /> : <SpinerCustom text={'Cargando pagos...'} />} */}
+      {(pagos != null) ? <Tablita data={pagos} obtenerPagos={obtenerPagos} /> : <SpinerCustom text={'Cargando pagos...'} />}
       </div>
+
     </div>
   )
 }
