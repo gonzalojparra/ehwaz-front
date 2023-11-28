@@ -135,7 +135,7 @@ export default function Hero() {
                     <h2 className="text-xl font-bold text-inherit" >
                       Analíticas
                     </h2>
-                    <p className="text-zinc-200 dark:text-zinc-100" >
+                    <p className="dark:text-zinc-100" >
                       Detalles de los ejercicios realizados, con gráficos de progreso y estadísticas.
                     </p>
                   </div>
@@ -161,7 +161,7 @@ export default function Hero() {
                     <h2 className="text-xl font-bold text-inherit" >
                       Seguimiento
                     </h2>
-                    <p className="text-zinc-200 dark:text-zinc-100" >
+                    <p className="dark:text-zinc-100" >
                       Permitimos a los clientes realizar un seguimiento de sus progresos.
                     </p>
                   </div>
@@ -186,7 +186,7 @@ export default function Hero() {
                     <h2 className="text-xl font-bold text-inherit" >
                       Seguridad
                     </h2>
-                    <p className="text-zinc-200 dark:text-zinc-100" >
+                    <p className="dark:text-zinc-100" >
                       Con seguridad confiable, sus datos siempre están seguros y protegidos.
                     </p>
                   </div>
@@ -211,7 +211,7 @@ export default function Hero() {
                     <h2 className="text-xl font-bold text-inherit" >
                       Condición Física
                     </h2>
-                    <p className="text-zinc-200 dark:text-zinc-100" >
+                    <p className="dark:text-zinc-100" >
                       Los ejercicios se adaptan a la condición física de cada cliente y mejorarán en base a sus objetivos.
                     </p>
                   </div>
@@ -238,7 +238,7 @@ export default function Hero() {
                     <h2 className="text-xl font-bold text-inherit" >
                       Guías Nutricionales
                     </h2>
-                    <p className="text-zinc-200 dark:text-zinc-100" >
+                    <p className="dark:text-zinc-100" >
                       Con los especialistas asociados, los clientes podrán mejorar su alimentación en base a sus ideales.
                     </p>
                   </div>
@@ -264,7 +264,7 @@ export default function Hero() {
                     <h2 className="text-xl font-bold text-inherit" >
                       Contacto fácil
                     </h2>
-                    <p className="text-zinc-200 dark:text-zinc-100" >
+                    <p className="dark:text-zinc-100" >
                       La comunicación con los especialistas asociados permite a los clientes resolver sus problemas.
                     </p>
                   </div>
