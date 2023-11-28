@@ -53,26 +53,26 @@ export default function Tablita({data, obtenerPagos}){
               </Button>
             );
           },
-          cell: ({ row }) => <div className="capitalize">{row.getValue("id")}</div>,
+          cell: ({ row }) => <div className="capitalize">{row.original.id}</div>,
         },
         {
-            accessorKey: "payment_type",
-            name: "Tipo de Pago",
-            nombre: "Tipo de Pago",
+            accessorKey: "student",
+            name: "Rutina/Plan Alumno",
+            nombre: "Rutina/Plan Alumno",
             header: ({ column }) => {
               return (
                 <Button
                   variant="ghost"
                   onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
-                  Rutina - Trainer
+                  Rutina/Plan Alumno
                   <ArrowUpDown className="ml-2 h-4 w-4" />
                 </Button>
               );
             },
             cell: ({ row }) => (
               <div className="lowercase">
-                {row.original.payment_type}
+                {row.original.routine_name} / {row.original.student.name + ' ' + row.original.student.last_name}
               </div>
             ),
           },
@@ -131,10 +131,9 @@ export default function Tablita({data, obtenerPagos}){
             return (
               <Button
                 variant="ghost"
-                onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
               >
                 Fecha
-                <ArrowUpDown className="ml-2 h-4 w-4" />
+                
               </Button>
             );
           },
@@ -152,10 +151,9 @@ export default function Tablita({data, obtenerPagos}){
               return (
                 <Button
                   variant="ghost"
-                  onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Archivo
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                  
                 </Button>
               );
             },
@@ -177,10 +175,9 @@ export default function Tablita({data, obtenerPagos}){
               return (
                 <Button
                   variant="ghost"
-                  onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                 >
                     Cambiar estado
-                  <ArrowUpDown className="ml-2 h-4 w-4" />
+                  
                 </Button>
               );
             },
@@ -222,9 +219,9 @@ export default function Tablita({data, obtenerPagos}){
             <div className="flex items-center py-4">
               <Input
                 placeholder="Filtrar nombres..."
-                value={table.getColumn("name")?.getFilterValue() ?? ""}
+                value={table.getColumn("student")?.getFilterValue() ?? ""}
                 onChange={(event) =>
-                  table.getColumn("name")?.setFilterValue(event.target.value)
+                  table.getColumn("student")?.setFilterValue(event.target.value)
                 }
                 className="max-w-sm"
               />
