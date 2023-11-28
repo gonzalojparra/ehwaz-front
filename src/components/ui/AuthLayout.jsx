@@ -92,6 +92,12 @@ const components = [
     description:
       'Ver planes creados a tu medida',
   },
+  {
+    title: 'Ver metricas de especialistas',
+    href: '/specialist_metrics',
+    perms: 'Especialista',
+    description: 'Ver metricas en base a los alumnos asignados',
+  }
 ]
 
 
