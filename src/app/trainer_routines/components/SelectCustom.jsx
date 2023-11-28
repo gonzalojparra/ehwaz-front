@@ -22,7 +22,7 @@ export default function SelectCustom({alumnos, setAlumnoId, alumnoId, obtener_ru
         <div className='space-y-2'>
             {alumnos != null ? 
             <div>
-                <Label htmlFor='estudiantes' className='flex ml-1'>
+                <Label htmlFor='estudiantes' className='flex ml-1 pb-2'>
                     Estudiantes
                 </Label>
           
