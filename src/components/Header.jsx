@@ -26,7 +26,7 @@ export default function Header() {
     });
   }, [user])
 
-  if (user) {
+  if (user && role) {
     return AuthLayout(user, logout, role);
   } else {
     return GuestLayout();

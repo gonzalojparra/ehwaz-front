@@ -22,7 +22,7 @@ import { Menu } from 'lucide-react';
 import ProfileButton from './ProfileButton';
 
 
-const components = [
+/* const components = [
   {
     title: 'Rutinas',
     href: '/student_routines',
@@ -98,17 +98,97 @@ const components = [
     perms: 'Especialista',
     description: 'Ver metricas en base a los alumnos asignados',
   }
+] */
+
+const components = [
+  [
+    'Rutinas',
+    '/student_routines',
+    'Alumno',
+    'Ver rutinas asignadas por el personal trainer.',
+    1
+  ],
+  [
+    'Calendario',
+    '/trainer_routines',
+    'Trainer',
+    'Ver calendario con el cronograma de rutinas asignadas por todos los profesionales.',
+    2
+  ],
+  [
+    'Progreso',
+    '/metricas',
+    'Alumno',
+    'Ver progreso de los objetivos basados en los ejercicios especificados.',
+    3
+  ],
+  [
+    'Mis Pago',
+    '/payment',
+    'Alumno',
+    'Generar mis pagos.',
+    4
+  ],
+  [
+    'Pagos',
+    '/payments',
+    'Trainer, Alumno',
+    'Ver pagos realizados y pendientes de los planes asignados por los profesionales.',
+    5
+  ],
+  [
+    'Alumnos',
+    '/trainer_request',
+    'Trainer',
+    'Ver eventos que se realizarán y que pueden ser de interés para que te inscribas!',
+    6
+  ],
+  [
+    'Planes',
+    '/specialist_plans',
+    'Especialista',
+    'Generar Planes para alumnos',
+    7
+  ],
+  [
+    'Alumnos',
+    '/specialist_request',
+    'Especialista',
+    'Ver listado de alumnos',
+    8
+  ],
+  [
+    'Listado de Pagos',
+    '/student_payment',
+    'Student',
+    'Ver pagos realizados',
+    9
+  ],
+  [
+    'Ver planes de especialistas',
+    '/student_plans',
+    'Student',
+    'Ver planes creados a tu medida',
+    10
+  ],
+  [
+    'Ver metricas de especialistas',
+    '/specialist_metrics',
+    'Especialista',
+    'Ver metricas en base a los alumnos asignados',
+    11
+  ]
 ]
 
 
 
 const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
-    
+
   return (
     <li>
       <NavigationMenuLink asChild>
         <Link
-          href={ref}
+          href={props.href}
           className={cn(
             'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
             className
@@ -126,6 +206,24 @@ const ListItem = React.forwardRef(({ className, title, children, ...props }, ref
 })
 ListItem.displayName = 'ListItem'
 
+const Lis = ({component}) => {
+  return (
+    <li key={component[4]}>
+      <NavigationMenuLink>
+        <Link
+          href={component[1]}
+          className=''
+        >
+          <div className='text-sm font-medium leading-none'>{component[0]}</div>
+          <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
+            {component[3]}
+          </p>
+        </Link>
+      </NavigationMenuLink>
+    </li>
+  )
+}
+
 const AuthLayout = (user, logout, role) => {
   return (
     <header className='sm:flex sm:justify-between py-3 px-4 border-b bg-background'>
@@ -139,10 +237,10 @@ const AuthLayout = (user, logout, role) => {
               </SheetTrigger>
               <SheetContent side='left' className='w-[300px] sm:w-[400px]'>
                 <nav className='flex flex-col gap-4'>
-                  {components.filter((component) => {
-                    /* console.log(role);
+                  {/* components.filter((component) => {
+                     console.log(role);
                     console.log(component.perms.includes(role));
-                    console.log(component); */
+                    console.log(component); 
                     if(component.perms.includes(role)){
                       <Link
                       key={component.title}
@@ -153,7 +251,7 @@ const AuthLayout = (user, logout, role) => {
                     </Link>
                     }
                   }
-                  )}
+                  ) */}
                 </nav>
               </SheetContent>
             </Sheet>
@@ -203,15 +301,35 @@ const AuthLayout = (user, logout, role) => {
                   <NavigationMenuTrigger>Planes</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className='grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] '>
-                      {components.map((component) => (
-                        <ListItem
-                          key={component.title}
-                          title={component.title}
-                          href={component.href}
+                      {role && components.map((component) => {
+                        let perm = component[2];
+                        if (perm.includes(role)) {
+                          return (<Lis component={component} /> )
+                          {/* <li>
+                            <NavigationMenuLink>
+                              <Link
+                                href={component[0]}
+                                className='block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'
+                              >
+                                <div className='text-sm font-medium leading-none'>{component[0]}</div>
+                                <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
+                                  {component[3]}
+                                </p>
+                              </Link>
+                            </NavigationMenuLink>
+                          </li> */}
+                          {/* <ListItem
+                          key={component[0]}
+                          title={component[0]}
+                          href={component[0]}
                         >
-                          {component.description}
-                        </ListItem>
-                      ))}
+                          {component[3]}
+                        </ListItem> */}
+                        }else{
+                          return <></>
+                        }
+
+                      })}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
