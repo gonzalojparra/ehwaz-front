@@ -206,13 +206,15 @@ const ListItem = React.forwardRef(({ className, title, children, ...props }, ref
 })
 ListItem.displayName = 'ListItem'
 
-const Lis = ({component}) => {
+const Lis = ({ component }) => {
   return (
     <li key={component[4]}>
-      <NavigationMenuLink>
+      <NavigationMenuLink asChild>
         <Link
           href={component[1]}
-          className=''
+          className={cn(
+            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground'
+          )}
         >
           <div className='text-sm font-medium leading-none'>{component[0]}</div>
           <p className='line-clamp-2 text-sm leading-snug text-muted-foreground'>
@@ -223,6 +225,7 @@ const Lis = ({component}) => {
     </li>
   )
 }
+Lis.displayName = 'ListItem'
 
 const AuthLayout = (user, logout, role) => {
   return (
@@ -304,7 +307,7 @@ const AuthLayout = (user, logout, role) => {
                       {role && components.map((component) => {
                         let perm = component[2];
                         if (perm.includes(role)) {
-                          return (<Lis component={component} /> )
+                          return (<Lis component={component} />)
                           {/* <li>
                             <NavigationMenuLink>
                               <Link
@@ -325,7 +328,7 @@ const AuthLayout = (user, logout, role) => {
                         >
                           {component[3]}
                         </ListItem> */}
-                        }else{
+                        } else {
                           return <></>
                         }
 

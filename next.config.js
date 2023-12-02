@@ -9,7 +9,8 @@ const nextConfig = {
       'wger.denull',
       'www.oorsprong.org',
       'static.wikia.nocookie.net',
-      'i.pinimg.com'
+      'i.pinimg.com',
+      'img.freepik.com'
     ],
   }
 }
