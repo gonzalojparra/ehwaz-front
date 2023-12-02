@@ -178,9 +178,7 @@ const components = [
     'Ver metricas en base a los alumnos asignados',
     11
   ]
-]
-
-
+];
 
 const ListItem = React.forwardRef(({ className, title, children, ...props }, ref) => {
 

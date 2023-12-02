@@ -1,16 +1,18 @@
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { Skeleton } from "@/components/ui/skeleton"
-import { ListIcon } from 'lucide-react';
+import Link from 'next/link';
+
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+} from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ListIcon } from 'lucide-react';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import Link from 'next/link';
+import { Skeleton } from '@/components/ui/skeleton';
+
+import { cn } from '@/lib/utils';
 
 export default function Sidebar({ trainers, className }) {
   return (
@@ -47,27 +49,27 @@ export default function Sidebar({ trainers, className }) {
         </div>
         <div className='py-2'>
           <h2 className='relative px-7 text-lg font-bold tracking-tight mb-3 bg-clip-text text-transparent bg-gradient-to-r from-[#8A2BE2] to-[#FFD700]'>
-            Top Ten <Badge variant="destructive" className='mx-4'>On Fire 🔥</Badge>
+            Top Ten <Badge variant='destructive' className='mx-4'>On Fire 🔥</Badge>
           </h2>
-          <Separator className="w-[90%] mx-auto" />
+          <Separator className='w-[90%] mx-auto' />
           <ScrollArea className='px-1'>
             <div className='p-2'>
               {trainers?.map((trainer, i) => (
-                <div className="flex items-center space-x-4 ml-2 h-full my-5" key={`${trainer.name}-${i}`}>
+                <div className='flex items-center space-x-4 ml-2 h-full my-5' key={`${trainer.name}-${i}`}>
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-                    <AvatarFallback>CN</AvatarFallback>
+                    <AvatarImage src='https://raw.githubusercontent.com/gonzalojparra/ehwaz-front/master/src/app/icon.ico' alt='@shadcn' />
+                    <AvatarFallback>Ehwaz</AvatarFallback>
                   </Avatar>
-                  <div className="space-y-2">
-                    {trainer.name?<p className='text-sm'>
+                  <div className='space-y-2'>
+                    {trainer.name ? <p className='text-sm'>
                       {trainer.name}
-                    </p>:<Skeleton className="h-4 w-[50px]" title='No hemos encontrado el nombre'/>}
-                  <Button className='primary' size={'sm'}><Link href={`./trainers/${trainer.id}`}>¡Contáctame!</Link></Button>
+                    </p> : <Skeleton className='h-4 w-[50px]' title='No hemos encontrado el nombre' />}
+                    <Button className='primary' size={'sm'}><Link href={`./trainers/${trainer.id}`}>¡Contáctame!</Link></Button>
                   </div>
                 </div>
               ))}
             </div>
-           {/*  <div className='space-y-1 p-2'>
+            {/*  <div className='space-y-1 p-2'>
               {trainers?.map((trainer, i) => (
                 <Button
                   key={`${trainer.name}-${i}`}
