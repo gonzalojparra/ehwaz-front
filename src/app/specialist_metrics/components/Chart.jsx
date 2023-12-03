@@ -45,6 +45,7 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
   const [value, setValue] = useState(null);
   const [planes, setPlanes] = useState(null);
   const [planesReforged, setPlanesReforged] = useState(null);
+  const [second, setSecond] = useState(null);
 
   const validarPlanes = (plans) => {
     const total = plans.length;
@@ -130,16 +131,18 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
     setPlanesReforged(planesReforged);
   }
 
-  const valueFormatter = (number) => `$ ${new Intl.NumberFormat("us").format(number).toString()}`;
+  const valueFormatter = (number) => `$ ${new Intl.NumberFormat("es").format(number).toString()}`;
 
   useEffect(() => {
     validarPlanes(plans);
     reforjarPlanes(plans);
+    segundoChart(plans);
   }, []);
 
   useEffect(() => {
     validarPlanes(plans);
     reforjarPlanes(plans);
+    segundoChart(plans);
   }, [obtenerPlanes]);
 
   const customTooltip = ({ payload, active }) => {
@@ -182,6 +185,18 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
       </div>
     );
   };
+
+  const segundoChart = (plans)=>{
+    let data = plans.map((pl)=>{
+      let obj = {
+        'name': pl.student.name + ' ' + pl.student.last_name,
+        'Monto': parseFloat(pl.amount)
+      }
+      return obj;
+    })
+    setSecond(data);
+  }
+
 
   const barchart = [
     {
@@ -256,18 +271,18 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
                 {planesReforged && <BarList showAnimation={true} data={planesReforged} className="mt-2" />}
               </Card>
               <Card className="w-full">
-                <Title>Number of species threatened with extinction (2021)</Title>
+                <Title>Monto de Planes asignados</Title>
                 <Subtitle>
-                  The IUCN Red List has assessed only a small share of the total known species in the world.
+                  Montos de cada Plan asignado
                 </Subtitle>
                 <BarChart
                   className="mt-6"
-                  data={barchart}
+                  data={second}
                   index="name"
-                  categories={["Number of threatened species"]}
+                  categories={["Monto"]}
                   colors={["blue"]}
                   valueFormatter={valueFormatter}
-                  yAxisWidth={48}
+                  yAxisWidth={50}
                 />
               </Card>
             </div>
