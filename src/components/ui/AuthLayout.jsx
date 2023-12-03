@@ -132,7 +132,7 @@ const components = [
   [
     'Pagos',
     '/payments',
-    'Trainer, Alumno, Especialista',
+    'Trainer, Especialista',
     'Ver pagos realizados y pendientes de los planes asignados por los profesionales.',
     5
   ],
@@ -160,14 +160,14 @@ const components = [
   [
     'Listado de Pagos',
     '/student_payment',
-    'Student',
+    'Alumno',
     'Ver pagos realizados',
     9
   ],
   [
     'Ver planes de especialistas',
     '/student_plans',
-    'Student',
+    'Alumno',
     'Ver planes creados a tu medida',
     10
   ],
