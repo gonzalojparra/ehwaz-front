@@ -72,7 +72,7 @@ export default function Page(){
   return (
     <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
       <div className='md:w-[500px] sm:w-full pb-8 w-full'>
-        {alumnos != null && <SelectCustom alumnos={alumnos} setAlumnoId={setAlumnoId} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/>}
+        {<SelectCustom alumnos={alumnos} setAlumnoId={setAlumnoId} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas}/>}
       </div>
       <div className="md:w-[1200px] sm:w-full pb-8 w-full">
         {(rutinas != null && alumnoId != null) ? <Collapsable data={rutinas} setRutinas={setRutinas} alumnoId={alumnoId} obtener_rutinas={obtener_rutinas} goals={goals} estados={estados}/> : <></>}
