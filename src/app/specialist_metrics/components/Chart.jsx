@@ -212,7 +212,6 @@ export const Chart = ({
     setSecond(data);
   }
 
-
   const barchart = [
     {
       name: 'Amphibians',
@@ -268,6 +267,7 @@ export const Chart = ({
                       customTooltip={customTooltipDonut}
                       onValueChange={(v) => setValue(v)}
                       showAnimation={true}
+                      noDataText='No hay datos para mostrar'
                     />
                   </div>
                 </div>
@@ -311,6 +311,7 @@ export const Chart = ({
                   valueFormatter={valueFormatter}
                   yAxisWidth={60}
                   showAnimation={true}
+                  noDataText='No hay datos para mostrar'
                 />
               </Card>
             </div>
@@ -323,4 +324,4 @@ export const Chart = ({
       </div>
     </>
   );
-};
+}

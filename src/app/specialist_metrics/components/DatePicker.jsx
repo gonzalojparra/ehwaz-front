@@ -1,27 +1,30 @@
 'use client'
 
-import { useState } from 'react'
-import { addDays, format } from 'date-fns'
-import { Calendar as CalendarIcon } from 'lucide-react'
+import { useState } from 'react';
 import { DateRange } from 'react-day-picker';
 
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
-import { Calendar } from '@/components/ui/calendar'
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-
-import es from 'date-fns/locale/es';
 import SimpleSpiner from '@/components/ui/simple-spiner';
+
+import { Calendar as CalendarIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+import { addDays, format } from 'date-fns';
+import es from 'date-fns/locale/es';
 
 export function DatePicker({ className, fechas, setFechas, obtenerPlanes, loading }) {
   const [date, setDate] = useState({
     from: new Date(),
     to: addDays(new Date(), 0),
   });
+
+  const options = { locale: es };
 
   const setearFechas = (e) => {
     if (e != null && e.from != null && e.to != null) {
@@ -37,8 +40,6 @@ export function DatePicker({ className, fechas, setFechas, obtenerPlanes, loadin
       console.log(fin);
     }
   };
-
-  const options = { locale: es };
 
   return (
     <div className={cn('grid gap-2', className)}>
@@ -78,7 +79,12 @@ export function DatePicker({ className, fechas, setFechas, obtenerPlanes, loadin
           />
         </PopoverContent>
       </Popover>
-      <Button onClick={(e) => obtenerPlanes()} disabled={loading}>Buscar por fechas {loading && <SimpleSpiner />}</Button>
+      <Button
+        onClick={(e) => obtenerPlanes()}
+        disabled={loading}
+      >
+        Buscar por fechas {loading && <SimpleSpiner />}
+      </Button>
     </div>
   )
 }

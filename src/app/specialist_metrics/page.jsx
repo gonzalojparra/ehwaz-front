@@ -1,28 +1,23 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { Chart } from './components/Chart';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
+
+import { Chart } from './components/Chart';
+
 import axios from '@/lib/axios';
-import SpinerCustom from '@/components/ui/spiner-custom';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 
 export default function Metricas() {
   const pathname = usePathname();
   const router = useRouter();
+
+  const [dataObj, setDataObj] = useState(null);
+  const [fechas, setFechas] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [plans, setPlans] = useState(null);
   const [objetivoId, setObjetivoId] = useState();
-  const [dataObj, setDataObj] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [value, setValue] = useState(null);
-
 
   const obtenerPlanes = () => {
     setLoading(true);
@@ -59,8 +54,6 @@ export default function Metricas() {
         });
     }
   }, []);
-
-  const [fechas, setFechas] = useState(null);
 
   return (
     <div className='bg-background py-4 flex flex-col justify-start items-center min-h-[84vh]'>
