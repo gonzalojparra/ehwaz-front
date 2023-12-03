@@ -20,22 +20,24 @@ export default function Metricas() {
   const [plans, setPlans] = useState(null);
   const [objetivoId, setObjetivoId] = useState();
   const [dataObj, setDataObj] = useState(null);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [value, setValue] = useState(null);
 
 
   const obtenerPlanes = () => {
-    setLoading(true)
-    if(fechas != null){
+    setLoading(true);
+    setValue(null);
+    if (fechas != null) {
       axios.post('/api/get_specialist_plans', {
-        "fecha_inicio":fechas.fecha_inicio,
-        "fecha_fin":fechas.fecha_fin
+        'fecha_inicio': fechas.fecha_inicio,
+        'fecha_fin': fechas.fecha_fin
       })
         .then((res) => {
           console.log(res.data.plans);
           setPlans(res.data);
-          setLoading(false)
+          setLoading(false);
         });
-    }else{
+    } else {
       axios.post('/api/get_specialist_plans')
         .then((res) => {
           console.log(res.data.plans);
@@ -62,14 +64,18 @@ export default function Metricas() {
 
   return (
     <div className='bg-background py-4 flex flex-col justify-start items-center min-h-[84vh]'>
-      <div className='md:w-[500px] sm:w-full'>
-          
-      </div>
       <div className='w-full px-16'>
-        { plans && (
-          <Chart plans={plans.plans} fechas={fechas} setFechas={setFechas} obtenerPlanes={obtenerPlanes} loading={loading}/>
-        )
-        }
+        {plans && (
+          <Chart
+            plans={plans.plans}
+            fechas={fechas}
+            setFechas={setFechas}
+            obtenerPlanes={obtenerPlanes}
+            loading={loading}
+            value={value}
+            setValue={setValue}
+          />
+        )}
       </div>
     </div>
   );

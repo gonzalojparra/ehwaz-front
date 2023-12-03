@@ -17,7 +17,15 @@ import {
 import { CustomCard } from './CustomCard';
 import { DatePicker } from './DatePicker';
 
-export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
+export const Chart = ({
+  plans,
+  fechas,
+  setFechas,
+  obtenerPlanes,
+  loading,
+  value,
+  setValue
+}) => {
   /**
    * Estructura del objeto plans
    * 
@@ -42,10 +50,17 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
       totalAmountWithPayment,
     }
    */
-  const [value, setValue] = useState(null);
+  
   const [planes, setPlanes] = useState(null);
   const [planesReforged, setPlanesReforged] = useState(null);
   const [second, setSecond] = useState(null);
+  const [showCard, setShowCard] = useState(false);
+
+  useEffect(() => {
+    if (value !== null) {
+      setShowCard(true);
+    }
+  }, [value]);
 
   const validarPlanes = (plans) => {
     const total = plans.length;
@@ -131,7 +146,7 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
     setPlanesReforged(planesReforged);
   }
 
-  const valueFormatter = (number) => `$ ${new Intl.NumberFormat("es").format(number).toString()}`;
+  const valueFormatter = (number) => `$ ${new Intl.NumberFormat('es').format(number).toString()}`;
 
   useEffect(() => {
     validarPlanes(plans);
@@ -148,13 +163,13 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
   const customTooltip = ({ payload, active }) => {
     if (!active || !payload) return null;
     return (
-      <div className="w-56 rounded-tremor-default text-tremor-default bg-tremor-background p-2 shadow-tremor-dropdown border border-tremor-border">
+      <div className='w-56 rounded-tremor-default text-tremor-default bg-tremor-background p-2 shadow-tremor-dropdown border border-tremor-border'>
         {payload.map((category, idx) => (
-          <div key={idx} className="flex flex-1 space-x-2.5">
+          <div key={idx} className='flex flex-1 space-x-2.5'>
             <div className={`w-1 flex flex-col bg-${category.color}-500 rounded`} />
-            <div className="space-y-1">
-              <p className="text-tremor-content">{category.dataKey}</p>
-              <p className="font-medium text-tremor-content-emphasis">{category.value} feedback</p>
+            <div className='space-y-1'>
+              <p className='text-tremor-content'>{category.dataKey}</p>
+              <p className='font-medium text-tremor-content-emphasis'>{category.value} feedback</p>
               <p className='text-tremor-content-emphasis font-bold'>{category.payload.student_feedback}</p>
             </div>
           </div>
@@ -168,15 +183,15 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
     const categoryPayload = payload?.[0];
     if (!categoryPayload) return null;
     return (
-      <div className="w-80 rounded-tremor-default text-tremor-default bg-tremor-background p-2 shadow-tremor-dropdown border border-tremor-border">
-        <div className="flex flex-1 space-x-3">
+      <div className='w-80 rounded-tremor-default text-tremor-default bg-tremor-background p-2 shadow-tremor-dropdown border border-tremor-border'>
+        <div className='flex flex-1 space-x-3'>
           <div className={`w-2 flex flex-col bg-${categoryPayload?.color}-500 rounded`} />
-          <div className="w-full">
-            <div className="flex items-center justify-between space-x-8">
-              <p className="text-right text-tremor-content">
+          <div className='w-full'>
+            <div className='flex items-center justify-between space-x-8'>
+              <p className='text-right text-tremor-content'>
                 {categoryPayload.name}
               </p>
-              <p className="font-medium text-right whitespace-nowrap text-tremor-content-emphasis">
+              <p className='font-medium text-right whitespace-nowrap text-tremor-content-emphasis'>
                 {categoryPayload.payload.porcentajeTooltip}%
               </p>
             </div>
@@ -186,8 +201,8 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
     );
   };
 
-  const segundoChart = (plans)=>{
-    let data = plans.map((pl)=>{
+  const segundoChart = (plans) => {
+    let data = plans.map((pl) => {
       let obj = {
         'name': pl.student.name + ' ' + pl.student.last_name,
         'Monto': parseFloat(pl.amount)
@@ -200,67 +215,75 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
 
   const barchart = [
     {
-      name: "Amphibians",
-      "Number of threatened species": 2488,
+      name: 'Amphibians',
+      'Number of threatened species': 2488,
     },
     {
-      name: "Birds",
-      "Number of threatened species": 1445,
+      name: 'Birds',
+      'Number of threatened species': 1445,
     },
     {
-      name: "Crustaceans",
-      "Number of threatened species": 743,
+      name: 'Crustaceans',
+      'Number of threatened species': 743,
     },
     {
-      name: "Ferns",
-      "Number of threatened species": 281,
+      name: 'Ferns',
+      'Number of threatened species': 281,
     },
     {
-      name: "Arachnids",
-      "Number of threatened species": 251,
+      name: 'Arachnids',
+      'Number of threatened species': 251,
     },
     {
-      name: "Corals",
-      "Number of threatened species": 232,
+      name: 'Corals',
+      'Number of threatened species': 232,
     },
     {
-      name: "Algae",
-      "Number of threatened species": 98,
+      name: 'Algae',
+      'Number of threatened species': 98,
     },
   ];
 
   return (
     <>
       <div>
-        <DatePicker fechas={fechas} setFechas={setFechas} obtenerPlanes={obtenerPlanes} loading={loading} className={`flex items-center justify-center pb-4`} />
+        <DatePicker
+          fechas={fechas}
+          setFechas={setFechas}
+          obtenerPlanes={obtenerPlanes}
+          loading={loading}
+          className={`flex items-center justify-center pb-4`}
+        />
         {plans != null ? (
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex flex-col gap-4 md:w-1/2">
-              <Card className="w-full flex flex-row">
-                <div className="">
+          <div className='flex flex-col md:flex-row gap-4'>
+            <div className='flex flex-col gap-4 md:w-1/2'>
+              <Card className='w-full flex flex-row'>
+                <div className='flex'>
                   <Title>Planes</Title>
-                  <div className="mt-6 md:w-96">
+                  <div className='mt-6 md:w-96 pb-3 flex items-center justify-center'>
                     <DonutChart
                       data={plans}
-                      category="porcentaje"
-                      index="description"
-                      colors={["rose", "yellow", "orange", "indigo", "blue", "emerald"]}
+                      category='porcentaje'
+                      index='description'
                       customTooltip={customTooltipDonut}
                       onValueChange={(v) => setValue(v)}
+                      showAnimation={true}
                     />
                   </div>
                 </div>
+              </Card>
+              <div className={`transition-opacity duration-500 ${showCard ? 'opacity-100' : 'opacity-0'}`}>
                 {value !== null && (
-                  <div className="flex justify-center items-center pt-4">
-                    <CustomCard className="max-w-md" plan={value} />
+                  <div className='flex justify-center items-center'>
+                    <CustomCard className='max-w-md' plan={value} />
                   </div>
                 )}
-              </Card>
+              </div>
             </div>
-            <div className="flex flex-col gap-4 md:w-1/2">
-              <Card className="w-full">
+            <div className='flex flex-col gap-4 md:w-1/2'>
+              <Card className='w-full'>
                 <Title>Dinero obtenido</Title>
-                <Flex className="mt-4">
+                <Flex className='mt-4'>
                   <Text>
                     <Bold>Motivo</Bold>
                   </Text>
@@ -268,28 +291,33 @@ export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
                     <Bold>Dinero</Bold>
                   </Text>
                 </Flex>
-                {planesReforged && <BarList showAnimation={true} data={planesReforged} className="mt-2" />}
+                {planesReforged &&
+                  <BarList
+                    showAnimation={true}
+                    data={planesReforged}
+                    className='mt-2'
+                  />
+                }
               </Card>
-              <Card className="w-full">
+              <Card className='w-full'>
                 <Title>Monto de Planes asignados</Title>
-                <Subtitle>
-                  Montos de cada Plan asignado
-                </Subtitle>
+                <Subtitle>Montos de cada Plan asignado</Subtitle>
                 <BarChart
-                  className="mt-6"
+                  className='mt-6'
                   data={second}
-                  index="name"
-                  categories={["Monto"]}
-                  colors={["blue"]}
+                  index='name'
+                  categories={['Monto']}
+                  colors={['blue']}
                   valueFormatter={valueFormatter}
-                  yAxisWidth={50}
+                  yAxisWidth={60}
+                  showAnimation={true}
                 />
               </Card>
             </div>
           </div>
         ) : (
-          <div className="flex justify-center items-center">
-            <h1 className="text-2xl font-bold flex justify-center">No hay planes!</h1>
+          <div className='flex justify-center items-center'>
+            <h1 className='text-2xl font-bold flex justify-center'>No hay planes!</h1>
           </div>
         )}
       </div>
