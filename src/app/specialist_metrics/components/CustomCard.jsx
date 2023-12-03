@@ -20,7 +20,6 @@ export function CustomCard({ plan }) {
       <CardHeader className='p-0 flex justify-between items-start'>
         <div className='flex items-center space-x-2'>
           <CardTitle className='text-xl font-semibold'>{plan.name}</CardTitle>
-          <div className={`bg-[${plan.color}] px-2 py-1 rounded-full text-xs font-medium`}>{plan.color}</div>
         </div>
         <div>
           <p className='mt-2 text-md'>{plan.student.name} {plan.student.last_name}</p>
