@@ -9,10 +9,14 @@ import {
   BarList,
   Bold,
   Flex,
-  Text
+  Text,
+  BarChart,
+  Subtitle,
+  valueFormatter
 } from '@tremor/react';
 
 import { CustomCard } from './CustomCard';
+import { DatePickerWithRange } from './DatePicker';
 
 export const Chart = ({ plans }) => {
   /**
@@ -155,16 +159,16 @@ export const Chart = ({ plans }) => {
     const categoryPayload = payload?.[0];
     if (!categoryPayload) return null;
     return (
-      <div className="w-56 rounded-tremor-default text-tremor-default bg-tremor-background p-2 shadow-tremor-dropdown border border-tremor-border">
-        <div className="flex flex-1 space-x-2.5">
-          <div className={`w-1.5 flex flex-col bg-${categoryPayload?.color}-500 rounded`} />
+      <div className="w-80 rounded-tremor-default text-tremor-default bg-tremor-background p-2 shadow-tremor-dropdown border border-tremor-border">
+        <div className="flex flex-1 space-x-3">
+          <div className={`w-2 flex flex-col bg-${categoryPayload?.color}-500 rounded`} />
           <div className="w-full">
             <div className="flex items-center justify-between space-x-8">
-              <p className="text-right text-tremor-content whitespace-nowrap">
+              <p className="text-right text-tremor-content">
                 {categoryPayload.name}
               </p>
               <p className="font-medium text-right whitespace-nowrap text-tremor-content-emphasis">
-                {categoryPayload.payload.porcentajeTooltip}
+                {categoryPayload.payload.porcentajeTooltip}%
               </p>
             </div>
           </div>
@@ -191,47 +195,101 @@ export const Chart = ({ plans }) => {
     },
   ];
 
+  const barchart = [
+    {
+      name: "Amphibians",
+      "Number of threatened species": 2488,
+    },
+    {
+      name: "Birds",
+      "Number of threatened species": 1445,
+    },
+    {
+      name: "Crustaceans",
+      "Number of threatened species": 743,
+    },
+    {
+      name: "Ferns",
+      "Number of threatened species": 281,
+    },
+    {
+      name: "Arachnids",
+      "Number of threatened species": 251,
+    },
+    {
+      name: "Corals",
+      "Number of threatened species": 232,
+    },
+    {
+      name: "Algae",
+      "Number of threatened species": 98,
+    },
+  ];
+
   return (
     <>
-      {plans != null ? (
-        <div className='flex flex-row gap-4'>
-          <Card className='mx-auto'>
-            <Title>Planes</Title>
-            <DonutChart
-              className='mt-6'
-              data={plans}
-              category='porcentaje'
-              index='description'
-              colors={['rose', 'yellow', 'orange', 'indigo', 'blue', 'emerald']}
-              customTooltip={customTooltipDonut}
-              onValueChange={(v) => setValue(v)}
-            />
-          </Card>
-          <Card>
-            <Title>Dinero obtenido</Title>
-            <Flex className="mt-4">
-              <Text>
-                <Bold>Motivo</Bold>
-              </Text>
-              <Text>
-                <Bold>Dinero</Bold>
-              </Text>
-            </Flex>
-            {planesReforged && (
-              <BarList showAnimation={true} data={planesReforged} className="mt-2" />
-            )}
-          </Card>
-        </div>
-      ) : (
-        <div className='flex justify-center items-center'>
-          <h1 className='text-2xl font-bold flex justify-center'>No hay planes!</h1>
-        </div>
-      )}
-      {value !== null && (
-        <div className='flex justify-center items-center pt-8'>
-          <CustomCard className='max-w-md' plan={value} />
-        </div>
-      )}
+      <div>
+        <DatePickerWithRange className={`flex items-center justify-center pb-4`} />
+        {plans != null ? (
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col gap-4 md:w-1/2">
+              <Card className="w-full flex flex-row">
+                <div className="">
+                  <Title>Planes</Title>
+                  <div className="mt-6 md:w-96">
+                    <DonutChart
+                      data={plans}
+                      category="porcentaje"
+                      index="description"
+                      colors={["rose", "yellow", "orange", "indigo", "blue", "emerald"]}
+                      customTooltip={customTooltipDonut}
+                      onValueChange={(v) => setValue(v)}
+                    />
+                  </div>
+                </div>
+                {value !== null && (
+                  <div className="flex justify-center items-center pt-4">
+                    <CustomCard className="max-w-md" plan={value} />
+                  </div>
+                )}
+              </Card>
+            </div>
+            <div className="flex flex-col gap-4 md:w-1/2">
+              <Card className="w-full">
+                <Title>Dinero obtenido</Title>
+                <Flex className="mt-4">
+                  <Text>
+                    <Bold>Motivo</Bold>
+                  </Text>
+                  <Text>
+                    <Bold>Dinero</Bold>
+                  </Text>
+                </Flex>
+                {planesReforged && <BarList showAnimation={true} data={planesReforged} className="mt-2" />}
+              </Card>
+              <Card className="w-full">
+                <Title>Number of species threatened with extinction (2021)</Title>
+                <Subtitle>
+                  The IUCN Red List has assessed only a small share of the total known species in the world.
+                </Subtitle>
+                <BarChart
+                  className="mt-6"
+                  data={barchart}
+                  index="name"
+                  categories={["Number of threatened species"]}
+                  colors={["blue"]}
+                  valueFormatter={valueFormatter}
+                  yAxisWidth={48}
+                />
+              </Card>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-center items-center">
+            <h1 className="text-2xl font-bold flex justify-center">No hay planes!</h1>
+          </div>
+        )}
+      </div>
     </>
   );
 };

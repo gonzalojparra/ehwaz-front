@@ -44,8 +44,8 @@ export default function Metricas() {
   }, []);
 
   return (
-    <div className='bg-background py-7 flex flex-col justify-start items-center min-h-[84vh]'>
-      <div className='md:w-[500px] sm:w-full pb-8'>
+    <div className='bg-background py-4 flex flex-col justify-start items-center min-h-[84vh]'>
+      <div className='md:w-[500px] sm:w-full'>
           
       </div>
       <div className='w-full px-16'>

@@ -6,6 +6,8 @@ import { DayPicker } from "react-day-picker"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
+import es from "date-fns/locale/es";
+
 function Calendar({
   className,
   classNames,
@@ -14,6 +16,7 @@ function Calendar({
 }) {
   return (
     (<DayPicker
+      locale={es}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{

@@ -132,7 +132,7 @@ const components = [
   [
     'Pagos',
     '/payments',
-    'Trainer, Alumno',
+    'Trainer, Alumno, Especialista',
     'Ver pagos realizados y pendientes de los planes asignados por los profesionales.',
     5
   ],
