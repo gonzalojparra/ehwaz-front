@@ -34,7 +34,7 @@ export default function Page(){
             console.log("estados:");
             console.log(res.data.data);
         })
-
+        setPlanes(null);
         await axios.post('/api/get_planes_student', {
             student_id: e
         })
