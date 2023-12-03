@@ -265,6 +265,7 @@ export const Chart = ({
                       category='porcentaje'
                       index='description'
                       customTooltip={customTooltipDonut}
+                      colors={['rose', 'yellow', 'orange', 'indigo', 'blue', 'emerald']}
                       onValueChange={(v) => setValue(v)}
                       showAnimation={true}
                       noDataText='No hay datos para mostrar'
