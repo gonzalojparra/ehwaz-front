@@ -14,11 +14,31 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function DatePickerWithRange({ className }) {
+import es from "date-fns/locale/es";
+import SimpleSpiner from "@/components/ui/simple-spiner";
+
+export function DatePicker({ className, fechas, setFechas, obtenerPlanes, loading }) {
   const [date, setDate] = useState({
     from: new Date(),
     to: addDays(new Date(), 0),
   });
+
+  const setearFechas = (e)=>{
+    if(e.from != null && e.to != null){
+      let inicio = new Date();
+      inicio = format(e.from, 'Y-MM-dd', options);
+      let fin = new Date();
+      fin = format(e.to, 'Y-MM-dd', options);
+      setFechas ({
+        "fecha_inicio": inicio,
+        "fecha_fin": fin
+      })
+      console.log(inicio);
+      console.log(fin);
+    }
+  }
+
+  const options = {locale:es};
 
   return (
     <div className={cn("grid gap-2", className)}>
@@ -36,11 +56,11 @@ export function DatePickerWithRange({ className }) {
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
+                  {format(date.from, "LLL dd, y", options)} -{" "}
+                  {format(date.to, "LLL dd, y", options)}
                 </>
               ) : (
-                format(date.from, "LLL dd, y")
+                format(date.from, "LLL dd, y", options)
               )
             ) : (
               <span>Selecciona un rango de fechas</span>
@@ -53,12 +73,12 @@ export function DatePickerWithRange({ className }) {
             mode="range"
             defaultMonth={date?.from}
             selected={date}
-            onSelect={setDate}
+            onSelect={(e)=>{setDate(e); console.log(e); setearFechas(e)}}
             numberOfMonths={2}
           />
         </PopoverContent>
       </Popover>
-      <Button onClick={(e) => console.log(date)}>ver fecha</Button>
+      <Button onClick={(e) => obtenerPlanes()} disabled={loading}>Buscar por fechas {loading && <SimpleSpiner/>}</Button>
     </div>
   )
 }

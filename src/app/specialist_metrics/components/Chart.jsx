@@ -11,14 +11,13 @@ import {
   Flex,
   Text,
   BarChart,
-  Subtitle,
-  valueFormatter
+  Subtitle
 } from '@tremor/react';
 
 import { CustomCard } from './CustomCard';
-import { DatePickerWithRange } from './DatePicker';
+import { DatePicker } from './DatePicker';
 
-export const Chart = ({ plans }) => {
+export const Chart = ({ plans, fechas, setFechas, obtenerPlanes, loading }) => {
   /**
    * Estructura del objeto plans
    * 
@@ -131,10 +130,17 @@ export const Chart = ({ plans }) => {
     setPlanesReforged(planesReforged);
   }
 
+  const valueFormatter = (number) => `$ ${new Intl.NumberFormat("us").format(number).toString()}`;
+
   useEffect(() => {
     validarPlanes(plans);
     reforjarPlanes(plans);
   }, []);
+
+  useEffect(() => {
+    validarPlanes(plans);
+    reforjarPlanes(plans);
+  }, [obtenerPlanes]);
 
   const customTooltip = ({ payload, active }) => {
     if (!active || !payload) return null;
@@ -177,24 +183,6 @@ export const Chart = ({ plans }) => {
     );
   };
 
-  const chartdata = [
-    {
-      date: "2023-10-01",
-      feedback: 1,
-      student_feedback: 'Hacer el dia 1 pa'
-    },
-    {
-      date: "2023-10-02",
-      feedback: 0,
-      student_feedback: 'Hacer el dia 1 pa'
-    },
-    {
-      date: "2023-10-03",
-      feedback: 1,
-      student_feedback: 'Hacer el dia 1 pa'
-    },
-  ];
-
   const barchart = [
     {
       name: "Amphibians",
@@ -229,7 +217,7 @@ export const Chart = ({ plans }) => {
   return (
     <>
       <div>
-        <DatePickerWithRange className={`flex items-center justify-center pb-4`} />
+        <DatePicker fechas={fechas} setFechas={setFechas} obtenerPlanes={obtenerPlanes} loading={loading} className={`flex items-center justify-center pb-4`} />
         {plans != null ? (
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex flex-col gap-4 md:w-1/2">

@@ -5,6 +5,9 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
+import format from "date-fns/format";
+import es from "date-fns/locale/es";
+const options = {locale:es};
 
 export function CustomCard({ plan }) {
   return (
@@ -20,7 +23,7 @@ export function CustomCard({ plan }) {
           <div className="flex items-center space-x-4">
             <div>
               <p className="text-sm font-medium leading-none">Fecha inicio</p>
-              <p className="text-sm text-muted-foreground">{plan.initial_date}</p>
+              <p className="text-sm text-muted-foreground">{format(new Date(plan.initial_date), 'd/M/Y', options)}</p>
             </div>
           </div>
         </div>
@@ -28,7 +31,7 @@ export function CustomCard({ plan }) {
           <div className="flex items-center space-x-4">
             <div>
               <p className="text-sm font-medium leading-none">Fecha fin</p>
-              <p className="text-sm text-muted-foreground">{plan.final_date}</p>
+              <p className="text-sm text-muted-foreground">{format(new Date(plan.final_date), 'd/M/Y', options)}</p>
             </div>
           </div>
         </div>
