@@ -161,10 +161,11 @@ export default function Calendario({ rutinas, alumnoId, obtener_rutinas, setRuti
           headerToolbar={{
             left: "prev,next today",
             center: "title",
-            right: ''
+            right: 'dayGridMonth'
           }}
           buttonText={{
-            today:'Hoy'
+            today: 'Hoy',
+            dayGridMonth: 'Mes',
           }}
           locale={"es"}
           initialView="dayGridMonth"

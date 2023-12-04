@@ -1,10 +1,11 @@
-"use client";
+'use client'
 
-import FullCalendar from "@fullcalendar/react";
-import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
-import interactionPlugin from "@fullcalendar/interaction";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+
+import FullCalendar from '@fullcalendar/react';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 import {
   Dialog,
@@ -14,15 +15,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 export default function Calendario({ planes }) {
   const [eventos, setEventos] = useState(null);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState(null);
-    console.log(planes);
 
   const cargar_eventos = () => {
     let events = [];
@@ -50,7 +50,6 @@ export default function Calendario({ planes }) {
         };
         events.push(eve);
     });
-    //console.log(events);
     setEventos(events);
   };
 
@@ -71,101 +70,104 @@ export default function Calendario({ planes }) {
         <FullCalendar
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
-            left: "prev,next today",
-            center: "title",
-            right: ''
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth'
+          }}
+          buttonText={{
+            today: 'Hoy',
+            dayGridMonth: 'Mes',
           }}
           locale={'es'}
-          initialView="dayGridMonth"
+          initialView='dayGridMonth'
           editable={false}
           selectable={true}
           selectMirror={true}
           dayMaxEvents={true}
           weekends={true}
-          /* select={crearEvento} */
           eventClick={verEvento}
-          themeSystem="Pulse"
+          themeSystem='Pulse'
           events={eventos}
         />
       
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild></DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
+        <DialogContent className='sm:max-w-[425px]'>
           <DialogHeader>
             <DialogTitle>Plan</DialogTitle>
           </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="">
-              <Label htmlFor="initial_date" className="flex ml-1">
+          <div className='grid gap-4 py-4'>
+            <div className=''>
+              <Label htmlFor='initial_date' className='flex ml-1'>
                 Fecha Inicio
               </Label>
               <input
-                id="initial_date"
-                type="date"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id='initial_date'
+                type='date'
+                className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
                 value={data != null ? data.extendedProps.initial_date : ''}
                 onChange={(e) => {}}
                 disabled={true}
               />
             </div>
-            <div className="">
-              <Label htmlFor="final_date" className="flex ml-1">
+            <div className=''>
+              <Label htmlFor='final_date' className='flex ml-1'>
                 Fecha Final
               </Label>
               <input
-                id="final_date"
-                type="date"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id='final_date'
+                type='date'
+                className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
                 value={data != null ? data.extendedProps.final_date : ''}
                 onChange={(e) => {}}
                 disabled={true}
               />
             </div>
-            <div className="">
-              <Label htmlFor="descripcion" className="flex ml-1">
+            <div className=''>
+              <Label htmlFor='descripcion' className='flex ml-1'>
                 Descripcion
               </Label>
               <Textarea
-                id="descripcion"
+                id='descripcion'
                 value={data != null ? data.extendedProps.description : ''}
                 onChange={(e) => {
                 }}
                 disabled={true}
               />
             </div>
-            <div className="">
-              <Label htmlFor="branch" className="flex ml-1">
+            <div className=''>
+              <Label htmlFor='branch' className='flex ml-1'>
                 Branch
               </Label>
               <Textarea
-                id="branch"
+                id='branch'
                 value={data != null ? data.extendedProps.branches : ''}
                 onChange={(e) => {
                 }}
                 disabled={true}
               />
             </div>
-            <div className="">
-              <Label htmlFor="feedback" className="flex ml-1">
+            <div className=''>
+              <Label htmlFor='feedback' className='flex ml-1'>
                 Feedback del Alumno
               </Label>
               <Textarea
-                id="feedback"
-                placeholder=""
+                id='feedback'
+                placeholder=''
                 value={data != null ? data.extendedProps.feedback : ''}
                 onChange={(e) => {
                 }}
                 disabled={true}
               />
             </div>
-            <div className="">
-              <Label htmlFor="amount" className="flex ml-1">
+            <div className=''>
+              <Label htmlFor='amount' className='flex ml-1'>
                 Monto
               </Label>
               <input
-                id="amount"
-                type="number"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id='amount'
+                type='number'
+                className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50'
                 value={data != null ? data.extendedProps.amount : ''}
                 onChange={(e) => {}}
                 disabled={true}

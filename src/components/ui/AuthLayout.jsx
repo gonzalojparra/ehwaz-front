@@ -102,7 +102,7 @@ import ProfileButton from './ProfileButton';
 
 const components = [
   [
-    'Rutinas',
+    'Ver Rutinas',
     '/student_routines',
     'Alumno',
     'Ver rutinas asignadas por el personal trainer.',
@@ -123,14 +123,28 @@ const components = [
     3
   ],
   [
-    'Mis Pago',
+    'Mis Pagos',
     '/payment',
     'Alumno',
     'Generar mis pagos.',
     4
   ],
   [
-    'Pagos',
+    'Crear Planes',
+    '/specialist_plans',
+    'Especialista',
+    'Generar Planes para alumnos',
+    7
+  ],
+  [
+    'Ver Alumnos',
+    '/specialist_request',
+    'Especialista',
+    'Ver listado de alumnos',
+    8
+  ],
+  [
+    'Administrar Pagos',
     '/payments',
     'Trainer, Especialista',
     'Ver pagos realizados y pendientes de los planes asignados por los profesionales.',
@@ -144,20 +158,6 @@ const components = [
     6
   ],
   [
-    'Planes',
-    '/specialist_plans',
-    'Especialista',
-    'Generar Planes para alumnos',
-    7
-  ],
-  [
-    'Alumnos',
-    '/specialist_request',
-    'Especialista',
-    'Ver listado de alumnos',
-    8
-  ],
-  [
     'Listado de Pagos',
     '/student_payment',
     'Alumno',
@@ -165,14 +165,14 @@ const components = [
     9
   ],
   [
-    'Ver planes de especialistas',
+    'Ver Planes de Especialistas',
     '/student_plans',
     'Alumno',
     'Ver planes creados a tu medida',
     10
   ],
   [
-    'Ver metricas de especialistas',
+    'Ver Estadísticas',
     '/specialist_metrics',
     'Especialista',
     'Ver metricas en base a los alumnos asignados',
@@ -225,7 +225,7 @@ const Lis = ({ component }) => {
 }
 Lis.displayName = 'ListItem'
 
-const AuthLayout = (user, logout, role) => {
+const AuthLayout = (user, logout, role, extraData) => {
   return (
     <header className='sm:flex sm:justify-between py-3 px-4 border-b bg-background'>
       <Container>
@@ -287,10 +287,10 @@ const AuthLayout = (user, logout, role) => {
                         </NavigationMenuLink>
                       </li>
                       <ListItem href='/trainers' title='Personal Trainers'>
-                        Ver todos los Personal Trainers
+                        Ver todos los personal trainers
                       </ListItem>
-                      <ListItem href='/specialists' title='Profesionales'>
-                        Ver todos los profesionales
+                      <ListItem href='/specialists' title='Especialistas'>
+                        Ver todos los especialistas
                       </ListItem>
                       <ListItem href='/exercises' title='Buscador de Ejercicios'>
                         Buscar ejercicios
@@ -339,7 +339,7 @@ const AuthLayout = (user, logout, role) => {
           </nav>
 
           <div className='flex items-center'>
-            <ProfileButton User={user} logout={logout} />
+            {extraData && <ProfileButton User={user} logout={logout} extraData={extraData} />}
             <ThemeToggle />
           </div>
 

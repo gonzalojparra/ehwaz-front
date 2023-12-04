@@ -9,17 +9,17 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 
-export default function ProfileButton({ User, logout }) {
+export default function ProfileButton({ User, logout, extraData }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
         <Avatar>
-          <AvatarImage src={''} />
+          <AvatarImage src={extraData.profile_picture_url} />
           <AvatarFallback>{User.name}</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>{User.name}</DropdownMenuLabel>
+        <DropdownMenuLabel>{extraData.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem className='cursor-pointer'><Link href='/perfil'>Perfil</Link></DropdownMenuItem>
         <DropdownMenuItem className='cursor-pointer'>Pagos</DropdownMenuItem>
