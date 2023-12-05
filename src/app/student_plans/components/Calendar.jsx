@@ -57,7 +57,7 @@ export default function Calendar({ specialist_id }) {
               id: event.id,
               title: event.name,
               start: event.initial_date,
-              end: event.final_date,
+              end: event.nueva_fecha_final,
               allDay: true,
               backgroundColor: event.color,
               borderColor: event.color,

@@ -80,7 +80,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="">
-            <Label htmlFor="goal" className="flex ml-1">
+            <Label htmlFor="goal" className="flex ml-1 pb-2">
               Objetivos de Alumno
             </Label>
             <Select onValueChange={(e) => setGoalId(e)}>
@@ -100,7 +100,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
             <InputError messages={errors?.id_student_goal} />
           </div>
           <div className="">
-            <Label htmlFor="nombre" className="flex ml-1">
+            <Label htmlFor="nombre" className="flex ml-1 pb-2">
               Nombre
             </Label>
             <input
@@ -114,7 +114,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
             <InputError messages={errors?.name} />
           </div>
           <div className="">
-            <Label htmlFor="fechaInicio" className="flex ml-1">
+            <Label htmlFor="fechaInicio" className="flex ml-1 pb-2">
               Fecha Inicio
             </Label>
             <input
@@ -127,7 +127,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
             <InputError messages={errors?.initial_date} />
           </div>
           <div className="">
-            <Label htmlFor="fechaFinal" className="flex ml-1">
+            <Label htmlFor="fechaFinal" className="flex ml-1 pb-2">
               Fecha Final
             </Label>
             <input
@@ -140,7 +140,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
             <InputError messages={errors?.final_date} />
           </div>
           <div className="">
-            <Label htmlFor="amount" className="flex ml-1">
+            <Label htmlFor="amount" className="flex ml-1 pb-2">
               Precio
             </Label>
             <input
@@ -154,7 +154,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
             <InputError messages={errors?.amount} />
           </div>
           <div className="">
-            <Label htmlFor="descripcion" className="flex ml-1">
+            <Label htmlFor="descripcion" className="flex ml-1 pb-2">
               Descripcion
             </Label>
             <Textarea
@@ -168,7 +168,7 @@ export function ModalCrearRutina({ goals, alumnoId, obtener_rutinas, setRutinas 
             <InputError messages={errors?.descriptions} />
           </div>
           <div className="">
-            <Label htmlFor="color" className="flex ml-1">
+            <Label htmlFor="color" className="flex ml-1 pb-2">
               Color
             </Label>
             <input

@@ -109,7 +109,7 @@ const components = [
     1
   ],
   [
-    'Calendario',
+    'Crear Rutinas',
     '/trainer_routines',
     'Trainer',
     'Ver calendario con el cronograma de rutinas asignadas por todos los profesionales.',
@@ -154,7 +154,7 @@ const components = [
     'Alumnos',
     '/trainer_request',
     'Trainer',
-    'Ver eventos que se realizarán y que pueden ser de interés para que te inscribas!',
+    'Administrar y gestionar solicitudes de alumnos.',
     6
   ],
   [

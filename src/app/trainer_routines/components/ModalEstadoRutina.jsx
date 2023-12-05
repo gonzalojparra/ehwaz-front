@@ -49,7 +49,7 @@ export default function ModalEstadoRutina({ row, rutinaId, estados, obtener_ruti
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="">
-            <Label htmlFor="rutina" className="flex ml-1">
+            <Label htmlFor="rutina" className="flex ml-1 pb-2">
               Rutina
             </Label>
               <Select

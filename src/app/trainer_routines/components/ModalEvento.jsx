@@ -56,7 +56,7 @@ export default function ModalEvento({ open, setOpen, nuevo, data, rutinas, calen
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="">
-            <Label htmlFor="date" className="flex ml-1">
+            <Label htmlFor="date" className="flex ml-1 pb-2">
               Fecha
             </Label>
             <input
@@ -70,7 +70,7 @@ export default function ModalEvento({ open, setOpen, nuevo, data, rutinas, calen
             <InputError messages={errors?.date} />
           </div>
           <div className="">
-            <Label htmlFor="rutina" className="flex ml-1">
+            <Label htmlFor="rutina" className="flex ml-1 pb-2">
               Rutina
             </Label>
             {nuevo ?
@@ -101,7 +101,7 @@ export default function ModalEvento({ open, setOpen, nuevo, data, rutinas, calen
             <InputError messages={errors?.trainer_routine_id} />
           </div>
           <div className="">
-            <Label htmlFor="descripcion" className="flex ml-1">
+            <Label htmlFor="descripcion" className="flex ml-1 pb-2">
               Descripcion
             </Label>
             <Textarea
