@@ -26,15 +26,15 @@ import { useToast } from "@/components/ui/use-toast"
 
 const estados = [
   {
-    id: 0,
+    id: 1,
     label: "Iniciado",
   },
   {
-    id: 1,
+    id: 2,
     label: "Aceptado",
   },
   {
-    id: 2,
+    id: 3,
     label: "Cancelado",
   },
 ];
