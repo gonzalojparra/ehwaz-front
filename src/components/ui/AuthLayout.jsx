@@ -299,7 +299,7 @@ const AuthLayout = (user, logout, role, extraData) => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>Planes</NavigationMenuTrigger>
+                  <NavigationMenuTrigger>Planificaciones</NavigationMenuTrigger>
                   <NavigationMenuContent>
                     <ul className='grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] '>
                       {role && components.map((component) => {
