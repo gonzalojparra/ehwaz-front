@@ -35,22 +35,22 @@ import ModalEstado from "./ModalEstado";
 import { ModalCrearPlan } from "./ModalCrearPlan";
 
 
-export function Tabla({data, setPlanes, obtener_planes, alumnoId, goals, estados}) {
+export function Tabla({ data, setPlanes, obtener_planes, alumnoId, goals, estados }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const borrarPlan = async(id)=>{
+  const borrarPlan = async (id) => {
     setLoading(true);
     await axios.post('/api/borrar_plan', {
       plan_id: id
     })
-    .then((res)=>{
-      obtener_planes(alumnoId); setLoading(false);
-    })
-    .catch((e)=>{
-      console.log(e.response.data.errors);
-      setLoading(false);
-    })
+      .then((res) => {
+        obtener_planes(alumnoId); setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e.response.data.errors);
+        setLoading(false);
+      })
   }
   const columns = [
     {
@@ -88,7 +88,7 @@ export function Tabla({data, setPlanes, obtener_planes, alumnoId, goals, estados
         );
       },
       cell: ({ row }) => (
-        <div className="lowercase">{row.getValue("name")}</div>
+        <div className="">{row.getValue("name")}</div>
       ),
     },
     {
@@ -102,7 +102,7 @@ export function Tabla({data, setPlanes, obtener_planes, alumnoId, goals, estados
         // Formatear el valor de la celda a moneda local
         let formatted = date.split('-');
 
-        return <div className="text-right font-medium">{formatted[2]+"/"+formatted[1]+"/"+formatted[0]}</div>;
+        return <div className="text-right font-medium">{formatted[2] + "/" + formatted[1] + "/" + formatted[0]}</div>;
       },
     },
     {
@@ -116,7 +116,7 @@ export function Tabla({data, setPlanes, obtener_planes, alumnoId, goals, estados
         // Formatear el valor de la celda a moneda local
         let formatted = date.split('-');
 
-        return <div className="text-right font-medium">{formatted[2]+"/"+formatted[1]+"/"+formatted[0]}</div>;
+        return <div className="text-right font-medium">{formatted[2] + "/" + formatted[1] + "/" + formatted[0]}</div>;
       },
     },
     {
@@ -135,7 +135,7 @@ export function Tabla({data, setPlanes, obtener_planes, alumnoId, goals, estados
         );
       },
       cell: ({ row }) => (
-        <div className="capitalize"><ModalEstado row={row.original} planId={row.getValue("id")} estados={estados} obtener_planes={obtener_planes} alumnoId={alumnoId}/></div>
+        <div className="capitalize"><ModalEstado row={row.original} planId={row.getValue("id")} estados={estados} obtener_planes={obtener_planes} alumnoId={alumnoId} /></div>
       ),
     },
     {
@@ -173,7 +173,7 @@ export function Tabla({data, setPlanes, obtener_planes, alumnoId, goals, estados
         );
       },
       cell: ({ row }) => (
-        <div className="capitalize"><Button variant="destructive" onClick={(e)=>borrarPlan(row.original.id)} disabled={loading}>Borrar</Button></div>
+        <div className="capitalize"><Button variant="destructive" onClick={(e) => borrarPlan(row.original.id)} disabled={loading}>Borrar</Button></div>
       ),
     },
   ];
@@ -214,7 +214,7 @@ export function Tabla({data, setPlanes, obtener_planes, alumnoId, goals, estados
             }
             className="max-w-sm"
           />
-          <ModalCrearPlan alumnoId={alumnoId} obtener_planes={obtener_planes}/>
+          <ModalCrearPlan alumnoId={alumnoId} obtener_planes={obtener_planes} />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="ml-auto">
@@ -253,9 +253,9 @@ export function Tabla({data, setPlanes, obtener_planes, alumnoId, goals, estados
                         {header.isPlaceholder
                           ? null
                           : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
                       </TableHead>
                     );
                   })}

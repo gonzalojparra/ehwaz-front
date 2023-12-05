@@ -230,7 +230,7 @@ export default function SpecialistPage({ params: { id } }) {
                     </>
                   ) : (
                     <>
-                      <User2 className='mr-2 h-4 w-4' /> Conectar {loading && <SimpleSpiner />}
+                      <User2 className='mr-2 h-4 w-4' /> Solicitar conexión {loading && <SimpleSpiner />}
                     </>
                   )
                 }
