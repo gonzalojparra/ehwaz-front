@@ -98,7 +98,7 @@ export default function Calendario({ planes }) {
           </DialogHeader>
           <div className='grid gap-4 py-4'>
             <div className=''>
-              <Label htmlFor='initial_date' className='flex ml-1'>
+              <Label htmlFor='initial_date' className='flex ml-1 pb-2'>
                 Fecha Inicio
               </Label>
               <input
@@ -111,7 +111,7 @@ export default function Calendario({ planes }) {
               />
             </div>
             <div className=''>
-              <Label htmlFor='final_date' className='flex ml-1'>
+              <Label htmlFor='final_date' className='flex ml-1 pb-2'>
                 Fecha Final
               </Label>
               <input
@@ -124,7 +124,7 @@ export default function Calendario({ planes }) {
               />
             </div>
             <div className=''>
-              <Label htmlFor='descripcion' className='flex ml-1'>
+              <Label htmlFor='descripcion' className='flex ml-1 pb-2'>
                 Descripcion
               </Label>
               <Textarea
@@ -136,7 +136,7 @@ export default function Calendario({ planes }) {
               />
             </div>
             <div className=''>
-              <Label htmlFor='branch' className='flex ml-1'>
+              <Label htmlFor='branch' className='flex ml-1 pb-2'>
                 Branch
               </Label>
               <Textarea
@@ -148,7 +148,7 @@ export default function Calendario({ planes }) {
               />
             </div>
             <div className=''>
-              <Label htmlFor='feedback' className='flex ml-1'>
+              <Label htmlFor='feedback' className='flex ml-1 pb-2'>
                 Feedback del Alumno
               </Label>
               <Textarea
@@ -161,7 +161,7 @@ export default function Calendario({ planes }) {
               />
             </div>
             <div className=''>
-              <Label htmlFor='amount' className='flex ml-1'>
+              <Label htmlFor='amount' className='flex ml-1 pb-2'>
                 Monto
               </Label>
               <input

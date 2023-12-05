@@ -54,7 +54,7 @@ export default function ModalEstado({ row, planId, estados, obtener_planes, alum
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="">
-            <Label htmlFor="plan" className="flex ml-1">
+            <Label htmlFor="plan" className="flex ml-1 pb-2">
               Plan
             </Label>
               <Select
